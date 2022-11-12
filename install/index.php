@@ -186,6 +186,10 @@ class fi1a_bitrixvalidation extends CModule
             return false;
         }
 
+        if (!$this->copyAdminFiles()) {
+            return false;
+        }
+
         return true;
     }
 
@@ -277,6 +281,10 @@ class fi1a_bitrixvalidation extends CModule
             return false;
         }
 
+        if (!$this->unlinkAdminFiles()) {
+            return false;
+        }
+
         return true;
     }
 
@@ -362,5 +370,82 @@ class fi1a_bitrixvalidation extends CModule
     private function deleteSettings()
     {
         Option::delete($this->MODULE_ID, []);
+    }
+
+    /**
+     * Копирование файлов из папка admin модуля
+     *
+     * @return bool
+     *
+     * @throws \Bitrix\Main\IO\FileNotFoundException
+     */
+    private function copyAdminFiles(): bool
+    {
+        global $APPLICATION;
+
+        $relModuleDir = str_replace(Application::getDocumentRoot(), '', $this->moduleDir);
+
+        $moduleAdminDir = new \Bitrix\Main\IO\Directory($this->createPath($this->moduleDir, 'admin'));
+        foreach ($moduleAdminDir->getChildren() as $fileSystemEntry) {
+            if (!$fileSystemEntry->isFile()) {
+                continue;
+            }
+
+            /**
+             * @var \Bitrix\Main\IO\File $fileSystemEntry
+             */
+            if ('php' != $fileSystemEntry->getExtension() || 'menu.php' == $fileSystemEntry->getName()) {
+                continue;
+            }
+
+            $link = $this->createRelativePath($relModuleDir, 'admin', $fileSystemEntry->getName());
+            $linkFileContents = '<?php' . PHP_EOL . 'require $_SERVER[\'DOCUMENT_ROOT\']."' . $link . '";' . PHP_EOL;
+            $filePath = $this->createPath($this->bitrixAdminDir, $fileSystemEntry->getName());
+
+            if (!file_put_contents($filePath, $linkFileContents)) {
+                $APPLICATION->ResetException();
+                $APPLICATION->ThrowException(Loc::getMessage('FBV_WRITE_FILE_ERROR', ['#FILE_PATH#' => $filePath]));
+
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Удаление файлов совпадающих с файлой в папке admin
+     *
+     * @return bool
+     *
+     * @throws \Bitrix\Main\IO\FileNotFoundException
+     */
+    private function unlinkAdminFiles(): bool
+    {
+        global $APPLICATION;
+
+        $moduleAdminDir = new \Bitrix\Main\IO\Directory($this->createPath($this->moduleDir, 'admin'));
+        foreach ($moduleAdminDir->getChildren() as $fileSystemEntry) {
+            if (!$fileSystemEntry->isFile()) {
+                continue;
+            }
+
+            /**
+             * @var \Bitrix\Main\IO\File $fileSystemEntry
+             */
+            if ('php' != $fileSystemEntry->getExtension() || 'menu.php' == $fileSystemEntry->getName()) {
+                continue;
+            }
+
+            $filePath = $this->createPath($this->bitrixAdminDir, $fileSystemEntry->getName());
+            if (!unlink($filePath)) {
+                $APPLICATION->ResetException();
+                $APPLICATION->ThrowException(Loc::getMessage('FBV_DELETE_FILE_ERROR', ['#FILE_PATH#' => $filePath]));
+
+                return false;
+            }
+        }
+
+        return true;
     }
 }

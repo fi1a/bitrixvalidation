@@ -8,3 +8,5 @@ $MESS['FBV_RIGHT_F'] = 'изменение пользовательских на
 $MESS['FBV_RIGHT_R'] = 'просмотр настроек модуля';
 $MESS['FBV_RIGHT_W'] = 'полный доступ';
 $MESS['FBV_WRITE_ERROR_BITRIX_ADMIN_DIR'] = 'Нет доступа на запись в папке /bitrix/admin/';
+$MESS['FBV_WRITE_FILE_ERROR'] = 'Не удалось записать файл "#FILE_PATH#"';
+$MESS['FBV_DELETE_FILE_ERROR'] = 'Не удалось удалить файл "#FILE_PATH#"';

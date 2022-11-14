@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Table v-if="!this.entityId" @select="entityRules($event)"/>
-    <Rules v-else-if="this.entityId" :entityId="this.entityId"/>
+    <List v-if="!this.entity.id" @select="edit($event)"/>
+    <Edit v-else :entity="this.entity"/>
   </div>
 </template>
 
@@ -9,46 +9,47 @@
 export default {
   data() {
     return {
-      entityId: null,
+      entity: {
+        id: null,
+        type: null,
+      }
     }
   },
+
   mounted() {
     const urlParams = new URL(document.URL);
-    this.entityId = urlParams.searchParams.get('entityId');
+    this.entity = {
+      id: urlParams.searchParams.get('id'),
+      type: urlParams.searchParams.get('type'),
+    };
 
     window.onpopstate = (event) => {
-      let entityId = null;
+      let entity = {
+        id: null,
+        type: null,
+      };
       if (event.state) {
-        entityId = event.state.entityId;
+        entity = event.state;
       }
 
-      this.entityId = entityId;
+      this.entity = entity;
     };
   },
+
   methods: {
-    entityRules(entityId) {
-      this.entityId = entityId;
+    edit(select) {
+      this.entity = select;
       let urlParams = new URL(document.URL);
-      urlParams.searchParams.delete('entityId');
-      urlParams.searchParams.append('entityId', entityId);
-      history.pushState({entityId}, '', urlParams.toString())
+      urlParams.searchParams.delete('id');
+      urlParams.searchParams.delete('type');
+      urlParams.searchParams.append('id', select.id);
+      urlParams.searchParams.append('type', select.type);
+      history.pushState({id: this.entity.id, type: this.entity.type}, '', urlParams.toString())
     }
   }
 }
 </script>
 
 <style scoped>
-.main-grid-cell-head {
-  cursor: default;
-}
-.main-grid-resize-button {
-  opacity: 1;
-  cursor: default;
-}
 
-html:not(.bx-firefox) .main-grid-resize-button::after,
-html:not(.bx-firefox) .main-grid-resize-button:after {
-  height: 50000px;
-  opacity: 1;
-}
 </style>

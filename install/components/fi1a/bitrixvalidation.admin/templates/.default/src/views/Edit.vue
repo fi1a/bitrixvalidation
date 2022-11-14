@@ -1,6 +1,6 @@
 <template>
   <div>
-    rules {{entityId}}
+    rules {{entity.id}} {{entity.type}}
   </div>
 </template>
 
@@ -9,7 +9,7 @@ export default {
   name: "Rules",
 
   props: {
-    entityId: Number,
+    entity: Object,
   }
 }
 </script>

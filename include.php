@@ -21,6 +21,23 @@ Loader::registerAutoloadClasses(
     [
         // Хелперы
         '\Fi1a\BitrixValidation\Helpers\ModuleRegistry' => 'lib/Helpers/ModuleRegistry.php',
+        '\Fi1a\BitrixValidation\ActionFilter\Rights' => 'lib/ActionFilter/Rights.php',
+
+        // Домен
+        '\Fi1a\BitrixValidation\Domain\EntityInterface' => 'lib/Domain/EntityInterface.php',
+        '\Fi1a\BitrixValidation\Domain\EntityCollectionInterface' => 'lib/Domain/EntityCollectionInterface.php',
+        '\Fi1a\BitrixValidation\Domain\Entity' => 'lib/Domain/Entity.php',
+        '\Fi1a\BitrixValidation\Domain\IBEntity' => 'lib/Domain/IBEntity.php',
+        '\Fi1a\BitrixValidation\Domain\HLEntity' => 'lib/Domain/HLEntity.php',
+        '\Fi1a\BitrixValidation\Domain\EntityCollection' => 'lib/Domain/EntityCollection.php',
+
+        //Репозиторий
+        '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
+        '\Fi1a\BitrixValidation\Repositories\EntityRepository' => 'lib/Repositories/EntityRepository.php',
+
+        // Сервисы
+        '\Fi1a\BitrixValidation\Services\EntityServiceInterface' => 'lib/Services/EntityServiceInterface.php',
+        '\Fi1a\BitrixValidation\Services\EntityService' => 'lib/Services/EntityService.php',
     ]
 );
 

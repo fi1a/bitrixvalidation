@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Fi1a\Unit\BitrixValidation\Services;
 
+use ErrorException;
 use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
+use Fi1a\BitrixValidation\Domain\EntityInterface;
 use Fi1a\BitrixValidation\Services\EntityService;
 use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 
@@ -47,5 +49,35 @@ class EntityServiceTest extends EntityTestCase
             }
         }
         $this->assertTrue($find);
+    }
+
+    /**
+     * Возвращает сущность
+     */
+    public function testGetEntity(): void
+    {
+        $service = new EntityService();
+        $entity = $service->getEntity('ib', static::$iblockId);
+        $this->assertInstanceOf(
+            EntityInterface::class,
+            $entity
+        );
+        $this->assertEquals('ib', $entity->entityType);
+        $entity = $service->getEntity('hl', static::$hlId);
+        $this->assertInstanceOf(
+            EntityInterface::class,
+            $entity
+        );
+        $this->assertEquals('hl', $entity->entityType);
+    }
+
+    /**
+     * Возвращает сущность
+     */
+    public function testGetEntityException(): void
+    {
+        $this->expectException(ErrorException::class);
+        $service = new EntityService();
+        $service->getEntity('unknown', static::$iblockId);
     }
 }

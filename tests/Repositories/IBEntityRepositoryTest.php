@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Fi1a\Unit\BitrixValidation\Repositories;
 
+use ErrorException;
 use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
+use Fi1a\BitrixValidation\Domain\EntityInterface;
+use Fi1a\BitrixValidation\Repositories\EntitySelect;
 use Fi1a\BitrixValidation\Repositories\IBEntityRepository;
 use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 
@@ -29,5 +32,28 @@ class IBEntityRepositoryTest extends EntityTestCase
             }
         }
         $this->assertTrue($find);
+    }
+
+    /**
+     * Возвращает сущность
+     */
+    public function testGetEntity(): void
+    {
+        $select = new EntitySelect(true);
+        $repository = new IBEntityRepository();
+        $this->assertInstanceOf(
+            EntityInterface::class,
+            $repository->getEntity(static::$iblockId, $select)
+        );
+    }
+
+    /**
+     * Возвращает сущность (исключение)
+     */
+    public function testGetEntityNotFound(): void
+    {
+        $this->expectException(ErrorException::class);
+        $repository = new IBEntityRepository();
+        $repository->getEntity(100500);
     }
 }

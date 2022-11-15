@@ -9,7 +9,7 @@ use Fi1a\Collection\DataType\ValueObject;
 /**
  *  Абстрактная сущность
  */
-abstract class AbstractEntity extends ValueObject implements EntityInterface
+class Entity extends ValueObject implements EntityInterface
 {
     /**
      * @var string[]

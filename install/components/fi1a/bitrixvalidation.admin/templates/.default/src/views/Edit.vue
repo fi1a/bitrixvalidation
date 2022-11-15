@@ -6,6 +6,12 @@
           <div class="adm-detail-title">{{entity.entity_type_name}}: <template v-if="entity.type_name">{{entity.type_name}} / </template>{{entity.name}}</div>
           <div class="adm-detail-content-item-block">
 
+            <div class="add-field">
+              <select>
+                <option v-for="field in this.fields" :value="field.id">{{field.name}}</option>
+              </select>
+              <input type="button" value="Добавить правила" title="Добавить правила для поля" class="adm-btn-save">
+            </div>
 
           </div>
         </div>
@@ -44,6 +50,12 @@ export default {
     };
   },
 
+  computed: {
+    fields() {
+      return this.entity.fields;
+    }
+  },
+
   mounted() {
     this.load();
   },
@@ -58,3 +70,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.adm-workarea .add-field .adm-btn-save {
+  margin-left: 20px;
+}
+</style>

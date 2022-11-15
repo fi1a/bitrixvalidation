@@ -16,7 +16,7 @@ export default {
     }
   },
 
-  mounted() {
+  beforeMount() {
     const urlParams = new URL(document.URL);
     this.entity = {
       id: urlParams.searchParams.get('id'),

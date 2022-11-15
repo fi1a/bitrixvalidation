@@ -8,6 +8,7 @@ use ErrorException;
 use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
 use Fi1a\BitrixValidation\Domain\EntityInterface;
 use Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface;
+use Fi1a\BitrixValidation\Repositories\EntitySelect;
 use Fi1a\BitrixValidation\Repositories\HLEntityRepository;
 use Fi1a\BitrixValidation\Repositories\IBEntityRepository;
 
@@ -37,7 +38,7 @@ class EntityService implements EntityServiceInterface
      */
     public function getEntity(string $type, int $id): EntityInterface
     {
-        return $this->factoryRepository($type)->getEntity($id);
+        return $this->factoryRepository($type)->getEntity($id, new EntitySelect(true));
     }
 
     /**

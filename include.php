@@ -10,8 +10,8 @@ if (is_file(__DIR__ . '/vendor/autoload.php')) {
 }
 
 $classLocFilePaths = [
-    __DIR__ . '/lib/Domain/IBEntity.php',
-    __DIR__ . '/lib/Domain/HLEntity.php',
+    __DIR__ . '/lib/Repositories/IBEntityRepository.php',
+    __DIR__ . '/lib/Repositories/HLEntityRepository.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -28,14 +28,16 @@ Loader::registerAutoloadClasses(
         // Домен
         '\Fi1a\BitrixValidation\Domain\EntityInterface' => 'lib/Domain/EntityInterface.php',
         '\Fi1a\BitrixValidation\Domain\EntityCollectionInterface' => 'lib/Domain/EntityCollectionInterface.php',
-        '\Fi1a\BitrixValidation\Domain\AbstractEntity' => 'lib/Domain/AbstractEntity.php',
-        '\Fi1a\BitrixValidation\Domain\IBEntity' => 'lib/Domain/IBEntity.php',
-        '\Fi1a\BitrixValidation\Domain\HLEntity' => 'lib/Domain/HLEntity.php',
+        '\Fi1a\BitrixValidation\Domain\Entity' => 'lib/Domain/Entity.php',
         '\Fi1a\BitrixValidation\Domain\EntityCollection' => 'lib/Domain/EntityCollection.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
-        '\Fi1a\BitrixValidation\Repositories\EntityRepository' => 'lib/Repositories/EntityRepository.php',
+        '\Fi1a\BitrixValidation\Repositories\AbstractEntityRepository' => 'lib/Repositories/AbstractEntityRepository.php',
+        '\Fi1a\BitrixValidation\Repositories\HLEntityRepository' => 'lib/Repositories/HLEntityRepository.php',
+        '\Fi1a\BitrixValidation\Repositories\IBEntityRepository' => 'lib/Repositories/IBEntityRepository.php',
+        '\Fi1a\BitrixValidation\Repositories\EntitySelectInterface' => 'lib/Repositories/EntitySelectInterface.php',
+        '\Fi1a\BitrixValidation\Repositories\EntitySelect' => 'lib/Repositories/EntitySelect.php',
 
         // Сервисы
         '\Fi1a\BitrixValidation\Services\EntityServiceInterface' => 'lib/Services/EntityServiceInterface.php',

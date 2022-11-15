@@ -10,6 +10,8 @@ if (is_file(__DIR__ . '/vendor/autoload.php')) {
 }
 
 $classLocFilePaths = [
+    __DIR__ . '/lib/Domain/IBEntity.php',
+    __DIR__ . '/lib/Domain/HLEntity.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -26,7 +28,7 @@ Loader::registerAutoloadClasses(
         // Домен
         '\Fi1a\BitrixValidation\Domain\EntityInterface' => 'lib/Domain/EntityInterface.php',
         '\Fi1a\BitrixValidation\Domain\EntityCollectionInterface' => 'lib/Domain/EntityCollectionInterface.php',
-        '\Fi1a\BitrixValidation\Domain\Entity' => 'lib/Domain/Entity.php',
+        '\Fi1a\BitrixValidation\Domain\AbstractEntity' => 'lib/Domain/AbstractEntity.php',
         '\Fi1a\BitrixValidation\Domain\IBEntity' => 'lib/Domain/IBEntity.php',
         '\Fi1a\BitrixValidation\Domain\HLEntity' => 'lib/Domain/HLEntity.php',
         '\Fi1a\BitrixValidation\Domain\EntityCollection' => 'lib/Domain/EntityCollection.php',

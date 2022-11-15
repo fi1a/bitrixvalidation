@@ -6,7 +6,7 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: `/bitrix/components/fi1a/bitrixvalidation.admin/templates/.default/dist`,
+  base: `/bitrix/components/fi1a/bitrixvalidation.admin/templates/.default/dist/`,
   plugins: [
     vue(),
     vueI18n({

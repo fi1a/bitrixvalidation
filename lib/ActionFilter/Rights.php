@@ -9,6 +9,9 @@ use Bitrix\Main\Event;
 use Bitrix\Main\EventResult;
 use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
 
+/**
+ * Префильтр проверки прав на модуль
+ */
 class Rights extends Base
 {
     /**

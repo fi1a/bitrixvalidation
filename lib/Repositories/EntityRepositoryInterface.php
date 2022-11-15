@@ -13,11 +13,15 @@ interface EntityRepositoryInterface
 {
     /**
      * Возвращает список сущностей инфоблоков
+     *
+     * @param mixed[][] $parameters
      */
-    public function getListIB(): EntityCollectionInterface;
+    public function getListIB(array $parameters = []): EntityCollectionInterface;
 
     /**
      * Возвращает список сущностей Highload-блоков
+     *
+     * @param mixed[][] $parameters
      */
-    public function getListHL(): EntityCollectionInterface;
+    public function getListHL(array $parameters = []): EntityCollectionInterface;
 }

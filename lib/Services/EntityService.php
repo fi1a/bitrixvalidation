@@ -14,16 +14,16 @@ class EntityService implements EntityServiceInterface
     /**
      * @inheritDoc
      */
-    public function getListIB(): array
+    public function getListIB(array $parameters = []): array
     {
-        return (new EntityRepository())->getListIB()->toArray();
+        return (new EntityRepository())->getListIB($parameters)->toArray();
     }
 
     /**
      * @inheritDoc
      */
-    public function getListHL(): array
+    public function getListHL(array $parameters = []): array
     {
-        return (new EntityRepository())->getListHL()->toArray();
+        return (new EntityRepository())->getListHL($parameters)->toArray();
     }
 }

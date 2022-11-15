@@ -14,6 +14,14 @@ class EntityCollection extends Collection implements EntityCollectionInterface
     /**
      * @inheritDoc
      */
+    public function __construct(?array $data = null)
+    {
+        parent::__construct(EntityInterface::class, $data);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function toArray(): array
     {
         $array = [];

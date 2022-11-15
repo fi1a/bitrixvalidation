@@ -7,6 +7,15 @@ import './assets/main.css'
 
 const app = createApp(App);
 
+app.config.globalProperties.$scrollTop = () => {
+    this.intervalId = setInterval(() => {
+        if (window.scrollY === 0) {
+            clearInterval(this.intervalId)
+        }
+        window.scroll(0, window.scrollY - 25)
+    }, 20)
+}
+
 app.component('Edit', Edit);
 app.component('List', List);
 

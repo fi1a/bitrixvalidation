@@ -7,9 +7,9 @@ namespace Fi1a\BitrixValidation\Domain;
 use Fi1a\Collection\DataType\ValueObject;
 
 /**
- * Сущность
+ *  Абстрактная сущность
  */
-class Entity extends ValueObject implements EntityInterface
+abstract class AbstractEntity extends ValueObject implements EntityInterface
 {
     /**
      * @var string[]

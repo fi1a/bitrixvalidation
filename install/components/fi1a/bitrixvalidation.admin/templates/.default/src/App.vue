@@ -45,7 +45,8 @@ export default {
       urlParams.searchParams.append('id', select.id);
       urlParams.searchParams.append('type', select.type);
       history.pushState({id: this.entity.id, type: this.entity.type}, '', urlParams.toString())
-    }
+      this.$scrollTop();
+    },
   }
 }
 </script>

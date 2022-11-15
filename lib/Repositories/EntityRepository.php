@@ -23,26 +23,38 @@ class EntityRepository implements EntityRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getListIB(): EntityCollectionInterface
+    public function getListIB(array $parameters = []): EntityCollectionInterface
     {
         Loader::includeModule('iblock');
-        $collection = new EntityCollection(EntityInterface::class);
 
-        $languageTypes = [];
-        $iterator = TypeLanguageTable::query()
-            ->setSelect(['NAME', 'IBLOCK_TYPE_ID', 'LANGUAGE_ID'])
-            ->where('LANGUAGE_ID', '=', LANGUAGE_ID)
-            ->exec();
+        $parameters['select'] = ['ID', 'NAME', 'IBLOCK_TYPE_ID',];
 
-        while ($languageType = $iterator->fetch()) {
-            $languageTypes[$languageType['IBLOCK_TYPE_ID']] = $languageType;
+        $iterator = IblockTable::getList($parameters);
+        $iblockTypeIds = [];
+        $iblocks = [];
+        while ($ib = $iterator->fetch()) {
+            if (!in_array($ib['IBLOCK_TYPE_ID'], $iblockTypeIds)) {
+                $iblockTypeIds[] = $ib['IBLOCK_TYPE_ID'];
+            }
+
+            $iblocks[] = $ib;
         }
 
-        $iterator = IblockTable::query()
-            ->setSelect(['ID', 'NAME', 'IBLOCK_TYPE_ID',])
-            ->exec();
+        $languageTypes = [];
+        if (count($iblockTypeIds)) {
+            $iterator = TypeLanguageTable::query()
+                ->setSelect(['NAME', 'IBLOCK_TYPE_ID', 'LANGUAGE_ID'])
+                ->where('LANGUAGE_ID', '=', LANGUAGE_ID)
+                ->whereIn('IBLOCK_TYPE_ID', $iblockTypeIds)
+                ->exec();
 
-        while ($ib = $iterator->fetch()) {
+            while ($languageType = $iterator->fetch()) {
+                $languageTypes[$languageType['IBLOCK_TYPE_ID']] = $languageType;
+            }
+        }
+
+        $collection = new EntityCollection();
+        foreach ($iblocks as $ib) {
             $ib['IBLOCK_TYPE_NAME'] = '';
             if (isset($languageTypes[$ib['IBLOCK_TYPE_ID']])) {
                 $ib['IBLOCK_TYPE_NAME'] = $languageTypes[$ib['IBLOCK_TYPE_ID']]['NAME'];
@@ -74,30 +86,38 @@ class EntityRepository implements EntityRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getListHL(): EntityCollectionInterface
+    public function getListHL(array $parameters = []): EntityCollectionInterface
     {
         Loader::includeModule('highloadblock');
-        $collection = new EntityCollection(EntityInterface::class);
 
-        $languages = [];
-        $iterator = HighloadBlockLangTable::query()
-            ->setSelect(['NAME', 'ID'])
-            ->where('LID', '=', LANGUAGE_ID)
-            ->exec();
+        $parameters['select'] = ['ID', 'NAME',];
 
-        while ($language = $iterator->fetch()) {
-            $languages[$language['ID']] = $language;
-        }
-
-        $iterator = HighloadBlockTable::query()
-            ->setSelect(['ID', 'NAME'])
-            ->exec();
+        $iterator = HighloadBlockTable::getList($parameters);
+        $hls = [];
 
         while ($hl = $iterator->fetch()) {
+            $hls[$hl['ID']] = $hl;
+        }
+
+        $languages = [];
+        if (count($hls)) {
+            $iterator = HighloadBlockLangTable::query()
+                ->setSelect(['NAME', 'ID'])
+                ->where('LID', '=', LANGUAGE_ID)
+                ->whereIn('ID', array_keys($hls))
+                ->exec();
+
+            while ($language = $iterator->fetch()) {
+                $languages[$language['ID']] = $language;
+            }
+        }
+
+        $collection = new EntityCollection();
+
+        foreach ($hls as $hl) {
             if (isset($languages[$hl['ID']]) && $languages[$hl['ID']]['NAME']) {
                 $hl['NAME'] = $languages[$hl['ID']]['NAME'];
             }
-
             $collection[] = $this->factoryHlEntity($hl);
         }
 

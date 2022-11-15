@@ -1,10 +1,11 @@
 <template>
-  <div v-if="loaded">
+  <div v-if="!loading">
     <template v-for="(items, key) in entities">
       <h2>{{$t('list.' + key)}}</h2>
       <TableList :entities="items" @select="$emit('select', $event);"/>
     </template>
   </div>
+  <Spinner :loading="loading"/>
 </template>
 
 <script>
@@ -12,15 +13,16 @@
 import api from "../api/api";
 
 import TableList from './../components/TableList.vue';
+import Spinner from './../components/Spinner.vue';
 
 export default {
   name: "List",
 
-  components: {TableList},
+  components: {TableList, Spinner},
 
   data() {
     return {
-      loaded: false,
+      loading: true,
       entities: {},
     };
   },
@@ -33,7 +35,7 @@ export default {
     load() {
       api.getList().then((response) => {
         this.entities = response.data;
-        this.loaded = true;
+        this.loading = false;
       })
     }
   }

@@ -6,6 +6,7 @@ namespace Fi1a\Unit\BitrixValidation\TestCase;
 
 use Bitrix\Main\Application;
 use Bitrix\Main\Loader;
+use CIBlock;
 use CModule;
 use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
 use PHPUnit\Framework\TestCase;
@@ -24,6 +25,16 @@ class ModuleTestCase extends TestCase
      * @var bool
      */
     private static $isInstalled = false;
+
+    /**
+     * @var int
+     */
+    private static $iblockId;
+
+    /**
+     * @var int
+     */
+    private static $hlId;
 
     /**
      * До начала вызова тестов
@@ -54,6 +65,24 @@ class ModuleTestCase extends TestCase
         }
 
         Loader::includeModule(self::MODULE_ID);
+        Loader::includeModule('iblock');
+        Loader::includeModule('highloadblock');
+
+        $ib = new CIBlock();
+        static::$iblockId = $ib->Add([
+            'ACTIVE' => 'Y',
+            'NAME' => 'BitrixValidation Test',
+            'CODE' => 'BITRIXVALIDATION_TEST',
+            'LIST_PAGE_URL' => '',
+            'DETAIL_PAGE_URL' => '',
+            'IBLOCK_TYPE_ID' => '',
+            'SITE_ID' => ['s1'],
+            'SORT' => 100,
+            'PICTURE' => null,
+            'DESCRIPTION' => null,
+            'DESCRIPTION_TYPE' => null,
+            'GROUP_ID' => [],
+        ]);
     }
 
     /**
@@ -61,6 +90,9 @@ class ModuleTestCase extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
+        if (static::$iblockId) {
+            CIBlock::Delete(static::$iblockId);
+        }
         if (self::$isInstalled) {
             $module = CModule::CreateModuleObject(self::MODULE_ID);
             if ($module->IsInstalled()) {

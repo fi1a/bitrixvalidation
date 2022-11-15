@@ -12,14 +12,18 @@ interface EntityServiceInterface
     /**
      * Возвращает список сущностей
      *
+     * @param mixed[][] $parameters
+     *
      * @return mixed[][]
      */
-    public function getListIB(): array;
+    public function getListIB(array $parameters = []): array;
 
     /**
      * Возвращает список сущностей
      *
+     * @param mixed[][] $parameters
+     *
      * @return mixed[][]
      */
-    public function getListHL(): array;
+    public function getListHL(array $parameters = []): array;
 }

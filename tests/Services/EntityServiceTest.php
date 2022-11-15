@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Fi1a\Unit\BitrixValidation\Services;
 
+use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
 use Fi1a\BitrixValidation\Services\EntityService;
 use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 
@@ -18,11 +19,11 @@ class EntityServiceTest extends EntityTestCase
     public function testGetListIB(): void
     {
         $service = new EntityService();
-        $array = $service->getListIB();
-        $this->assertIsArray($array);
-        $this->assertGreaterThanOrEqual(1, count($array));
+        $collection = $service->getListIB();
+        $this->assertInstanceOf(EntityCollectionInterface::class, $collection);
+        $this->assertGreaterThanOrEqual(1, count($collection));
         $find = false;
-        foreach ($array as $item) {
+        foreach ($collection as $item) {
             if ((int) $item['id'] === static::$iblockId) {
                 $find = true;
             }
@@ -36,11 +37,11 @@ class EntityServiceTest extends EntityTestCase
     public function testGetListHL(): void
     {
         $service = new EntityService();
-        $array = $service->getListHL();
-        $this->assertIsArray($array);
-        $this->assertGreaterThanOrEqual(1, count($array));
+        $collection = $service->getListHL();
+        $this->assertInstanceOf(EntityCollectionInterface::class, $collection);
+        $this->assertGreaterThanOrEqual(1, count($collection));
         $find = false;
-        foreach ($array as $item) {
+        foreach ($collection as $item) {
             if ((int) $item['id'] === static::$hlId) {
                 $find = true;
             }

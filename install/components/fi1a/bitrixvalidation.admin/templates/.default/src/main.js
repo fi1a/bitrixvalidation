@@ -7,10 +7,12 @@ import './assets/main.css'
 
 const app = createApp(App);
 
-app.config.globalProperties.$scrollTop = () => {
+app.config.globalProperties.$scrollTop = (top) => {
     this.intervalId = setInterval(() => {
-        if (window.scrollY === 0) {
+        if (window.scrollY <= top) {
             clearInterval(this.intervalId)
+
+            return;
         }
         window.scroll(0, window.scrollY - 25)
     }, 20)

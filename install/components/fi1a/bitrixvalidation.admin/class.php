@@ -39,6 +39,16 @@ class Fi1aBitrixValidationAdminComponent extends CBitrixComponent implements Con
                 ],
                 'postfilters' => []
             ],
+            'getEntity' => [
+                'prefilters' => [
+                    new Authentication(),
+                    new Rights(static::MODULE_ID, 'E'),
+                    new HttpMethod(
+                        [HttpMethod::METHOD_POST,]
+                    ),
+                ],
+                'postfilters' => []
+            ],
         ];
     }
 
@@ -165,8 +175,22 @@ class Fi1aBitrixValidationAdminComponent extends CBitrixComponent implements Con
         $service = new EntityService();
 
         return [
-            'ib' => $service->getListIB(),
-            'hl' => $service->getListHL(),
+            'ib' => $service->getListIB()->toArray(),
+            'hl' => $service->getListHL()->toArray(),
+        ];
+    }
+
+    /**
+     * Возвращает сущность
+     *
+     * @return string[]
+     */
+    public function getEntityAction(string $type, int $id): array
+    {
+        $service = new EntityService();
+
+        return [
+            'entity' => $service->getEntity($type, $id)->getArrayCopy(),
         ];
     }
 }

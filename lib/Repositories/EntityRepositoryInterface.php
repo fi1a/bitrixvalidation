@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\BitrixValidation\Repositories;
 
 use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
+use Fi1a\BitrixValidation\Domain\EntityInterface;
 
 /**
  *  Репозиторий сущностей
@@ -12,16 +13,14 @@ use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
 interface EntityRepositoryInterface
 {
     /**
-     * Возвращает список сущностей инфоблоков
+     * Возвращает список сущностей
      *
      * @param mixed[][] $parameters
      */
-    public function getListIB(array $parameters = []): EntityCollectionInterface;
+    public function getList(array $parameters = []): EntityCollectionInterface;
 
     /**
-     * Возвращает список сущностей Highload-блоков
-     *
-     * @param mixed[][] $parameters
+     * Возвращает сущность
      */
-    public function getListHL(array $parameters = []): EntityCollectionInterface;
+    public function getEntity(int $id): EntityInterface;
 }

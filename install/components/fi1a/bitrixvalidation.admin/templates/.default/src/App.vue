@@ -1,7 +1,7 @@
 <template>
   <div>
     <List v-if="!this.entity.id" @select="edit($event)"/>
-    <Edit v-else :entity="this.entity"/>
+    <Edit v-else :entityKey="this.entity" @cancel="cancelEdit()"/>
   </div>
 </template>
 
@@ -45,8 +45,19 @@ export default {
       urlParams.searchParams.append('id', select.id);
       urlParams.searchParams.append('type', select.type);
       history.pushState({id: this.entity.id, type: this.entity.type}, '', urlParams.toString())
-      this.$scrollTop();
+      this.$scrollTop(document.getElementById('app').offsetTop);
     },
+    cancelEdit() {
+      this.entity = {
+        id: null,
+        type: null,
+      };
+      let urlParams = new URL(document.URL);
+      urlParams.searchParams.delete('id');
+      urlParams.searchParams.delete('type');
+      history.pushState({id: null, type: null}, '', urlParams.toString())
+      this.$scrollTop(document.getElementById('app').offsetTop);
+    }
   }
 }
 </script>

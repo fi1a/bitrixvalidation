@@ -15,6 +15,6 @@ abstract class AbstractEntity extends ValueObject implements EntityInterface
      * @var string[]
      */
     protected $modelKeys = [
-        'entity_type', 'entity_type_name', 'id', 'name', 'type_name',
+        'entity_type', 'entity_type_name', 'id', 'name', 'type_name', 'fields',
     ];
 }

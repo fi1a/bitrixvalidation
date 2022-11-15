@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Fi1a\BitrixValidation\Services;
 
+use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
+use Fi1a\BitrixValidation\Domain\EntityInterface;
+
 /**
  * Интерфейс сервиса сущностей
  */
@@ -13,17 +16,18 @@ interface EntityServiceInterface
      * Возвращает список сущностей
      *
      * @param mixed[][] $parameters
-     *
-     * @return mixed[][]
      */
-    public function getListIB(array $parameters = []): array;
+    public function getListIB(array $parameters = []): EntityCollectionInterface;
 
     /**
      * Возвращает список сущностей
      *
      * @param mixed[][] $parameters
-     *
-     * @return mixed[][]
      */
-    public function getListHL(array $parameters = []): array;
+    public function getListHL(array $parameters = []): EntityCollectionInterface;
+
+    /**
+     * Возвращает сущность
+     */
+    public function getEntity(string $type, int $id): EntityInterface;
 }

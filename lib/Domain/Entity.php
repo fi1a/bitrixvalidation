@@ -17,4 +17,21 @@ class Entity extends ValueObject implements EntityInterface
     protected $modelKeys = [
         'entity_type', 'entity_type_name', 'id', 'name', 'type_name', 'fields',
     ];
+
+    /**
+     * @inheritDoc
+     */
+    public function toArray(): array
+    {
+        $array = parent::toArray();
+        if (isset($array['fields']) && count($array['fields'])) {
+            $fields = [];
+            foreach ($array['fields'] as $field) {
+                $fields[] = $field->toArray();
+            }
+            $array['fields'] = $fields;
+        }
+
+        return $array;
+    }
 }

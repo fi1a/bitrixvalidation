@@ -20,6 +20,19 @@ use Fi1a\BitrixValidation\Domain\EntityInterface;
 class HLEntityRepository extends AbstractEntityRepository
 {
     /**
+     * @var string[]
+     */
+    private $mapTypes = [
+        'string' => 'string',
+        'integer' => 'number',
+        'double' => 'number',
+        'address' => 'string',
+        'date' => 'date',
+        'datetime' => 'date',
+        'url' => 'string',
+    ];
+
+    /**
      * @inheritDoc
      */
     public function getList(array $parameters = [], ?EntitySelectInterface $select = null): EntityCollectionInterface
@@ -64,12 +77,16 @@ class HLEntityRepository extends AbstractEntityRepository
                     'LANG' => LANGUAGE_ID,
                 ]);
                 while ($field = $iterator->Fetch()) {
-                    $hl['FIELDS'][] = [
+                    if (!array_key_exists($field['USER_TYPE_ID'], $this->mapTypes)) {
+                        continue;
+                    }
+                    $hl['FIELDS'][] = $this->factoryField([
                         'id' => $field['FIELD_NAME'],
                         'name' => $field['EDIT_FORM_LABEL'] . ' (' . $field['FIELD_NAME'] . ')',
-                        'type' => $field['USER_TYPE_ID'],
+                        'type' => $this->mapType($field['USER_TYPE_ID']),
                         'internal_type' => 'field',
-                    ];
+                        'multiple' => $field['MULTIPLE'] === 'Y',
+                    ]);
                 }
             }
             $collection[] = $this->factoryEntity($hl);
@@ -95,5 +112,13 @@ class HLEntityRepository extends AbstractEntityRepository
         ];
 
         return new Entity($entity);
+    }
+
+    /**
+     * Типы
+     */
+    private function mapType(string $type): string
+    {
+        return $this->mapTypes[$type];
     }
 }

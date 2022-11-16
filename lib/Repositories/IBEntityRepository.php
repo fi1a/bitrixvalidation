@@ -25,6 +25,14 @@ class IBEntityRepository extends AbstractEntityRepository
     private $baseFields;
 
     /**
+     * @var string[]
+     */
+    private $mapTypes = [
+        'S' => 'string',
+        'N' => 'number',
+    ];
+
+    /**
      * @inheritDoc
      */
     public function __construct()
@@ -33,25 +41,25 @@ class IBEntityRepository extends AbstractEntityRepository
             [
                 'id' => 'NAME',
                 'name' => Loc::getMessage('FBV_FIELD_NAME'),
-                'type' => 'S',
+                'type' => 'string',
                 'internal_type' => 'field',
             ],
             [
                 'id' => 'CODE',
                 'name' => Loc::getMessage('FBV_FIELD_CODE'),
-                'type' => 'S',
+                'type' => 'string',
                 'internal_type' => 'field',
             ],
             [
                 'id' => 'PREVIEW_TEXT',
                 'name' => Loc::getMessage('FBV_FIELD_PREVIEW_TEXT'),
-                'type' => 'S',
+                'type' => 'string',
                 'internal_type' => 'field',
             ],
             [
                 'id' => 'DETAIL_TEXT',
                 'name' => Loc::getMessage('FBV_FIELD_DETAIL_TEXT'),
-                'type' => 'S',
+                'type' => 'string',
                 'internal_type' => 'field',
             ],
         ];
@@ -103,13 +111,14 @@ class IBEntityRepository extends AbstractEntityRepository
                 $ib['FIELDS'] = $this->baseFields;
                 foreach ($properties as $property) {
                     if ((int) $property['IBLOCK_ID'] === (int) $ib['ID']) {
-                        $ib['FIELDS'][] = [
+                        $ib['FIELDS'][] = $this->factoryField([
                             'id' => $property['ID'],
                             'name' => Loc::getMessage('FBV_PROPERTY') . ': '
                                 . $property['NAME'] . ' (' . $property['CODE'] . ')',
-                            'type' => $property['PROPERTY_TYPE'],
+                            'type' => $this->mapType($property['PROPERTY_TYPE']),
                             'internal_type' => 'property',
-                        ];
+                            'multiple' => $property['MULTIPLE'] === 'Y',
+                        ]);
                     }
                 }
             }
@@ -160,8 +169,9 @@ class IBEntityRepository extends AbstractEntityRepository
     private function getProperties(array $iblockIds): array
     {
         return PropertyTable::query()
-            ->setSelect(['ID', 'NAME', 'CODE', 'PROPERTY_TYPE', 'IBLOCK_ID'])
+            ->setSelect(['ID', 'NAME', 'CODE', 'PROPERTY_TYPE', 'IBLOCK_ID', 'MULTIPLE'])
             ->whereIn('IBLOCK_ID', $iblockIds)
+            ->whereNotIn('PROPERTY_TYPE', ['L', 'F', 'E', 'G',])
             ->exec()
             ->fetchAll();
     }
@@ -183,5 +193,13 @@ class IBEntityRepository extends AbstractEntityRepository
         ];
 
         return new Entity($entity);
+    }
+
+    /**
+     * Типы
+     */
+    private function mapType(string $type): string
+    {
+        return $this->mapTypes[$type];
     }
 }

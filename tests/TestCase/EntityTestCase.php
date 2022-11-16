@@ -79,12 +79,26 @@ class EntityTestCase extends ModuleTestCase
 
         $ibp = new CIBlockProperty();
         $propertyId = $ibp->Add([
-            'NAME' => 'Итог',
+            'NAME' => 'FBV Test 1',
             'ACTIVE' => 'Y',
             'SORT' => '600',
             'CODE' => 'FBV_TEST1',
             'PROPERTY_TYPE' => 'S',
             'USER_TYPE' => 'HTML',
+            'IBLOCK_ID' => static::$iblockId,
+        ]);
+
+        if (!$propertyId) {
+            throw new ErrorException('Не удалось добавить свойство инфоблока');
+        }
+
+        $propertyId = $ibp->Add([
+            'NAME' => 'FBV Test 2',
+            'ACTIVE' => 'Y',
+            'SORT' => '600',
+            'CODE' => 'FBV_TEST2',
+            'PROPERTY_TYPE' => 'E',
+            'USER_TYPE' => '',
             'IBLOCK_ID' => static::$iblockId,
         ]);
 
@@ -107,6 +121,30 @@ class EntityTestCase extends ModuleTestCase
             'ENTITY_ID' => 'HLBLOCK_' . static::$hlId,
             'FIELD_NAME' => 'UF_FBV_TEST1',
             'USER_TYPE_ID' => 'string',
+            'XML_ID' => '',
+            'SORT' => '500',
+            'MULTIPLE' => 'N',
+            'MANDATORY' => 'Y',
+            'SETTINGS' => [
+                'DEFAULT_VALUE' => '',
+                'SIZE' => '20',
+                'ROWS' => '1',
+                'MIN_LENGTH' => '0',
+                'MAX_LENGTH' => '0',
+                'REGEXP' => '',
+            ],
+            'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
+            'ERROR_MESSAGE' => null,
+            'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
+        ]);
+        if (!$userTypeId) {
+            throw new ErrorException('Не удалось добавить пользовательское поле');
+        }
+
+        $userTypeId = $userTypeEntity->Add([
+            'ENTITY_ID' => 'HLBLOCK_' . static::$hlId,
+            'FIELD_NAME' => 'UF_FBV_TEST2',
+            'USER_TYPE_ID' => 'enumeration',
             'XML_ID' => '',
             'SORT' => '500',
             'MULTIPLE' => 'N',

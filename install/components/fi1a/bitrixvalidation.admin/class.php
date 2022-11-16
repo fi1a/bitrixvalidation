@@ -190,7 +190,7 @@ class Fi1aBitrixValidationAdminComponent extends CBitrixComponent implements Con
         $service = new EntityService();
 
         return [
-            'entity' => $service->getEntity($type, $id)->getArrayCopy(),
+            'entity' => $service->getEntity($type, $id)->toArray(),
         ];
     }
 }

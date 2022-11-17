@@ -109,6 +109,7 @@ class HLEntityRepository extends AbstractEntityRepository
             'name' => $hl['NAME'],
             'type_name' => null,
             'fields' => $hl['FIELDS'],
+            'groups' => [],
         ];
 
         return new Entity($entity);

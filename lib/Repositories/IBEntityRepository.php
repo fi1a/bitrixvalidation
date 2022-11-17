@@ -43,24 +43,28 @@ class IBEntityRepository extends AbstractEntityRepository
                 'name' => Loc::getMessage('FBV_FIELD_NAME'),
                 'type' => 'string',
                 'internal_type' => 'field',
+                'multiple' => false,
             ],
             [
                 'id' => 'CODE',
                 'name' => Loc::getMessage('FBV_FIELD_CODE'),
                 'type' => 'string',
                 'internal_type' => 'field',
+                'multiple' => false,
             ],
             [
                 'id' => 'PREVIEW_TEXT',
                 'name' => Loc::getMessage('FBV_FIELD_PREVIEW_TEXT'),
                 'type' => 'string',
                 'internal_type' => 'field',
+                'multiple' => false,
             ],
             [
                 'id' => 'DETAIL_TEXT',
                 'name' => Loc::getMessage('FBV_FIELD_DETAIL_TEXT'),
                 'type' => 'string',
                 'internal_type' => 'field',
+                'multiple' => false,
             ],
         ];
     }
@@ -108,7 +112,10 @@ class IBEntityRepository extends AbstractEntityRepository
             }
             $ib['FIELDS'] = null;
             if ($select->isSelectFields()) {
-                $ib['FIELDS'] = $this->baseFields;
+                $ib['FIELDS'] = [];
+                foreach ($this->baseFields as $field) {
+                    $ib['FIELDS'][] = $this->factoryField($field);
+                }
                 foreach ($properties as $property) {
                     if ((int) $property['IBLOCK_ID'] === (int) $ib['ID']) {
                         $ib['FIELDS'][] = $this->factoryField([
@@ -190,6 +197,7 @@ class IBEntityRepository extends AbstractEntityRepository
             'name' => $ib['NAME'],
             'type_name' => $ib['IBLOCK_TYPE_NAME'],
             'fields' => $ib['FIELDS'],
+            'groups' => [],
         ];
 
         return new Entity($entity);

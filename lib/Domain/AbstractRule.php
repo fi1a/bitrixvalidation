@@ -44,7 +44,7 @@ abstract class AbstractRule extends ValueObject implements RuleInterface
      */
     public function setSort(int $sort): void
     {
-        if (!$sort) {
+        if ($sort < 0) {
             throw new InvalidArgumentException('sort не может быть пустым');
         }
 

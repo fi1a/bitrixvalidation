@@ -7,6 +7,8 @@ namespace Fi1a\Unit\BitrixValidation\Repositories;
 use ErrorException;
 use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
 use Fi1a\BitrixValidation\Domain\EntityInterface;
+use Fi1a\BitrixValidation\Domain\FieldCollectionInterface;
+use Fi1a\BitrixValidation\Domain\GroupCollectionInterface;
 use Fi1a\BitrixValidation\Repositories\EntitySelect;
 use Fi1a\BitrixValidation\Repositories\HLEntityRepository;
 use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
@@ -39,12 +41,14 @@ class HLEntityRepositoryTest extends EntityTestCase
      */
     public function testGetEntity(): void
     {
-        $select = new EntitySelect(true);
+        $select = new EntitySelect(true, true);
         $repository = new HLEntityRepository();
-        $this->assertInstanceOf(
-            EntityInterface::class,
-            $repository->getEntity(static::$hlId, $select)
-        );
+        $entity = $repository->getEntity(static::$hlId, $select);
+        $this->assertInstanceOf(EntityInterface::class, $entity);
+        $this->assertInstanceOf(FieldCollectionInterface::class, $entity->getFields());
+        $this->assertCount(1, $entity->getFields());
+        $this->assertInstanceOf(GroupCollectionInterface::class, $entity->getGroups());
+        $this->assertCount(1, $entity->getGroups());
     }
 
     /**

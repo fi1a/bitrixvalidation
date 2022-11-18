@@ -4,21 +4,23 @@ declare(strict_types=1);
 
 namespace Fi1a\Unit\BitrixValidation\Domain;
 
-use Fi1a\BitrixValidation\Domain\Field;
+use Fi1a\BitrixValidation\Domain\Group;
+use Fi1a\BitrixValidation\Domain\MinRule;
+use Fi1a\BitrixValidation\Domain\RuleCollection;
 use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
 use InvalidArgumentException;
 
 /**
- * Тестирование поля
+ * Тестирование группы
  */
-class FieldTest extends ModuleTestCase
+class GroupTest extends ModuleTestCase
 {
     /**
      * Поле
      */
     public function testField(): void
     {
-        $field = new Field([
+        $field = new Group([
             'id' => 1,
             'name' => 'Field 1',
             'type' => 'string',
@@ -38,7 +40,7 @@ class FieldTest extends ModuleTestCase
     public function testIdException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new Field([
+        new Group([
             'id' => null,
             'name' => 'Field 1',
             'type' => 'string',
@@ -53,7 +55,7 @@ class FieldTest extends ModuleTestCase
     public function testNameException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new Field([
+        new Group([
             'id' => 1,
             'name' => '',
             'type' => 'string',
@@ -68,7 +70,7 @@ class FieldTest extends ModuleTestCase
     public function testTypeException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new Field([
+        new Group([
             'id' => 1,
             'name' => 'Field 1',
             'type' => '',
@@ -83,7 +85,7 @@ class FieldTest extends ModuleTestCase
     public function testUnknownTypeException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new Field([
+        new Group([
             'id' => 1,
             'name' => 'Field 1',
             'type' => 'unknown',
@@ -98,7 +100,7 @@ class FieldTest extends ModuleTestCase
     public function testInternalTypeException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new Field([
+        new Group([
             'id' => 1,
             'name' => 'Field 1',
             'type' => 'string',
@@ -113,12 +115,57 @@ class FieldTest extends ModuleTestCase
     public function testUnknownInternalTypeException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new Field([
+        new Group([
             'id' => 1,
             'name' => 'Field 1',
             'type' => 'string',
             'internal_type' => 'unknown',
             'multiple' => false,
         ]);
+    }
+
+    /**
+     * Преобразование в массив
+     */
+    public function testToArray(): void
+    {
+        $fields = [
+            'id' => 1,
+            'name' => 'Field 1',
+            'type' => 'string',
+            'internal_type' => 'field',
+            'multiple' => false,
+            'rules' => new RuleCollection([new MinRule([
+                'key' => 'min',
+                'options' => [],
+                'sort' => 500,
+                'id' => 1,
+                'field_id' => '1',
+                'entity_type' => 'ib',
+                'entity_id' => 1,
+            ]),
+            ]),
+        ];
+        $equals = [
+            'id' => 1,
+            'name' => 'Field 1',
+            'type' => 'string',
+            'internal_type' => 'field',
+            'multiple' => false,
+            'rules' => [
+                [
+                    'key' => 'min',
+                    'options' => [],
+                    'sort' => 500,
+                    'id' => 1,
+                    'field_id' => '1',
+                    'entity_type' => 'ib',
+                    'entity_id' => 1,
+                ],
+            ],
+        ];
+        $group = new Group($fields);
+        $this->assertIsArray($group->toArray());
+        $this->assertEquals($equals, $group->toArray());
     }
 }

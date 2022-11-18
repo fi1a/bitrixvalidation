@@ -6,6 +6,7 @@ namespace Fi1a\Unit\BitrixValidation\Domain;
 
 use Fi1a\BitrixValidation\Domain\Entity;
 use Fi1a\BitrixValidation\Domain\Field;
+use Fi1a\BitrixValidation\Domain\Group;
 use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
 
 /**
@@ -36,7 +37,15 @@ class EntityTest extends ModuleTestCase
             'internal_type' => 'field',
             'multiple' => false,
         ]);
-        $entity = new Entity(['id' => 1, 'fields' => [$field],]);
+        $group = new Group([
+            'id' => 1,
+            'name' => 'Field 1',
+            'type' => 'string',
+            'internal_type' => 'field',
+            'multiple' => false,
+            'rules' => [],
+        ]);
+        $entity = new Entity(['id' => 1, 'fields' => [$field], 'groups' => [$group]]);
         $this->assertIsArray($entity->toArray());
     }
 }

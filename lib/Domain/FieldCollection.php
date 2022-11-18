@@ -7,16 +7,16 @@ namespace Fi1a\BitrixValidation\Domain;
 use Fi1a\Collection\Collection;
 
 /**
- * Коллекция правил
+ * Коллекция полей
  */
-class RuleCollection extends Collection implements RuleCollectionInterface
+class FieldCollection extends Collection implements FieldCollectionInterface
 {
     /**
      * @inheritDoc
      */
     public function __construct(?array $data = null)
     {
-        parent::__construct(RuleInterface::class, $data);
+        parent::__construct(Field::class, $data);
     }
 
     /**
@@ -25,9 +25,9 @@ class RuleCollection extends Collection implements RuleCollectionInterface
     public function toArray(): array
     {
         $array = [];
-        foreach ($this->getArrayCopy() as $rule) {
-            assert($rule instanceof RuleInterface);
-            $array[] = $rule->toArray();
+        foreach ($this->getArrayCopy() as $field) {
+            assert($field instanceof FieldInterface);
+            $array[] = $field->toArray();
         }
 
         return $array;

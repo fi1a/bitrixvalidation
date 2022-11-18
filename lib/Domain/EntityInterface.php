@@ -15,6 +15,14 @@ use Fi1a\Collection\DataType\IValueObject;
  * @property string $name
  * @property string $typeName
  * @property string[][] $fields
+ * @property string[][] $groups
+ * @method string getEntityType()
+ * @method string getEntityTypeName()
+ * @method int getId()
+ * @method string getName()
+ * @method string getTypeName()
+ * @method array getFields()
+ * @method array getGroups()
  */
 interface EntityInterface extends IValueObject
 {

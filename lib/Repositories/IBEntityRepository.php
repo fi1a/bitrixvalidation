@@ -13,6 +13,8 @@ use Fi1a\BitrixValidation\Domain\Entity;
 use Fi1a\BitrixValidation\Domain\EntityCollection;
 use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
 use Fi1a\BitrixValidation\Domain\EntityInterface;
+use Fi1a\BitrixValidation\Domain\FieldCollection;
+use Fi1a\BitrixValidation\Domain\GroupCollection;
 
 /**
  *  Репозиторий сущностей
@@ -110,7 +112,7 @@ class IBEntityRepository extends AbstractEntityRepository
             if (isset($typeLanguages[$ib['IBLOCK_TYPE_ID']])) {
                 $ib['IBLOCK_TYPE_NAME'] = $typeLanguages[$ib['IBLOCK_TYPE_ID']]['NAME'];
             }
-            $ib['FIELDS'] = [];
+            $ib['FIELDS'] = new FieldCollection();
             if ($select->isSelectFields()) {
                 foreach ($this->baseFields as $field) {
                     $ib['FIELDS'][] = $this->factoryField($field);
@@ -128,7 +130,7 @@ class IBEntityRepository extends AbstractEntityRepository
                     }
                 }
             }
-            $ib['GROUPS'] = [];
+            $ib['GROUPS'] = new GroupCollection();
             if ($select->isSelectGroups() && $select->isSelectFields()) {
                 $ib['GROUPS'] = $this->getGroups('ib', (int) $ib['ID'], $ib['FIELDS']);
             }

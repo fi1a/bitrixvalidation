@@ -7,6 +7,8 @@ namespace Fi1a\Unit\BitrixValidation\Repositories;
 use ErrorException;
 use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
 use Fi1a\BitrixValidation\Domain\EntityInterface;
+use Fi1a\BitrixValidation\Domain\FieldCollectionInterface;
+use Fi1a\BitrixValidation\Domain\GroupCollectionInterface;
 use Fi1a\BitrixValidation\Repositories\EntitySelect;
 use Fi1a\BitrixValidation\Repositories\IBEntityRepository;
 use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
@@ -39,12 +41,14 @@ class IBEntityRepositoryTest extends EntityTestCase
      */
     public function testGetEntity(): void
     {
-        $select = new EntitySelect(true);
+        $select = new EntitySelect(true, true);
         $repository = new IBEntityRepository();
-        $this->assertInstanceOf(
-            EntityInterface::class,
-            $repository->getEntity(static::$iblockId, $select)
-        );
+        $entity = $repository->getEntity(static::$iblockId, $select);
+        $this->assertInstanceOf(EntityInterface::class, $entity);
+        $this->assertInstanceOf(FieldCollectionInterface::class, $entity->getFields());
+        $this->assertCount(5, $entity->getFields());
+        $this->assertInstanceOf(GroupCollectionInterface::class, $entity->getGroups());
+        $this->assertCount(1, $entity->getGroups());
     }
 
     /**

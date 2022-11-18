@@ -24,7 +24,7 @@ interface RuleInterface extends IValueObject
     public function setId(?int $id): void;
 
     /**
-     * Ключ правил
+     * Ключ правила
      */
     public function setKey(string $key): void;
 

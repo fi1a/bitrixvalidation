@@ -13,6 +13,8 @@ use Fi1a\BitrixValidation\Domain\Entity;
 use Fi1a\BitrixValidation\Domain\EntityCollection;
 use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
 use Fi1a\BitrixValidation\Domain\EntityInterface;
+use Fi1a\BitrixValidation\Domain\FieldCollection;
+use Fi1a\BitrixValidation\Domain\GroupCollection;
 
 /**
  *  Репозиторий сущностей
@@ -70,7 +72,7 @@ class HLEntityRepository extends AbstractEntityRepository
             if (isset($languages[$hl['ID']]) && $languages[$hl['ID']]['NAME']) {
                 $hl['NAME'] = $languages[$hl['ID']]['NAME'];
             }
-            $hl['FIELDS'] = [];
+            $hl['FIELDS'] = new FieldCollection();
             if ($select->isSelectFields()) {
                 $iterator = CUserTypeEntity::GetList([], [
                     'ENTITY_ID' => 'HLBLOCK_' . $hl['ID'],
@@ -81,7 +83,7 @@ class HLEntityRepository extends AbstractEntityRepository
                         continue;
                     }
                     $hl['FIELDS'][] = $this->factoryField([
-                        'id' => $field['FIELD_NAME'],
+                        'id' => $field['ID'],
                         'name' => $field['EDIT_FORM_LABEL'] . ' (' . $field['FIELD_NAME'] . ')',
                         'type' => $this->mapType($field['USER_TYPE_ID']),
                         'internal_type' => 'field',
@@ -89,7 +91,7 @@ class HLEntityRepository extends AbstractEntityRepository
                     ]);
                 }
             }
-            $hl['GROUPS'] = [];
+            $hl['GROUPS'] = new GroupCollection();
             if ($select->isSelectGroups() && $select->isSelectFields()) {
                 $hl['GROUPS'] = $this->getGroups('hl', (int) $hl['ID'], $hl['FIELDS']);
             }
@@ -113,7 +115,7 @@ class HLEntityRepository extends AbstractEntityRepository
             'name' => $hl['NAME'],
             'type_name' => null,
             'fields' => $hl['FIELDS'],
-            'groups' => [],
+            'groups' => $hl['GROUPS'],
         ];
 
         return new Entity($entity);

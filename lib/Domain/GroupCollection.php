@@ -26,8 +26,8 @@ class GroupCollection extends Collection implements GroupCollectionInterface
     {
         $array = [];
         foreach ($this->getArrayCopy() as $group) {
-            assert($group instanceof Group);
-            $array[] = $group->getArrayCopy();
+            assert($group instanceof GroupInterface);
+            $array[] = $group->toArray();
         }
 
         return $array;

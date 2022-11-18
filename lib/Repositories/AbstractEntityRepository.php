@@ -7,6 +7,7 @@ namespace Fi1a\BitrixValidation\Repositories;
 use ErrorException;
 use Fi1a\BitrixValidation\Domain\EntityInterface;
 use Fi1a\BitrixValidation\Domain\Field;
+use Fi1a\BitrixValidation\Domain\FieldCollectionInterface;
 use Fi1a\BitrixValidation\Domain\FieldInterface;
 use Fi1a\BitrixValidation\Domain\Group;
 use Fi1a\BitrixValidation\Domain\GroupCollection;
@@ -49,8 +50,11 @@ abstract class AbstractEntityRepository implements EntityRepositoryInterface
      *
      * @param mixed[][] $fields
      */
-    protected function getGroups(string $entityType, int $entityId, array $fields): GroupCollectionInterface
-    {
+    protected function getGroups(
+        string $entityType,
+        int $entityId,
+        FieldCollectionInterface $fields
+    ): GroupCollectionInterface {
         $collection = new GroupCollection();
 
         $repository = new RuleRepository();
@@ -70,6 +74,9 @@ abstract class AbstractEntityRepository implements EntityRepositoryInterface
                         $collection[$field->id]['rules'] = new RuleCollection();
                     }
                 }
+            }
+            if (!$collection->has($rule->getFieldId())) {
+                continue;
             }
             $collection[$rule->getFieldId()]['rules'][] = $rule;
         }

@@ -40,6 +40,10 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Domain\RuleCollectionInterface' => 'lib/Domain/RuleCollectionInterface.php',
         '\Fi1a\BitrixValidation\Domain\RuleCollection' => 'lib/Domain/RuleCollection.php',
         '\Fi1a\BitrixValidation\Domain\RuleInterface' => 'lib/Domain/RuleInterface.php',
+        '\Fi1a\BitrixValidation\Domain\FieldInterface' => 'lib/Domain/FieldInterface.php',
+        '\Fi1a\BitrixValidation\Domain\Field' => 'lib/Domain/Field.php',
+        '\Fi1a\BitrixValidation\Domain\FieldCollectionInterface' => 'lib/Domain/FieldCollectionInterface.php',
+        '\Fi1a\BitrixValidation\Domain\FieldCollection' => 'lib/Domain/FieldCollection.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',

@@ -2,9 +2,11 @@
 
 use Bitrix\Main\Application;
 use Bitrix\Main\Config\Option;
+use Bitrix\Main\DB\Connection;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ModuleManager;
+use Fi1a\BitrixValidation\ORM\RuleTable;
 
 Loc::loadMessages(__FILE__);
 
@@ -153,6 +155,7 @@ class fi1a_bitrixvalidation extends CModule
             ModuleManager::registerModule($this->MODULE_ID);
             Loader::includeModule($this->MODULE_ID);
 
+            $this->createRuleTable($connection);
             $this->setSettings();
 
             $connection->commitTransaction();
@@ -166,6 +169,33 @@ class fi1a_bitrixvalidation extends CModule
         }
 
         return true;
+    }
+
+    /**
+     * Создать таблицу с правилами
+     */
+    private function createRuleTable(Connection $connection): void
+    {
+        $tableName = RuleTable::getTableName();
+        if (!$connection->isTableExists($tableName)) {
+            $connection->createTable(
+                $tableName,
+                RuleTable::getMap(),
+                ['ID'],
+                ['ID']
+            );
+        }
+    }
+
+    /**
+     * Удаляем таблицу с правилами
+     */
+    private function dropRuleTable(Connection $connection)
+    {
+        $tableName = RuleTable::getTableName();
+        if ($connection->isTableExists($tableName)) {
+            $connection->dropTable($tableName);
+        }
     }
 
     /**
@@ -246,6 +276,7 @@ class fi1a_bitrixvalidation extends CModule
 
             $connection->startTransaction();
 
+            $this->dropRuleTable($connection);
             $this->deleteSettings();
 
             ModuleManager::unRegisterModule($this->MODULE_ID);

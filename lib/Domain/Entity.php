@@ -27,9 +27,18 @@ class Entity extends ValueObject implements EntityInterface
         if (isset($array['fields']) && count($array['fields'])) {
             $fields = [];
             foreach ($array['fields'] as $field) {
+                assert($field instanceof FieldInterface);
                 $fields[] = $field->toArray();
             }
             $array['fields'] = $fields;
+        }
+        if (isset($array['groups']) && count($array['groups'])) {
+            $groups = [];
+            foreach ($array['groups'] as $group) {
+                assert($group instanceof GroupInterface);
+                $groups[] = $group->toArray();
+            }
+            $array['groups'] = $groups;
         }
 
         return $array;

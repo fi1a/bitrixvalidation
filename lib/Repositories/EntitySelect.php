@@ -14,9 +14,18 @@ class EntitySelect implements EntitySelectInterface
      */
     private $selectFields;
 
-    public function __construct(bool $selectFields = false)
+    /**
+     * @var bool
+     */
+    private $selectGroups;
+
+    /**
+     * Конструктор
+     */
+    public function __construct(bool $selectFields = false, bool $selectGroups = false)
     {
         $this->selectFields = $selectFields;
+        $this->selectGroups = $selectGroups;
     }
 
     /**
@@ -25,5 +34,13 @@ class EntitySelect implements EntitySelectInterface
     public function isSelectFields(): bool
     {
         return $this->selectFields;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isSelectGroups(): bool
+    {
+        return $this->selectGroups;
     }
 }

@@ -1,66 +1,141 @@
 <template>
-  <tr>
-    <td class="rule-cell">
-      <select v-model="rule.key" class="rule-select">
-        <option v-for="item in rulesByType" :value="item.key">{{item.title}}</option>
-      </select>
-    </td>
-    <td class="rule-cell">
-      <RuleMin v-if="rule.key === 'min'" :options="rule.options" @updateOptions="updateOptions($event)"/>
-    </td>
-    <td>
-      <input v-on:click.prevent="$emit('delete')" type="button" title="Удалить" value="Удалить">
-    </td>
+  <tr :key="rule.id">
+      <td class="rule-cell">
+        <select v-model="v$.rule.key.$model" class="rule-select">
+          <option :value="null">{{$t('edit.selectRule')}}</option>
+          <option v-if="rule.key" :value="rule.key">{{getCurrentRule.title}}</option>
+          <option v-for="item in rulesByTypeAndFilterSelected" :value="item.key">{{item.title}}</option>
+        </select>
+        <p v-if="v$.rule.key.$invalid && v$.rule.key.$dirty" class="error">
+          {{$t('errors.required')}}
+        </p>
+      </td>
+      <td class="rule-cell">
+        <RuleMin v-if="rule.key === 'min'" :options="rule.options" @updateOptions="updateOptions($event)"/>
+        <RuleMax v-if="rule.key === 'max'" :options="rule.options" @updateOptions="updateOptions($event)"/>
+      </td>
+      <td class="rule-cell">
+        <input type="text" v-model="v$.rule.sort.$model" class="rule-sort">
+        <p v-if="v$.rule.sort.$invalid" class="error">
+          <template v-if="v$.rule.sort.integer.$invalid">
+            {{$t('errors.integer')}}
+          </template>
+          <template v-else-if="v$.rule.sort.required.$invalid">
+            {{$t('errors.required')}}
+          </template>
+          <template v-else-if="v$.rule.sort.minValue.$invalid">
+            {{$t('errors.minValue', {minValue: 0})}}
+          </template>
+        </p>
+      </td>
+      <td>
+        <input v-on:click.prevent="$emit('delete')" type="button" title="Удалить" value="Удалить">
+      </td>
   </tr>
 </template>
 
 <script>
 
+import { useVuelidate } from '@vuelidate/core'
+import { required, integer, minValue } from '@vuelidate/validators'
 import RuleMin from "./RuleMin.vue";
+import RuleMax from "./RuleMax.vue";
 
 export default {
   name: "Rule",
 
-  props: {
-    rule: Object,
-    group: Object
+  setup () {
+    return {
+      v$: useVuelidate()
+    }
   },
 
-  components: {RuleMin},
+  props: {
+    rule: Object,
+    group: Object,
+    rules: Array,
+  },
+
+  components: {RuleMin, RuleMax},
+
+  emits: ['delete'],
 
   computed: {
-    rulesByType() {
-      let rules = [
-        {
-          key: null,
-          title: this.$t('edit.selectRule')
-        }
-      ];
+    rulesByTypeAndFilterSelected() {
+      let rules = [];
+      let existing = [];
+      this.group.rules.forEach((rule) => {
+        existing.push(rule.key)
+      })
       this.rules.forEach((rule) => {
-        if (rule.type === this.group.type) {
+        if (rule.type === this.group.type && existing.indexOf(rule.key) === -1) {
           rules.push(rule);
         }
       });
 
+      rules.sort((a, b) => {
+        return a.title < b.title ? -1 : a.title > b.title
+      })
+
       return rules;
+    },
+    getCurrentRule() {
+      if (!this.rule.key) {
+        return null;
+      }
+      let item = null;
+      this.rules.forEach((rule) => {
+        if (this.rule.key === rule.key) {
+          item = rule;
+        }
+      });
+
+      return item;
     }
   },
 
-  data() {
+  validations () {
     return {
-      rules: [
-        {
-          title: this.$t('rules.min'),
-          key: 'min',
-          type: 'number'
+      rule: {
+        key: {
+          required
+        },
+        sort: {
+          required, integer, minValue: minValue(0)
         }
-      ],
+      }
     }
   },
 
   methods: {
     updateOptions(options) {
       this.rule.options = Object.assign({}, this.rule.options, options);
+    }
+  },
+
+  watch: {
+    rule: {
+      handler() {
+        const editComponent = this.$parent.$parent;
+
+        if (typeof editComponent.$data.validation[this.group.id] === "undefined") {
+          editComponent.$data.validation[this.group.id] = {};
+        }
+        console.log(this.v$.$invalid)
+        editComponent.$data.validation[this.group.id]['rule'] = this.v$.$invalid;
+      },
+      deep: true
+    }
+  },
+
+  beforeUnmount() {
+    const editComponent = this.$parent.$parent;
+
+    if (
+        typeof editComponent.$data.validation[this.group.id] !== "undefined"
+        && typeof editComponent.$data.validation[this.group.id]['rule'] !== "undefined"
+    ) {
+      editComponent.$data.validation[this.group.id]['rule'] = false;
     }
   }
 }
@@ -74,5 +149,10 @@ export default {
 
 .rule-cell {
   vertical-align: top;
+}
+
+.adm-workarea .rule-sort {
+  width: 50px;
+  margin-top: 18px !important;
 }
 </style>

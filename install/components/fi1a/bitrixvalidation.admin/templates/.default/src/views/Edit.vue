@@ -4,6 +4,27 @@
       <div class="adm-detail-content-wrap">
         <div class="adm-detail-content">
           <div class="adm-detail-title">{{entity.entity_type_name}}: <template v-if="entity.type_name">{{entity.type_name}} / </template>{{entity.name}}</div>
+
+          <div v-if="errors.length" class="adm-info-message-wrap adm-info-message-red">
+            <div class="adm-info-message">
+              <div class="adm-info-message-title">Ошибка</div>
+              <template v-for="error in errors">
+                {{error.message}}<br>
+              </template>
+              <br>
+              <div class="adm-info-message-icon"></div>
+            </div>
+          </div>
+          <div v-if="success.length" class="adm-info-message-wrap adm-info-message-green">
+            <div class="adm-info-message">
+              <div class="adm-info-message-title">Успешно</div>
+              <template v-for="item in success">
+                {{item.message}}<br>
+              </template>
+              <br>
+              <div class="adm-info-message-icon"></div>
+            </div>
+          </div>
           <div class="adm-detail-content-item-block">
             <div class="add-field">
               <select v-model="fieldId">
@@ -14,14 +35,15 @@
             </div>
             <hr>
             <div class="groups">
-              <Group v-for="(group, index) in entity.groups" :group="group" @delete="deleteGroup(index)" />
+              <Group :key="group.id" v-for="(group, index) in entity.groups" :group="group" :entity="entity" @delete="deleteGroup(index)" />
+              <div class="empty-groups" v-if="!entity.groups.length">{{$t('edit.emptyGroups')}}</div>
             </div>
           </div>
         </div>
         <div class="adm-detail-content-btns-wrap">
           <div class="adm-detail-content-btns">
-            <input type="submit" :value="$t('edit.save')" :title="$t('edit.saveTitle')" class="adm-btn-save">
-            <input type="submit" :value="$t('edit.apply')" :title="$t('edit.applyTitle')">
+            <input :disabled="isDisabled" v-on:click.prevent="save()" type="submit" :value="$t('edit.save')" :title="$t('edit.saveTitle')" class="adm-btn-save">
+            <input :disabled="isDisabled" v-on:click.prevent="apply()" type="submit" :value="$t('edit.apply')" :title="$t('edit.applyTitle')">
             <input v-on:click.prevent="$emit('cancel')" type="button" :value="$t('edit.cancel')" :title="$t('edit.cancelTitle')">
           </div>
         </div>
@@ -47,11 +69,16 @@ export default {
 
   components: {Spinner, Group},
 
+  emits: ['cancel'],
+
   data() {
     return {
       loading: true,
       entity: null,
-      fieldId: null
+      fieldId: null,
+      errors: [],
+      success: [],
+      validation: {}
     };
   },
 
@@ -69,6 +96,18 @@ export default {
       })
 
       return fields;
+    },
+    isDisabled() {
+      let disabled = false;
+      Object.values(this.validation).forEach((group) => {
+        Object.values(group).forEach((error) => {
+          if (error) {
+            disabled = true;
+          }
+        })
+      });
+
+      return disabled;
     }
   },
 
@@ -76,10 +115,23 @@ export default {
     this.load();
   },
 
+  watch: {
+    entity: {
+      handler(newValue) {
+        this.errors = [];
+        this.success = [];
+      },
+      deep: true,
+    }
+  },
+
   methods: {
     load() {
       api.getEntity(this.entityKey).then((response) => {
-        this.entity = response.data.entity;
+        let entity = response.data.entity;
+        entity.groups = Object.values(entity.groups);
+        entity.fields = Object.values(entity.fields);
+        this.entity = Object.assign({}, entity);
         this.loading = false;
       })
     },
@@ -98,6 +150,11 @@ export default {
                 {
                   key: null,
                   options: {},
+                  sort: 500,
+                  id: null,
+                  field_id: field.id,
+                  entity_type: this.entity.entity_type,
+                  entity_id: this.entity.id,
                 }
               ]
             },
@@ -108,6 +165,38 @@ export default {
     },
     deleteGroup(index) {
       this.entity.groups.splice(index, 1);
+    },
+    save() {
+      this.errors = [];
+      this.success = [];
+      this.submit().then(() => {
+        this.$emit('cancel');
+      });
+    },
+    apply() {
+      this.errors = [];
+      this.success = [];
+      this.submit().then(() => {
+        this.success.push({message: "Правила успешно сохранены"})
+      });
+    },
+    submit() {
+      let rules = [];
+      this.loading = true;
+      this.entity.groups.forEach((group) => {
+        group.rules.forEach((rule) => {
+          if (rule.key) {
+            rules.push(rule);
+          }
+        });
+      })
+
+      return api.submit(this.entity.entity_type, this.entity.id, rules).catch((response) => {
+        this.errors = response.errors;
+        this.loading = false;
+      }).then(() => {
+        this.loading = false;
+      });
     }
   }
 }
@@ -128,5 +217,10 @@ export default {
 
 .adm-workarea .add-field .adm-btn-save {
   margin-left: 20px;
+}
+
+.groups .empty-groups {
+  font-style: italic;
+  margin-bottom: 20px;
 }
 </style>

@@ -30,6 +30,16 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Domain\EntityCollectionInterface' => 'lib/Domain/EntityCollectionInterface.php',
         '\Fi1a\BitrixValidation\Domain\Entity' => 'lib/Domain/Entity.php',
         '\Fi1a\BitrixValidation\Domain\EntityCollection' => 'lib/Domain/EntityCollection.php',
+        '\Fi1a\BitrixValidation\Domain\GroupInterface' => 'lib/Domain/GroupInterface.php',
+        '\Fi1a\BitrixValidation\Domain\Group' => 'lib/Domain/Group.php',
+        '\Fi1a\BitrixValidation\Domain\GroupCollectionInterface' => 'lib/Domain/GroupCollectionInterface.php',
+        '\Fi1a\BitrixValidation\Domain\GroupCollection' => 'lib/Domain/GroupCollection.php',
+        '\Fi1a\BitrixValidation\Domain\AbstractRule' => 'lib/Domain/AbstractRule.php',
+        '\Fi1a\BitrixValidation\Domain\MaxRule' => 'lib/Domain/MaxRule.php',
+        '\Fi1a\BitrixValidation\Domain\MinRule' => 'lib/Domain/MinRule.php',
+        '\Fi1a\BitrixValidation\Domain\RuleCollectionInterface' => 'lib/Domain/RuleCollectionInterface.php',
+        '\Fi1a\BitrixValidation\Domain\RuleCollection' => 'lib/Domain/RuleCollection.php',
+        '\Fi1a\BitrixValidation\Domain\RuleInterface' => 'lib/Domain/RuleInterface.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -38,10 +48,16 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Repositories\IBEntityRepository' => 'lib/Repositories/IBEntityRepository.php',
         '\Fi1a\BitrixValidation\Repositories\EntitySelectInterface' => 'lib/Repositories/EntitySelectInterface.php',
         '\Fi1a\BitrixValidation\Repositories\EntitySelect' => 'lib/Repositories/EntitySelect.php',
+        '\Fi1a\BitrixValidation\Repositories\RuleRepositoryInterface' => 'lib/Repositories/RuleRepositoryInterface.php',
+        '\Fi1a\BitrixValidation\Repositories\RuleRepository' => 'lib/Repositories/RuleRepository.php',
 
         // Сервисы
         '\Fi1a\BitrixValidation\Services\EntityServiceInterface' => 'lib/Services/EntityServiceInterface.php',
         '\Fi1a\BitrixValidation\Services\EntityService' => 'lib/Services/EntityService.php',
+
+        // ORM
+        '\Fi1a\BitrixValidation\ORM\Rule' => 'lib/ORM/Rule.php',
+        '\Fi1a\BitrixValidation\ORM\RuleTable' => 'lib/ORM/RuleTable.php',
     ]
 );
 

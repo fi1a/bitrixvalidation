@@ -13,4 +13,9 @@ interface EntitySelectInterface
      * Выбирать поля или нет
      */
     public function isSelectFields(): bool;
+
+    /**
+     * Выбирать правила или нет
+     */
+    public function isSelectGroups(): bool;
 }

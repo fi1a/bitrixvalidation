@@ -7,16 +7,16 @@ namespace Fi1a\BitrixValidation\Domain;
 use Fi1a\Collection\Collection;
 
 /**
- * Коллекция
+ * Коллекция групп правил
  */
-class EntityCollection extends Collection implements EntityCollectionInterface
+class GroupCollection extends Collection implements GroupCollectionInterface
 {
     /**
      * @inheritDoc
      */
     public function __construct(?array $data = null)
     {
-        parent::__construct(EntityInterface::class, $data);
+        parent::__construct(Group::class, $data);
     }
 
     /**
@@ -25,9 +25,9 @@ class EntityCollection extends Collection implements EntityCollectionInterface
     public function toArray(): array
     {
         $array = [];
-        foreach ($this->getArrayCopy() as $entity) {
-            assert($entity instanceof Entity);
-            $array[] = $entity->getArrayCopy();
+        foreach ($this->getArrayCopy() as $group) {
+            assert($group instanceof Group);
+            $array[] = $group->getArrayCopy();
         }
 
         return $array;

@@ -70,7 +70,7 @@ class HLEntityRepository extends AbstractEntityRepository
             if (isset($languages[$hl['ID']]) && $languages[$hl['ID']]['NAME']) {
                 $hl['NAME'] = $languages[$hl['ID']]['NAME'];
             }
-            $hl['FIELDS'] = null;
+            $hl['FIELDS'] = [];
             if ($select->isSelectFields()) {
                 $iterator = CUserTypeEntity::GetList([], [
                     'ENTITY_ID' => 'HLBLOCK_' . $hl['ID'],
@@ -88,6 +88,10 @@ class HLEntityRepository extends AbstractEntityRepository
                         'multiple' => $field['MULTIPLE'] === 'Y',
                     ]);
                 }
+            }
+            $hl['GROUPS'] = [];
+            if ($select->isSelectGroups() && $select->isSelectFields()) {
+                $hl['GROUPS'] = $this->getGroups('hl', (int) $hl['ID'], $hl['FIELDS']);
             }
             $collection[] = $this->factoryEntity($hl);
         }

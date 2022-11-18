@@ -8,6 +8,12 @@ use ErrorException;
 use Fi1a\BitrixValidation\Domain\EntityInterface;
 use Fi1a\BitrixValidation\Domain\Field;
 use Fi1a\BitrixValidation\Domain\FieldInterface;
+use Fi1a\BitrixValidation\Domain\Group;
+use Fi1a\BitrixValidation\Domain\GroupCollection;
+use Fi1a\BitrixValidation\Domain\GroupCollectionInterface;
+use Fi1a\BitrixValidation\Domain\GroupInterface;
+use Fi1a\BitrixValidation\Domain\RuleCollection;
+use Fi1a\BitrixValidation\Domain\RuleInterface;
 
 /**
  * Абстрактный класс репозитория сущности
@@ -36,5 +42,50 @@ abstract class AbstractEntityRepository implements EntityRepositoryInterface
     protected function factoryField(array $field): FieldInterface
     {
         return new Field($field);
+    }
+
+    /**
+     * Возвращает группы
+     *
+     * @param mixed[][] $fields
+     */
+    protected function getGroups(string $entityType, int $entityId, array $fields): GroupCollectionInterface
+    {
+        $collection = new GroupCollection();
+
+        $repository = new RuleRepository();
+        $rules = $repository->getList([
+            'filter' => [
+                '=ENTITY_TYPE' => $entityType,
+                '=ENTITY_ID' => $entityId,
+            ],
+        ]);
+        foreach ($rules as $rule) {
+            assert($rule instanceof RuleInterface);
+            if (!$collection->has($rule->getFieldId())) {
+                foreach ($fields as $field) {
+                    assert($field instanceof FieldInterface);
+                    if ($field->id === $rule->getFieldId()) {
+                        $collection[$field->id] = $this->factoryGroup($field->toArray());
+                        $collection[$field->id]['rules'] = new RuleCollection();
+                    }
+                }
+            }
+            $collection[$rule->getFieldId()]['rules'][] = $rule;
+        }
+
+        $collection->resetKeys();
+
+        return $collection;
+    }
+
+    /**
+     * Фабричный метод группы правил
+     *
+     * @param mixed[] $field
+     */
+    protected function factoryGroup(array $field): GroupInterface
+    {
+        return new Group($field);
     }
 }

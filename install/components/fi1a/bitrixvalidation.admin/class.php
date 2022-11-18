@@ -6,6 +6,7 @@ use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Engine\Contract\Controllerable;
 use Bitrix\Main\Errorable;
+use Bitrix\Main\Error;
 use Bitrix\Main\ErrorCollection;
 use Bitrix\Main\Engine\ActionFilter\Authentication;
 use Bitrix\Main\Engine\ActionFilter\HttpMethod;
@@ -40,6 +41,16 @@ class Fi1aBitrixValidationAdminComponent extends CBitrixComponent implements Con
                 'postfilters' => []
             ],
             'getEntity' => [
+                'prefilters' => [
+                    new Authentication(),
+                    new Rights(static::MODULE_ID, 'E'),
+                    new HttpMethod(
+                        [HttpMethod::METHOD_POST,]
+                    ),
+                ],
+                'postfilters' => []
+            ],
+            'submit' => [
                 'prefilters' => [
                     new Authentication(),
                     new Rights(static::MODULE_ID, 'E'),
@@ -192,5 +203,27 @@ class Fi1aBitrixValidationAdminComponent extends CBitrixComponent implements Con
         return [
             'entity' => $service->getEntity($type, $id)->toArray(),
         ];
+    }
+
+    /**
+     * Сохранить правила
+     *
+     * @param string[] $rules
+     *
+     * @return array|null
+     */
+    public function submitAction(string $entityType, int $entityId, array $rules = []): ?array
+    {
+        $service = new EntityService();
+
+        try {
+            $service->saveRules($entityType, $entityId, $rules);
+        } catch (InvalidArgumentException $exception) {
+            $this->addError(new Error($exception->getMessage()));
+
+            return null;
+        }
+
+        return [];
     }
 }

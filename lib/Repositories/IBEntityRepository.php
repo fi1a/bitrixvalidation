@@ -110,9 +110,8 @@ class IBEntityRepository extends AbstractEntityRepository
             if (isset($typeLanguages[$ib['IBLOCK_TYPE_ID']])) {
                 $ib['IBLOCK_TYPE_NAME'] = $typeLanguages[$ib['IBLOCK_TYPE_ID']]['NAME'];
             }
-            $ib['FIELDS'] = null;
+            $ib['FIELDS'] = [];
             if ($select->isSelectFields()) {
-                $ib['FIELDS'] = [];
                 foreach ($this->baseFields as $field) {
                     $ib['FIELDS'][] = $this->factoryField($field);
                 }
@@ -128,6 +127,10 @@ class IBEntityRepository extends AbstractEntityRepository
                         ]);
                     }
                 }
+            }
+            $ib['GROUPS'] = [];
+            if ($select->isSelectGroups() && $select->isSelectFields()) {
+                $ib['GROUPS'] = $this->getGroups('ib', (int) $ib['ID'], $ib['FIELDS']);
             }
             $collection[] = $this->factoryEntity($ib);
         }
@@ -197,7 +200,7 @@ class IBEntityRepository extends AbstractEntityRepository
             'name' => $ib['NAME'],
             'type_name' => $ib['IBLOCK_TYPE_NAME'],
             'fields' => $ib['FIELDS'],
-            'groups' => [],
+            'groups' => $ib['GROUPS'],
         ];
 
         return new Entity($entity);

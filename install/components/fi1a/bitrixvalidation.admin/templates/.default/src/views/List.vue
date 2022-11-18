@@ -20,6 +20,8 @@ export default {
 
   components: {TableList, Spinner},
 
+  emits: ['select'],
+
   data() {
     return {
       loading: true,

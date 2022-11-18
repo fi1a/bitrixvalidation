@@ -30,4 +30,11 @@ interface EntityServiceInterface
      * Возвращает сущность
      */
     public function getEntity(string $type, int $id): EntityInterface;
+
+    /**
+     * Сохранение правил
+     *
+     * @param string[][] $rules
+     */
+    public function saveRules(string $entityType, int $entityId, array $rules): bool;
 }

@@ -11,6 +11,8 @@ use Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface;
 use Fi1a\BitrixValidation\Repositories\EntitySelect;
 use Fi1a\BitrixValidation\Repositories\HLEntityRepository;
 use Fi1a\BitrixValidation\Repositories\IBEntityRepository;
+use Fi1a\BitrixValidation\Repositories\RuleRepository;
+use InvalidArgumentException;
 
 /**
  * Сервис сущностей
@@ -38,7 +40,10 @@ class EntityService implements EntityServiceInterface
      */
     public function getEntity(string $type, int $id): EntityInterface
     {
-        return $this->factoryRepository($type)->getEntity($id, new EntitySelect(true));
+        return $this->factoryRepository($type)->getEntity(
+            $id,
+            new EntitySelect(true, true)
+        );
     }
 
     /**
@@ -54,5 +59,23 @@ class EntityService implements EntityServiceInterface
         }
 
         throw new ErrorException(htmlspecialcharsbx(sprintf('Тип "%s" не определен', $type)));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function saveRules(string $entityType, int $entityId, array $rules): bool
+    {
+        if (!$entityType) {
+            throw new InvalidArgumentException('Аргумент $entityType не может быть пустым');
+        }
+        if (!$entityId) {
+            throw new InvalidArgumentException('Аргумент $entityId не может быть пустым');
+        }
+
+        $ruleRepository = new RuleRepository();
+        $collection = $ruleRepository->factoryList($rules);
+
+        return $ruleRepository->save($entityType, $entityId, $collection);
     }
 }

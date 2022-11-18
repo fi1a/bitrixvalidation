@@ -7,7 +7,7 @@ namespace Fi1a\Unit\BitrixValidation\Services;
 use ErrorException;
 use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
 use Fi1a\BitrixValidation\Domain\EntityInterface;
-use Fi1a\BitrixValidation\Domain\MinRule;
+use Fi1a\BitrixValidation\Domain\Rule\MinRule;
 use Fi1a\BitrixValidation\Repositories\RuleRepository;
 use Fi1a\BitrixValidation\Services\EntityService;
 use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;

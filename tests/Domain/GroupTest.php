@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Fi1a\Unit\BitrixValidation\Domain;
 
 use Fi1a\BitrixValidation\Domain\Group;
-use Fi1a\BitrixValidation\Domain\MinRule;
-use Fi1a\BitrixValidation\Domain\RuleCollection;
+use Fi1a\BitrixValidation\Domain\Rule\MinRule;
+use Fi1a\BitrixValidation\Domain\Rule\RuleCollection;
 use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
 use InvalidArgumentException;
 

@@ -34,16 +34,18 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Domain\Group' => 'lib/Domain/Group.php',
         '\Fi1a\BitrixValidation\Domain\GroupCollectionInterface' => 'lib/Domain/GroupCollectionInterface.php',
         '\Fi1a\BitrixValidation\Domain\GroupCollection' => 'lib/Domain/GroupCollection.php',
-        '\Fi1a\BitrixValidation\Domain\AbstractRule' => 'lib/Domain/AbstractRule.php',
-        '\Fi1a\BitrixValidation\Domain\MaxRule' => 'lib/Domain/MaxRule.php',
-        '\Fi1a\BitrixValidation\Domain\MinRule' => 'lib/Domain/MinRule.php',
-        '\Fi1a\BitrixValidation\Domain\RuleCollectionInterface' => 'lib/Domain/RuleCollectionInterface.php',
-        '\Fi1a\BitrixValidation\Domain\RuleCollection' => 'lib/Domain/RuleCollection.php',
-        '\Fi1a\BitrixValidation\Domain\RuleInterface' => 'lib/Domain/RuleInterface.php',
         '\Fi1a\BitrixValidation\Domain\FieldInterface' => 'lib/Domain/FieldInterface.php',
         '\Fi1a\BitrixValidation\Domain\Field' => 'lib/Domain/Field.php',
         '\Fi1a\BitrixValidation\Domain\FieldCollectionInterface' => 'lib/Domain/FieldCollectionInterface.php',
         '\Fi1a\BitrixValidation\Domain\FieldCollection' => 'lib/Domain/FieldCollection.php',
+
+        // Правила
+        '\Fi1a\BitrixValidation\Domain\Rule\AbstractRule' => 'lib/Domain/Rule/AbstractRule.php',
+        '\Fi1a\BitrixValidation\Domain\Rule\MaxRule' => 'lib/Domain/Rule/MaxRule.php',
+        '\Fi1a\BitrixValidation\Domain\Rule\MinRule' => 'lib/Domain/Rule/MinRule.php',
+        '\Fi1a\BitrixValidation\Domain\Rule\RuleCollectionInterface' => 'lib/Domain/Rule/RuleCollectionInterface.php',
+        '\Fi1a\BitrixValidation\Domain\Rule\RuleCollection' => 'lib/Domain/Rule/RuleCollection.php',
+        '\Fi1a\BitrixValidation\Domain\Rule\RuleInterface' => 'lib/Domain/Rule/RuleInterface.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',

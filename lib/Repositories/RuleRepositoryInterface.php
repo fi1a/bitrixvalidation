@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Fi1a\BitrixValidation\Repositories;
 
-use Fi1a\BitrixValidation\Domain\RuleCollectionInterface;
-use Fi1a\BitrixValidation\Domain\RuleInterface;
+use Fi1a\BitrixValidation\Domain\Rule\RuleCollectionInterface;
+use Fi1a\BitrixValidation\Domain\Rule\RuleInterface;
 
 /**
  *  Репозиторий правил

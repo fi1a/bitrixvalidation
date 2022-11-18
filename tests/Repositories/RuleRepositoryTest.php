@@ -8,8 +8,8 @@ use Bitrix\Main\Entity\EntityError;
 use Bitrix\Main\Entity\EventResult;
 use Bitrix\Main\Event;
 use Bitrix\Main\EventManager;
-use Fi1a\BitrixValidation\Domain\MinRule;
-use Fi1a\BitrixValidation\Domain\RuleCollectionInterface;
+use Fi1a\BitrixValidation\Domain\Rule\MinRule;
+use Fi1a\BitrixValidation\Domain\Rule\RuleCollectionInterface;
 use Fi1a\BitrixValidation\Repositories\RuleRepository;
 use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 use InvalidArgumentException;
@@ -25,9 +25,14 @@ class RuleRepositoryTest extends EntityTestCase
     public function testGetList(): void
     {
         $repository = new RuleRepository();
-        $collection = $repository->getList();
+        $collection = $repository->getList([
+            'filter' => [
+                '=ENTITY_TYPE' => 'ib',
+                '=ENTITY_ID' => static::$iblockId,
+            ],
+        ]);
         $this->assertInstanceOf(RuleCollectionInterface::class, $collection);
-        $this->assertCount(3, $collection);
+        $this->assertCount(2, $collection);
     }
 
     /**

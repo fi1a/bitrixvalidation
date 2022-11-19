@@ -10,6 +10,7 @@ use Bitrix\Main\Event;
 use Bitrix\Main\EventManager;
 use Fi1a\BitrixValidation\Domain\Rule\MinRule;
 use Fi1a\BitrixValidation\Domain\Rule\RuleCollectionInterface;
+use Fi1a\BitrixValidation\Domain\Rule\RuleInterface;
 use Fi1a\BitrixValidation\Repositories\RuleRepository;
 use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 use InvalidArgumentException;
@@ -32,7 +33,7 @@ class RuleRepositoryTest extends EntityTestCase
             ],
         ]);
         $this->assertInstanceOf(RuleCollectionInterface::class, $collection);
-        $this->assertCount(2, $collection);
+        $this->assertCount(4, $collection);
     }
 
     /**
@@ -55,6 +56,7 @@ class RuleRepositoryTest extends EntityTestCase
             'field_id' => (string) static::$iblockPropertyId,
             'entity_type' => 'ib',
             'entity_id' => static::$iblockId,
+            'multiple' => false,
         ]);
         $this->assertTrue($repository->save('ib', static::$iblockId, $rules));
         $rules->delete(2);
@@ -166,5 +168,22 @@ class RuleRepositoryTest extends EntityTestCase
 
             throw $exception;
         }
+    }
+
+    /**
+     * Проверка фабричного метода
+     */
+    public function testFactory(): void
+    {
+        $repository = new RuleRepository();
+        $this->assertInstanceOf(RuleInterface::class, $repository->factory([
+            'key' => 'min',
+            'options' => ['min' => 10],
+            'sort' => 500,
+            'field_id' => (string) static::$iblockPropertyId,
+            'entity_type' => 'ib',
+            'entity_id' => static::$iblockId,
+            'multiple' => 'false',
+        ]));
     }
 }

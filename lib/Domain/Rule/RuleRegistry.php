@@ -25,7 +25,7 @@ class RuleRegistry implements RuleRegistryInterface
             return false;
         }
 
-        static::$rules[mb_strtolower($key)] = $rule;
+        static::$rules[$key] = $rule;
 
         return true;
     }
@@ -35,7 +35,7 @@ class RuleRegistry implements RuleRegistryInterface
      */
     public static function has(string $key): bool
     {
-        return array_key_exists(mb_strtolower($key), static::$rules);
+        return array_key_exists($key, static::$rules);
     }
 
     /**
@@ -49,7 +49,7 @@ class RuleRegistry implements RuleRegistryInterface
             );
         }
 
-        return static::$rules[mb_strtolower($key)];
+        return static::$rules[$key];
     }
 
     /**
@@ -61,7 +61,7 @@ class RuleRegistry implements RuleRegistryInterface
             return false;
         }
 
-        unset(static::$rules[mb_strtolower($key)]);
+        unset(static::$rules[$key]);
 
         return true;
     }

@@ -11,8 +11,10 @@
         </p>
       </td>
       <td class="rule-cell">
-        <RuleMin v-if="rule.key === 'min'" :options="rule.options" @updateOptions="updateOptions($event)"/>
-        <RuleMax v-if="rule.key === 'max'" :options="rule.options" @updateOptions="updateOptions($event)"/>
+        <MinRule v-if="rule.key === 'min'" :options="rule.options" @updateOptions="updateOptions($event)"/>
+        <MaxRule v-if="rule.key === 'max'" :options="rule.options" @updateOptions="updateOptions($event)"/>
+        <MinCountRule v-if="rule.key === 'minCount'" :options="rule.options" @updateOptions="updateOptions($event)"/>
+        <MaxCountRule v-if="rule.key === 'maxCount'" :options="rule.options" @updateOptions="updateOptions($event)"/>
       </td>
       <td class="rule-cell">
         <input type="text" v-model="v$.rule.sort.$model" class="rule-sort">
@@ -38,8 +40,10 @@
 
 import { useVuelidate } from '@vuelidate/core'
 import { required, integer, minValue } from '@vuelidate/validators'
-import RuleMin from "./RuleMin.vue";
-import RuleMax from "./RuleMax.vue";
+import MinRule from "./MinRule.vue";
+import MaxRule from "./MaxRule.vue";
+import MinCountRule from "./MinCountRule.vue";
+import MaxCountRule from "./MaxCountRule.vue";
 
 export default {
   name: "Rule",
@@ -54,9 +58,10 @@ export default {
     rule: Object,
     group: Object,
     rules: Array,
+    groupRules: Array,
   },
 
-  components: {RuleMin, RuleMax},
+  components: {MinRule, MaxRule, MinCountRule, MaxCountRule},
 
   emits: ['delete'],
 
@@ -64,11 +69,11 @@ export default {
     rulesByTypeAndFilterSelected() {
       let rules = [];
       let existing = [];
-      this.group.rules.forEach((rule) => {
+      this.groupRules.forEach((rule) => {
         existing.push(rule.key)
       })
       this.rules.forEach((rule) => {
-        if (rule.types.indexOf(this.group.type) !== -1 && existing.indexOf(rule.key) === -1) {
+        if (existing.indexOf(rule.key) === -1) {
           rules.push(rule);
         }
       });
@@ -121,7 +126,6 @@ export default {
         if (typeof editComponent.$data.validation[this.group.id] === "undefined") {
           editComponent.$data.validation[this.group.id] = {};
         }
-        console.log(this.v$.$invalid)
         editComponent.$data.validation[this.group.id]['rule'] = this.v$.$invalid;
       },
       deep: true

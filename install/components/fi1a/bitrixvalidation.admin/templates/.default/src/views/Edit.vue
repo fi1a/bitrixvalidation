@@ -127,10 +127,32 @@ export default {
   },
 
   methods: {
+    getEmptyRule(fieldId, entity, multiple) {
+      return {
+        key: null,
+        options: {},
+        sort: 500,
+        id: null,
+        field_id: fieldId,
+        entity_type: entity.entity_type,
+        entity_id: entity.id,
+        multiple: multiple,
+      }
+    },
     load() {
       api.getEntity(this.entityKey).then((response) => {
         let entity = response.data.entity;
         entity.groups = Object.values(entity.groups);
+        for (let index in entity.groups) {
+          entity.groups[index].rules = Object.values(entity.groups[index].rules);
+          if (!entity.groups[index].rules.length) {
+            entity.groups[index].rules.push(this.getEmptyRule(entity.groups[index].id, entity, false));
+          }
+          entity.groups[index].multiple_rules = Object.values(entity.groups[index].multiple_rules);
+          if (!entity.groups[index].multiple_rules.length) {
+            entity.groups[index].multiple_rules.push(this.getEmptyRule(entity.groups[index].id, entity, true));
+          }
+        }
         entity.fields = Object.values(entity.fields);
         this.entity = Object.assign({}, entity);
         this.rules = response.data.rules;
@@ -149,15 +171,10 @@ export default {
           Object.assign(
             {
               rules: [
-                {
-                  key: null,
-                  options: {},
-                  sort: 500,
-                  id: null,
-                  field_id: field.id,
-                  entity_type: this.entity.entity_type,
-                  entity_id: this.entity.id,
-                }
+                this.getEmptyRule(field.id, this.entity, false)
+              ],
+              multiple_rules: [
+                this.getEmptyRule(field.id, this.entity, true)
               ]
             },
             field
@@ -178,9 +195,7 @@ export default {
     apply() {
       this.errors = [];
       this.success = [];
-      this.submit().then(() => {
-        this.success.push({message: "Правила успешно сохранены"})
-      });
+      this.submit();
     },
     submit() {
       let rules = [];
@@ -191,12 +206,18 @@ export default {
             rules.push(rule);
           }
         });
+        group.multiple_rules.forEach((rule) => {
+          if (rule.key) {
+            rules.push(rule);
+          }
+        });
       })
 
       return api.submit(this.entity.entity_type, this.entity.id, rules).catch((response) => {
         this.errors = response.errors;
         this.loading = false;
       }).then(() => {
+        this.success.push({message: "Правила успешно сохранены"})
         this.loading = false;
       });
     }

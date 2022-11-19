@@ -46,9 +46,9 @@ class IBEntityRepositoryTest extends EntityTestCase
         $entity = $repository->getEntity(static::$iblockId, $select);
         $this->assertInstanceOf(EntityInterface::class, $entity);
         $this->assertInstanceOf(FieldCollectionInterface::class, $entity->getFields());
-        $this->assertCount(5, $entity->getFields());
+        $this->assertCount(6, $entity->getFields());
         $this->assertInstanceOf(GroupCollectionInterface::class, $entity->getGroups());
-        $this->assertCount(1, $entity->getGroups());
+        $this->assertCount(2, $entity->getGroups());
     }
 
     /**

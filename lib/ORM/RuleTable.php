@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\BitrixValidation\ORM;
 
 use Bitrix\Main\Entity\DataManager;
+use Bitrix\Main\ORM\Fields\BooleanField;
 use Bitrix\Main\ORM\Fields\IntegerField;
 use Bitrix\Main\ORM\Fields\StringField;
 
@@ -50,6 +51,9 @@ class RuleTable extends DataManager
             ]),
             'ENTITY_ID' => new IntegerField('ENTITY_ID', [
                 'required' => true,
+            ]),
+            'MULTIPLE' => new BooleanField('MULTIPLE', [
+                'values' => [0, 1],
             ]),
         ];
     }

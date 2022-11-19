@@ -15,6 +15,7 @@ use Fi1a\Collection\DataType\IValueObject;
  * @method string getFieldId()
  * @method string getEntityType()
  * @method int getEntityId()
+ * @method bool getMultiple()
  */
 interface RuleInterface extends IValueObject
 {
@@ -47,6 +48,11 @@ interface RuleInterface extends IValueObject
      * Идентификатор сущности
      */
     public function setEntityId(int $entityId): void;
+
+    /**
+     * Правило для множественного значения
+     */
+    public function setMultiple(bool $multiple): void;
 
     /**
      * Возвращает опции

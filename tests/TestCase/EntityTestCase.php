@@ -39,6 +39,11 @@ class EntityTestCase extends ModuleTestCase
     protected static $iblockPropertyId;
 
     /**
+     * @var int
+     */
+    protected static $iblockMultiplePropertyId;
+
+    /**
      * До начала вызова тестов
      */
     public static function setUpBeforeClass(): void
@@ -94,8 +99,8 @@ class EntityTestCase extends ModuleTestCase
             'ACTIVE' => 'Y',
             'SORT' => '600',
             'CODE' => 'FBV_TEST1',
-            'PROPERTY_TYPE' => 'S',
-            'USER_TYPE' => 'HTML',
+            'PROPERTY_TYPE' => 'N',
+            'USER_TYPE' => '',
             'IBLOCK_ID' => static::$iblockId,
         ]);
 
@@ -127,6 +132,46 @@ class EntityTestCase extends ModuleTestCase
 
         if (!$propertyId) {
             throw new ErrorException('Не удалось добавить свойство инфоблока');
+        }
+
+        static::$iblockMultiplePropertyId = $ibp->Add([
+            'NAME' => 'FBV Test 3',
+            'ACTIVE' => 'Y',
+            'SORT' => '600',
+            'CODE' => 'FBV_TEST3',
+            'PROPERTY_TYPE' => 'N',
+            'USER_TYPE' => '',
+            'IBLOCK_ID' => static::$iblockId,
+            'MULTIPLE' => 'Y',
+        ]);
+
+        if (!static::$iblockMultiplePropertyId) {
+            throw new ErrorException('Не удалось добавить свойство инфоблока');
+        }
+
+        $result = RuleTable::add([
+            'KEY' => 'min',
+            'OPTIONS' => '{"min": 10}',
+            'SORT' => 500,
+            'FIELD_ID' => static::$iblockMultiplePropertyId,
+            'ENTITY_TYPE' => 'ib',
+            'ENTITY_ID' => static::$iblockId,
+        ]);
+        if ($result->isSuccess()) {
+            static::$ruleIds[] = $result->getId();
+        }
+
+        $result = RuleTable::add([
+            'KEY' => 'minCount',
+            'OPTIONS' => '{"min": 10}',
+            'SORT' => 500,
+            'FIELD_ID' => static::$iblockMultiplePropertyId,
+            'ENTITY_TYPE' => 'ib',
+            'ENTITY_ID' => static::$iblockId,
+            'MULTIPLE' => 1,
+        ]);
+        if ($result->isSuccess()) {
+            static::$ruleIds[] = $result->getId();
         }
 
         $result = RuleTable::add([

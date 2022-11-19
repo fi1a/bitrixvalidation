@@ -38,6 +38,7 @@ class RuleRepository implements RuleRepositoryInterface
                 'field_id' => $entity['FIELD_ID'],
                 'entity_type' => $entity['ENTITY_TYPE'],
                 'entity_id' => $entity['ENTITY_ID'],
+                'multiple' => (int) $entity['MULTIPLE'] === 1,
             ];
         }
 
@@ -71,6 +72,9 @@ class RuleRepository implements RuleRepositoryInterface
         }
         if (isset($rule['entity_id'])) {
             $rule['entity_id'] = (int) $rule['entity_id'];
+        }
+        if (isset($rule['multiple']) && is_string($rule['multiple'])) {
+            $rule['multiple'] = $rule['multiple'] === 'true';
         }
 
         $class = RuleRegistry::get($rule['key']);

@@ -104,6 +104,7 @@ class EntityServiceTest extends EntityTestCase
             'field_id' => (string) static::$iblockPropertyId,
             'entity_type' => 'ib',
             'entity_id' => static::$iblockId,
+            'multiple' => false,
         ]);
         $service = new EntityService();
         $this->assertTrue($service->saveEntityRules('ib', static::$iblockId, $rules->toArray()));

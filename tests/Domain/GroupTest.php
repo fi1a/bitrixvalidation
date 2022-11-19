@@ -143,6 +143,18 @@ class GroupTest extends ModuleTestCase
                 'field_id' => '1',
                 'entity_type' => 'ib',
                 'entity_id' => 1,
+                'multiple' => false,
+            ]),
+            ]),
+            'multiple_rules' => new RuleCollection([new MinRule([
+                'key' => 'minCount',
+                'options' => [],
+                'sort' => 500,
+                'id' => 1,
+                'field_id' => '1',
+                'entity_type' => 'ib',
+                'entity_id' => 1,
+                'multiple' => true,
             ]),
             ]),
         ];
@@ -161,6 +173,19 @@ class GroupTest extends ModuleTestCase
                     'field_id' => '1',
                     'entity_type' => 'ib',
                     'entity_id' => 1,
+                    'multiple' => false,
+                ],
+            ],
+            'multiple_rules' => [
+                [
+                    'key' => 'minCount',
+                    'options' => [],
+                    'sort' => 500,
+                    'id' => 1,
+                    'field_id' => '1',
+                    'entity_type' => 'ib',
+                    'entity_id' => 1,
+                    'multiple' => true,
                 ],
             ],
         ];

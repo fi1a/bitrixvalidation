@@ -26,6 +26,7 @@ class AbstractRuleTest extends ModuleTestCase
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
+            'multiple' => false,
         ];
         $rule = new MinRule($fields);
         $this->assertEquals($fields, $rule->toArray());
@@ -45,6 +46,7 @@ class AbstractRuleTest extends ModuleTestCase
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
+            'multiple' => false,
         ];
         $rule = new MinRule($fields);
         $rule->setKey('');
@@ -64,6 +66,7 @@ class AbstractRuleTest extends ModuleTestCase
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
+            'multiple' => false,
         ];
         $rule = new MinRule($fields);
         $rule->setSort(-1);
@@ -83,6 +86,7 @@ class AbstractRuleTest extends ModuleTestCase
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
+            'multiple' => false,
         ];
         $rule = new MinRule($fields);
         $rule->setFieldId('');
@@ -102,6 +106,7 @@ class AbstractRuleTest extends ModuleTestCase
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
+            'multiple' => false,
         ];
         $rule = new MinRule($fields);
         $rule->setEntityType('');
@@ -121,6 +126,7 @@ class AbstractRuleTest extends ModuleTestCase
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
+            'multiple' => false,
         ];
         $rule = new MinRule($fields);
         $rule->setEntityId(0);
@@ -138,6 +144,7 @@ class AbstractRuleTest extends ModuleTestCase
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
+            'multiple' => false,
         ];
         $rule = new MinRule($fields);
         $this->assertEquals([
@@ -148,6 +155,7 @@ class AbstractRuleTest extends ModuleTestCase
             'FIELD_ID' => '1',
             'ENTITY_TYPE' => 'ib',
             'ENTITY_ID' => 1,
+            'MULTIPLE' => false,
         ], $rule->toArrayUpperCase());
     }
 }

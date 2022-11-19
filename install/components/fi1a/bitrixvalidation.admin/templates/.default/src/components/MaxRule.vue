@@ -20,7 +20,7 @@ import { required, decimal } from '@vuelidate/validators'
 import RuleMixin from './../mixins/RuleMixin.vue';
 
 export default {
-  name: "RuleMax",
+  name: "MaxRule",
 
   setup () {
     return {

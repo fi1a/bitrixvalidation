@@ -72,10 +72,16 @@ abstract class AbstractEntityRepository implements EntityRepositoryInterface
                     if ($field->id === $rule->getFieldId()) {
                         $collection[$field->id] = $this->factoryGroup($field->toArray());
                         $collection[$field->id]['rules'] = new RuleCollection();
+                        $collection[$field->id]['multiple_rules'] = new RuleCollection();
                     }
                 }
             }
             if (!$collection->has($rule->getFieldId())) {
+                continue;
+            }
+            if ($rule->getMultiple()) {
+                $collection[$rule->getFieldId()]['multiple_rules'][] = $rule;
+
                 continue;
             }
             $collection[$rule->getFieldId()]['rules'][] = $rule;

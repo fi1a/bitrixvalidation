@@ -5,6 +5,8 @@ use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Fi1a\BitrixValidation\Domain\Rule\MaxRule;
 use Fi1a\BitrixValidation\Domain\Rule\MinRule;
+use Fi1a\BitrixValidation\Domain\Rule\MaxCountRule;
+use Fi1a\BitrixValidation\Domain\Rule\MinCountRule;
 use Fi1a\BitrixValidation\Domain\Rule\RuleRegistry;
 use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
 
@@ -17,6 +19,8 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Repositories/HLEntityRepository.php',
     __DIR__ . '/lib/Domain/Rule/MinRule.php',
     __DIR__ . '/lib/Domain/Rule/MaxRule.php',
+    __DIR__ . '/lib/Domain/Rule/MinCountRule.php',
+    __DIR__ . '/lib/Domain/Rule/MaxCountRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -53,6 +57,8 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Domain\Rule\RuleRegistry' => 'lib/Domain/Rule/RuleRegistry.php',
         '\Fi1a\BitrixValidation\Domain\Rule\MaxRule' => 'lib/Domain/Rule/MaxRule.php',
         '\Fi1a\BitrixValidation\Domain\Rule\MinRule' => 'lib/Domain/Rule/MinRule.php',
+        '\Fi1a\BitrixValidation\Domain\Rule\MaxCountRule' => 'lib/Domain/Rule/MaxCountRule.php',
+        '\Fi1a\BitrixValidation\Domain\Rule\MinCountRule' => 'lib/Domain/Rule/MinCountRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -80,3 +86,5 @@ ModuleRegistry::configure($APPLICATION, $GLOBALS);
 
 RuleRegistry::add('min', MinRule::class);
 RuleRegistry::add('max', MaxRule::class);
+RuleRegistry::add('minCount', MinCountRule::class);
+RuleRegistry::add('maxCount', MaxCountRule::class);

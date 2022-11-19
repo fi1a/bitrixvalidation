@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Fi1a\BitrixValidation\Repositories;
 
 use Bitrix\Main\Web\Json;
-use Fi1a\BitrixValidation\Domain\Rule\MaxRule;
-use Fi1a\BitrixValidation\Domain\Rule\MinRule;
 use Fi1a\BitrixValidation\Domain\Rule\RuleCollection;
 use Fi1a\BitrixValidation\Domain\Rule\RuleCollectionInterface;
 use Fi1a\BitrixValidation\Domain\Rule\RuleInterface;
+use Fi1a\BitrixValidation\Domain\Rule\RuleRegistry;
 use Fi1a\BitrixValidation\ORM\RuleTable;
 use InvalidArgumentException;
 
@@ -74,16 +73,9 @@ class RuleRepository implements RuleRepositoryInterface
             $rule['entity_id'] = (int) $rule['entity_id'];
         }
 
-        switch ($rule['key']) {
-            case 'min':
-                return new MinRule($rule);
-            case 'max':
-                return new MaxRule($rule);
-        }
+        $class = RuleRegistry::get($rule['key']);
 
-        throw new InvalidArgumentException(
-            htmlspecialcharsbx(sprintf('Неизвестное правило "%s"', $rule['key']))
-        );
+        return new $class($rule);
     }
 
     /**

@@ -202,6 +202,7 @@ class Fi1aBitrixValidationAdminComponent extends CBitrixComponent implements Con
 
         return [
             'entity' => $service->getEntity($type, $id)->toArray(),
+            'rules' => $service->getRules(),
         ];
     }
 
@@ -217,7 +218,7 @@ class Fi1aBitrixValidationAdminComponent extends CBitrixComponent implements Con
         $service = new EntityService();
 
         try {
-            $service->saveRules($entityType, $entityId, $rules);
+            $service->saveEntityRules($entityType, $entityId, $rules);
         } catch (InvalidArgumentException $exception) {
             $this->addError(new Error($exception->getMessage()));
 

@@ -3,6 +3,9 @@ namespace Fi1a\UserSettings;
 
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
+use Fi1a\BitrixValidation\Domain\Rule\MaxRule;
+use Fi1a\BitrixValidation\Domain\Rule\MinRule;
+use Fi1a\BitrixValidation\Domain\Rule\RuleRegistry;
 use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
 
 if (is_file(__DIR__ . '/vendor/autoload.php')) {
@@ -12,6 +15,8 @@ if (is_file(__DIR__ . '/vendor/autoload.php')) {
 $classLocFilePaths = [
     __DIR__ . '/lib/Repositories/IBEntityRepository.php',
     __DIR__ . '/lib/Repositories/HLEntityRepository.php',
+    __DIR__ . '/lib/Domain/Rule/MinRule.php',
+    __DIR__ . '/lib/Domain/Rule/MaxRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -41,11 +46,13 @@ Loader::registerAutoloadClasses(
 
         // Правила
         '\Fi1a\BitrixValidation\Domain\Rule\AbstractRule' => 'lib/Domain/Rule/AbstractRule.php',
-        '\Fi1a\BitrixValidation\Domain\Rule\MaxRule' => 'lib/Domain/Rule/MaxRule.php',
-        '\Fi1a\BitrixValidation\Domain\Rule\MinRule' => 'lib/Domain/Rule/MinRule.php',
         '\Fi1a\BitrixValidation\Domain\Rule\RuleCollectionInterface' => 'lib/Domain/Rule/RuleCollectionInterface.php',
         '\Fi1a\BitrixValidation\Domain\Rule\RuleCollection' => 'lib/Domain/Rule/RuleCollection.php',
         '\Fi1a\BitrixValidation\Domain\Rule\RuleInterface' => 'lib/Domain/Rule/RuleInterface.php',
+        '\Fi1a\BitrixValidation\Domain\Rule\RuleRegistryInterface' => 'lib/Domain/Rule/RuleRegistryInterface.php',
+        '\Fi1a\BitrixValidation\Domain\Rule\RuleRegistry' => 'lib/Domain/Rule/RuleRegistry.php',
+        '\Fi1a\BitrixValidation\Domain\Rule\MaxRule' => 'lib/Domain/Rule/MaxRule.php',
+        '\Fi1a\BitrixValidation\Domain\Rule\MinRule' => 'lib/Domain/Rule/MinRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -70,3 +77,6 @@ Loader::registerAutoloadClasses(
 global $APPLICATION;
 
 ModuleRegistry::configure($APPLICATION, $GLOBALS);
+
+RuleRegistry::add('min', MinRule::class);
+RuleRegistry::add('max', MaxRule::class);

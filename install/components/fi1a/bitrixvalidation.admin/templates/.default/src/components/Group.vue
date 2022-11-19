@@ -28,22 +28,23 @@ export default {
   props: {
     group: Object,
     entity: Object,
+    rules: Array,
   },
 
   data() {
     return {
-      rules: [
-        {
-          title: this.$t('rules.min'),
-          key: 'min',
-          type: 'number'
-        },
-        {
-          title: this.$t('rules.max'),
-          key: 'max',
-          type: 'number'
-        }
-      ],
+      // rules: [
+      //   {
+      //     title: this.$t('rules.min'),
+      //     key: 'min',
+      //     type: 'number'
+      //   },
+      //   {
+      //     title: this.$t('rules.max'),
+      //     key: 'max',
+      //     type: 'number'
+      //   }
+      // ],
     }
   },
 
@@ -51,7 +52,7 @@ export default {
     rulesByType() {
       let rules = [];
       this.rules.forEach((rule) => {
-        if (rule.type === this.group.type) {
+        if (rule.types.indexOf(this.group.type) !== -1) {
           rules.push(rule);
         }
       });

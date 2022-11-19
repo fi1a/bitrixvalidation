@@ -106,9 +106,9 @@ class EntityServiceTest extends EntityTestCase
             'entity_id' => static::$iblockId,
         ]);
         $service = new EntityService();
-        $this->assertTrue($service->saveRules('ib', static::$iblockId, $rules->toArray()));
+        $this->assertTrue($service->saveEntityRules('ib', static::$iblockId, $rules->toArray()));
         $rules->delete(2);
-        $this->assertTrue($service->saveRules('ib', static::$iblockId, $rules->toArray()));
+        $this->assertTrue($service->saveEntityRules('ib', static::$iblockId, $rules->toArray()));
     }
 
     /**
@@ -118,7 +118,7 @@ class EntityServiceTest extends EntityTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $service = new EntityService();
-        $service->saveRules('', static::$iblockId, []);
+        $service->saveEntityRules('', static::$iblockId, []);
     }
 
     /**
@@ -128,6 +128,15 @@ class EntityServiceTest extends EntityTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $service = new EntityService();
-        $service->saveRules('ib', 0, []);
+        $service->saveEntityRules('ib', 0, []);
+    }
+
+    /**
+     * Возвращает правила
+     */
+    public function testGetRules(): void
+    {
+        $service = new EntityService();
+        $this->assertIsArray($service->getRules());
     }
 }

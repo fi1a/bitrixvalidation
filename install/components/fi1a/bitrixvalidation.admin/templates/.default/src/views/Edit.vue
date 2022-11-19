@@ -35,7 +35,7 @@
             </div>
             <hr>
             <div class="groups">
-              <Group :key="group.id" v-for="(group, index) in entity.groups" :group="group" :entity="entity" @delete="deleteGroup(index)" />
+              <Group :key="group.id" v-for="(group, index) in entity.groups" :group="group" :entity="entity" :rules="rules" @delete="deleteGroup(index)" />
               <div class="empty-groups" v-if="!entity.groups.length">{{$t('edit.emptyGroups')}}</div>
             </div>
           </div>
@@ -75,6 +75,7 @@ export default {
     return {
       loading: true,
       entity: null,
+      rules: [],
       fieldId: null,
       errors: [],
       success: [],
@@ -132,6 +133,7 @@ export default {
         entity.groups = Object.values(entity.groups);
         entity.fields = Object.values(entity.fields);
         this.entity = Object.assign({}, entity);
+        this.rules = response.data.rules;
         this.loading = false;
       })
     },

@@ -7,6 +7,8 @@ namespace Fi1a\BitrixValidation\Services;
 use ErrorException;
 use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
 use Fi1a\BitrixValidation\Domain\EntityInterface;
+use Fi1a\BitrixValidation\Domain\Rule\RuleInterface;
+use Fi1a\BitrixValidation\Domain\Rule\RuleRegistry;
 use Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface;
 use Fi1a\BitrixValidation\Repositories\EntitySelect;
 use Fi1a\BitrixValidation\Repositories\HLEntityRepository;
@@ -64,7 +66,7 @@ class EntityService implements EntityServiceInterface
     /**
      * @inheritDoc
      */
-    public function saveRules(string $entityType, int $entityId, array $rules): bool
+    public function saveEntityRules(string $entityType, int $entityId, array $rules): bool
     {
         if (!$entityType) {
             throw new InvalidArgumentException('Аргумент $entityType не может быть пустым');
@@ -77,5 +79,25 @@ class EntityService implements EntityServiceInterface
         $collection = $ruleRepository->factoryList($rules);
 
         return $ruleRepository->save($entityType, $entityId, $collection);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRules(): array
+    {
+        $rules = [];
+        foreach (RuleRegistry::all() as $key => $ruleClass) {
+            /**
+             * @var RuleInterface $ruleClass
+             */
+            $rules[] = [
+                'title' => $ruleClass::getTitle(),
+                'key' => $key,
+                'types' => $ruleClass::getTypes(),
+            ];
+        }
+
+        return $rules;
     }
 }

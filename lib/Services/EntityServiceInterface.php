@@ -36,5 +36,12 @@ interface EntityServiceInterface
      *
      * @param string[][] $rules
      */
-    public function saveRules(string $entityType, int $entityId, array $rules): bool;
+    public function saveEntityRules(string $entityType, int $entityId, array $rules): bool;
+
+    /**
+     * Возвращает правила
+     *
+     * @return mixed[][]
+     */
+    public function getRules(): array;
 }

@@ -61,4 +61,16 @@ interface RuleInterface extends IValueObject
      * @return mixed[]
      */
     public function toArrayUpperCase(): array;
+
+    /**
+     * Возвращает типы полей для которых доступно правило
+     *
+     * @return string[]
+     */
+    public static function getTypes(): array;
+
+    /**
+     * Возвращает заголовок
+     */
+    public static function getTitle(): string;
 }

@@ -68,7 +68,7 @@ export default {
         existing.push(rule.key)
       })
       this.rules.forEach((rule) => {
-        if (rule.type === this.group.type && existing.indexOf(rule.key) === -1) {
+        if (rule.types.indexOf(this.group.type) !== -1 && existing.indexOf(rule.key) === -1) {
           rules.push(rule);
         }
       });

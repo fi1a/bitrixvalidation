@@ -40,7 +40,7 @@
     "fl:phpcbf": "phpcbf --cache=build/cache/phpcs.cache",
     "fl:test:unit:coverage:ci": "phpunit --coverage-clover build/logs/clover.xml",
     "fl:test:unit": "phpunit",
-    "fl:build": "cd ./install/components/fi1a/bitrixvalidation.admin/templates/.default && npm install && npm run build",
+    "fl:build": "cd ./install/components/fi1a/bitrixvalidation.admin/templates/.default && npm install && npm run build && git add ./dist",
     "fl:check": [
       "@fl:lint",
       "@fl:test:unit"

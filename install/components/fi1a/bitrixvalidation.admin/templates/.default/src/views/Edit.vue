@@ -2,7 +2,7 @@
   <div class="spinner-container">
     <div v-if="errors.length" class="adm-info-message-wrap adm-info-message-red">
       <div class="adm-info-message">
-        <div class="adm-info-message-title">Ошибка</div>
+        <div class="adm-info-message-title">{{$t('edit.errors')}}</div>
         <template v-for="error in errors">
           {{error.message}}<br>
         </template>
@@ -12,7 +12,7 @@
     </div>
     <div v-if="success.length" class="adm-info-message-wrap adm-info-message-green">
       <div class="adm-info-message">
-        <div class="adm-info-message-title">Успешно</div>
+        <div class="adm-info-message-title">{{$t('edit.success')}}</div>
         <template v-for="item in success">
           {{item.message}}<br>
         </template>

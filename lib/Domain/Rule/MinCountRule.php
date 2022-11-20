@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Fi1a\BitrixValidation\Domain\Rule;
 
 use Bitrix\Main\Localization\Loc;
+use InvalidArgumentException;
+
+use const FILTER_VALIDATE_INT;
 
 /**
  * Проверка на минимальное количество значений в массиве
@@ -25,5 +28,21 @@ class MinCountRule extends AbstractRule
     public static function getTitle(): string
     {
         return Loc::getMessage('FBV_MIN_COUNT_TITLE');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setOptions(array $options): void
+    {
+        if (!isset($options['min']) || !is_numeric($options['min'])) {
+            throw new InvalidArgumentException('Не передано обязательное значение min');
+        }
+        if (filter_var($options['min'], FILTER_VALIDATE_INT) === false || (int) $options['min'] < 0) {
+            throw new InvalidArgumentException('Значение min должно быть положительным числом или 0');
+        }
+        $options['min'] = (int) $options['min'];
+
+        $this->modelSet('options', $options);
     }
 }

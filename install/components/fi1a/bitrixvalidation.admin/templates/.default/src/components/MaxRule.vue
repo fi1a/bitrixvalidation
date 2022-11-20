@@ -43,6 +43,10 @@ export default {
     }
   },
 
+  mounted() {
+    this.$emit('updateOptions', this.values);
+  },
+
   validations () {
     return {
       values: {

@@ -107,17 +107,4 @@ abstract class AbstractRule extends ValueObject implements RuleInterface
 
         return $array;
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function getOptions(): array
-    {
-        $options = $this->modelGet('options');
-        if (!$options) {
-            $options = [];
-        }
-
-        return $options;
-    }
 }

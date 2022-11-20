@@ -23,7 +23,8 @@
 
 <script>
 export default {
-    name: 'circleLine',
+    name: 'Spinner',
+
     props: {
         loading: {
             type: Boolean,
@@ -34,6 +35,7 @@ export default {
             default: '#408ec0'
         }
     },
+
     data () {
         return {
             css: {
@@ -49,6 +51,7 @@ export default {
     margin: 0;
     padding: 0;
 }
+
 .circleOneContainer,
 .circleTwoContainer,
 .circleThreeContainer,
@@ -61,26 +64,32 @@ export default {
     opacity: 0;
     animation: rotate 5s infinite cubic-bezier(0.16, 0.54, 0.84, 0.54);
 }
+
 .circle {
-    position: absolute;
+   position: absolute;
     left: 50%;
     width: 6px;
     height: 6px;
     margin-left: -3px;
     border-radius: 50%;
 }
+
 .circleTwoContainer {
     animation-delay: 150ms;
 }
+
 .circleThreeContainer {
     animation-delay: 300ms;
 }
+
 .circleFourContainer {
     animation-delay: 450ms;
 }
+
 .circleFiveContainer {
     animation-delay: 600ms;
 }
+
 .circleSixContainer {
     animation-delay: 750ms;
 }
@@ -109,8 +118,12 @@ export default {
         opacity: 0;
     }
 }
+
 .vue-css-spinner {
   width: 40px;
-  margin: 100px auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
 }
+
 </style>

@@ -20,7 +20,9 @@ class AbstractRuleTest extends ModuleTestCase
     {
         $fields = [
             'key' => 'min',
-            'options' => [],
+            'options' => [
+                'min' => 10,
+            ],
             'sort' => 500,
             'id' => 1,
             'field_id' => '1',
@@ -40,7 +42,9 @@ class AbstractRuleTest extends ModuleTestCase
         $this->expectException(InvalidArgumentException::class);
         $fields = [
             'key' => 'min',
-            'options' => [],
+            'options' => [
+                'min' => 10,
+            ],
             'sort' => 500,
             'id' => 1,
             'field_id' => '1',
@@ -60,7 +64,9 @@ class AbstractRuleTest extends ModuleTestCase
         $this->expectException(InvalidArgumentException::class);
         $fields = [
             'key' => 'min',
-            'options' => [],
+            'options' => [
+                'min' => 10,
+            ],
             'sort' => 500,
             'id' => 1,
             'field_id' => '1',
@@ -80,7 +86,9 @@ class AbstractRuleTest extends ModuleTestCase
         $this->expectException(InvalidArgumentException::class);
         $fields = [
             'key' => 'min',
-            'options' => [],
+            'options' => [
+                'min' => 10,
+            ],
             'sort' => 500,
             'id' => 1,
             'field_id' => '1',
@@ -100,7 +108,9 @@ class AbstractRuleTest extends ModuleTestCase
         $this->expectException(InvalidArgumentException::class);
         $fields = [
             'key' => 'min',
-            'options' => [],
+            'options' => [
+                'min' => 10,
+            ],
             'sort' => 500,
             'id' => 1,
             'field_id' => '1',
@@ -120,7 +130,9 @@ class AbstractRuleTest extends ModuleTestCase
         $this->expectException(InvalidArgumentException::class);
         $fields = [
             'key' => 'min',
-            'options' => [],
+            'options' => [
+                'min' => 10,
+            ],
             'sort' => 500,
             'id' => 1,
             'field_id' => '1',
@@ -145,11 +157,16 @@ class AbstractRuleTest extends ModuleTestCase
             'entity_type' => 'ib',
             'entity_id' => 1,
             'multiple' => false,
+            'options' => [
+                'min' => 10,
+            ],
         ];
         $rule = new MinRule($fields);
         $this->assertEquals([
             'KEY' => 'min',
-            'OPTIONS' => [],
+            'OPTIONS' => [
+                'min' => 10,
+            ],
             'SORT' => 500,
             'ID' => 1,
             'FIELD_ID' => '1',

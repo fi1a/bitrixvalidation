@@ -1,58 +1,59 @@
 <template>
-  <div v-if="!loading">
-    <div class="adm-detail-block">
-      <div class="adm-detail-content-wrap">
-        <div class="adm-detail-content">
-          <div class="adm-detail-title">{{entity.entity_type_name}}: <template v-if="entity.type_name">{{entity.type_name}} / </template>{{entity.name}}</div>
+  <div class="spinner-container">
+    <div v-if="errors.length" class="adm-info-message-wrap adm-info-message-red">
+      <div class="adm-info-message">
+        <div class="adm-info-message-title">Ошибка</div>
+        <template v-for="error in errors">
+          {{error.message}}<br>
+        </template>
+        <br>
+        <div class="adm-info-message-icon"></div>
+      </div>
+    </div>
+    <div v-if="success.length" class="adm-info-message-wrap adm-info-message-green">
+      <div class="adm-info-message">
+        <div class="adm-info-message-title">Успешно</div>
+        <template v-for="item in success">
+          {{item.message}}<br>
+        </template>
+        <br>
+        <div class="adm-info-message-icon"></div>
+      </div>
+    </div>
+    <div v-if="entity">
+      <div class="adm-detail-block">
+        <div class="adm-detail-content-wrap">
+          <div class="adm-detail-content">
+            <div class="adm-detail-title">{{entity.entity_type_name}}: <template v-if="entity.type_name">{{entity.type_name}} / </template>{{entity.name}}</div>
 
-          <div v-if="errors.length" class="adm-info-message-wrap adm-info-message-red">
-            <div class="adm-info-message">
-              <div class="adm-info-message-title">Ошибка</div>
-              <template v-for="error in errors">
-                {{error.message}}<br>
-              </template>
-              <br>
-              <div class="adm-info-message-icon"></div>
+            <div class="adm-detail-content-item-block">
+              <div class="add-field">
+                <select v-model="fieldId">
+                  <option></option>
+                  <option v-for="field in this.fields" :value="field.id">{{field.name}}</option>
+                </select>
+                <input :disabled="!fieldId" v-on:click.prevent="addRule(fieldId); fieldId = null;" type="button" :value="$t('edit.addRule')" :title="$t('edit.addRuleTitle')" class="adm-btn-save">
+              </div>
+              <hr>
+              <div class="groups">
+                <Group :key="group.id" v-for="(group, index) in entity.groups" :group="group" :entity="entity" :rules="rules" @delete="deleteGroup(index)" />
+                <div class="empty-groups" v-if="!entity.groups.length">{{$t('edit.emptyGroups')}}</div>
+              </div>
             </div>
           </div>
-          <div v-if="success.length" class="adm-info-message-wrap adm-info-message-green">
-            <div class="adm-info-message">
-              <div class="adm-info-message-title">Успешно</div>
-              <template v-for="item in success">
-                {{item.message}}<br>
-              </template>
-              <br>
-              <div class="adm-info-message-icon"></div>
+          <div class="adm-detail-content-btns-wrap">
+            <div class="adm-detail-content-btns">
+              <input :disabled="isDisabled" v-on:click.prevent="save()" type="submit" :value="$t('edit.save')" :title="$t('edit.saveTitle')" class="adm-btn-save">
+              <input :disabled="isDisabled" v-on:click.prevent="apply()" type="submit" :value="$t('edit.apply')" :title="$t('edit.applyTitle')">
+              <input v-on:click.prevent="$emit('cancel')" type="button" :value="$t('edit.cancel')" :title="$t('edit.cancelTitle')">
             </div>
-          </div>
-          <div class="adm-detail-content-item-block">
-            <div class="add-field">
-              <select v-model="fieldId">
-                <option></option>
-                <option v-for="field in this.fields" :value="field.id">{{field.name}}</option>
-              </select>
-              <input :disabled="!fieldId" v-on:click.prevent="addRule(fieldId); fieldId = null;" type="button" :value="$t('edit.addRule')" :title="$t('edit.addRuleTitle')" class="adm-btn-save">
-            </div>
-            <hr>
-            <div class="groups">
-              <Group :key="group.id" v-for="(group, index) in entity.groups" :group="group" :entity="entity" :rules="rules" @delete="deleteGroup(index)" />
-              <div class="empty-groups" v-if="!entity.groups.length">{{$t('edit.emptyGroups')}}</div>
-            </div>
-          </div>
-        </div>
-        <div class="adm-detail-content-btns-wrap">
-          <div class="adm-detail-content-btns">
-            <input :disabled="isDisabled" v-on:click.prevent="save()" type="submit" :value="$t('edit.save')" :title="$t('edit.saveTitle')" class="adm-btn-save">
-            <input :disabled="isDisabled" v-on:click.prevent="apply()" type="submit" :value="$t('edit.apply')" :title="$t('edit.applyTitle')">
-            <input v-on:click.prevent="$emit('cancel')" type="button" :value="$t('edit.cancel')" :title="$t('edit.cancelTitle')">
           </div>
         </div>
       </div>
     </div>
+    <Spinner :loading="loading && !errors.length"/>
   </div>
-  <Spinner :loading="loading"/>
 </template>
-
 <script>
 
 import api from "./../api/api";
@@ -154,9 +155,11 @@ export default {
           }
         }
         entity.fields = Object.values(entity.fields);
-        this.entity = Object.assign({}, entity);
         this.rules = response.data.rules;
         this.loading = false;
+        this.entity = Object.assign({}, entity);
+      }).catch((response) => {
+        this.errors = response.errors;
       })
     },
     addRule(fieldId) {
@@ -187,15 +190,18 @@ export default {
     },
     save() {
       this.errors = [];
-      this.success = [];
       this.submit().then(() => {
+        this.success = [{message: "Правила успешно сохранены"}];
+        this.loading = false;
         this.$emit('cancel');
       });
     },
     apply() {
       this.errors = [];
-      this.success = [];
-      this.submit();
+      this.submit().then(() => {
+        this.success = [{message: "Правила успешно сохранены"}];
+        this.loading = false;
+      });
     },
     submit() {
       let rules = [];
@@ -214,10 +220,8 @@ export default {
       })
 
       return api.submit(this.entity.entity_type, this.entity.id, rules).catch((response) => {
+        this.success = [];
         this.errors = response.errors;
-        this.loading = false;
-      }).then(() => {
-        this.success.push({message: "Правила успешно сохранены"})
         this.loading = false;
       });
     }

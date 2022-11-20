@@ -200,8 +200,14 @@ class Fi1aBitrixValidationAdminComponent extends CBitrixComponent implements Con
     {
         $service = new EntityService();
 
+        try {
+            $entity = $service->getEntity($type, $id)->toArray();
+        } catch (ErrorException $exception) {
+            $this->addError(new Error($exception->getMessage()));
+        }
+
         return [
-            'entity' => $service->getEntity($type, $id)->toArray(),
+            'entity' => $entity,
             'rules' => $service->getRules(),
         ];
     }

@@ -55,11 +55,11 @@ interface RuleInterface extends IValueObject
     public function setMultiple(bool $multiple): void;
 
     /**
-     * Возвращает опции
+     * Установить опции
      *
-     * @return mixed[]
+     * @param mixed[] $options
      */
-    public function getOptions(): array;
+    public function setOptions(array $options): void;
 
     /**
      * Массив с ключами в верхнем регистре

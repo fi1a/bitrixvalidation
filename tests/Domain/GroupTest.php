@@ -137,7 +137,9 @@ class GroupTest extends ModuleTestCase
             'multiple' => false,
             'rules' => new RuleCollection([new MinRule([
                 'key' => 'min',
-                'options' => [],
+                'options' => [
+                    'min' => 10,
+                ],
                 'sort' => 500,
                 'id' => 1,
                 'field_id' => '1',
@@ -148,7 +150,9 @@ class GroupTest extends ModuleTestCase
             ]),
             'multiple_rules' => new RuleCollection([new MinRule([
                 'key' => 'minCount',
-                'options' => [],
+                'options' => [
+                    'min' => 10,
+                ],
                 'sort' => 500,
                 'id' => 1,
                 'field_id' => '1',
@@ -167,7 +171,9 @@ class GroupTest extends ModuleTestCase
             'rules' => [
                 [
                     'key' => 'min',
-                    'options' => [],
+                    'options' => [
+                        'min' => 10,
+                    ],
                     'sort' => 500,
                     'id' => 1,
                     'field_id' => '1',
@@ -179,7 +185,9 @@ class GroupTest extends ModuleTestCase
             'multiple_rules' => [
                 [
                     'key' => 'minCount',
-                    'options' => [],
+                    'options' => [
+                        'min' => 10,
+                    ],
                     'sort' => 500,
                     'id' => 1,
                     'field_id' => '1',

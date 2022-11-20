@@ -31,6 +31,6 @@ export default {
     ) {
       editComponent.$data.validation[groupComponent.group.id][this._id] = false;
     }
-  }
+  },
 }
 </script>

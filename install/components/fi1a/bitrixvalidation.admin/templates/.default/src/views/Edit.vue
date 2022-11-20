@@ -191,7 +191,7 @@ export default {
     save() {
       this.errors = [];
       this.submit().then(() => {
-        this.success = [{message: "Правила успешно сохранены"}];
+        this.success = [{message: this.$t('edit.successMessage')}];
         this.loading = false;
         this.$emit('cancel');
       });
@@ -199,7 +199,7 @@ export default {
     apply() {
       this.errors = [];
       this.submit().then(() => {
-        this.success = [{message: "Правила успешно сохранены"}];
+        this.success = [{message: this.$t('edit.successMessage')}];
         this.loading = false;
       });
     },

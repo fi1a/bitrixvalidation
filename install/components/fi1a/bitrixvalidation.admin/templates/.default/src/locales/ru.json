@@ -28,7 +28,8 @@
     "notMultiple": "Значение",
     "emptyRules": "Нет правил",
     "errors": "Ошибка",
-    "success": "Успешно"
+    "success": "Успешно",
+    "successMessage": "Правила успешно сохранены"
   },
   "errors": {
     "integer": "Значение должно быть целым числом",

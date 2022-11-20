@@ -100,4 +100,82 @@ class EntityService implements EntityServiceInterface
 
         return $rules;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteFieldRules(string $entityType, int $entityId, $fieldId): bool
+    {
+        if (!$entityType) {
+            throw new InvalidArgumentException('Аргумент $entityType не может быть пустым');
+        }
+        if (!$entityId) {
+            throw new InvalidArgumentException('Аргумент $entityId не может быть пустым');
+        }
+        if (!$fieldId) {
+            throw new InvalidArgumentException('Аргумент $fieldId не может быть пустым');
+        }
+
+        $ruleRepository = new RuleRepository();
+        $rules = $ruleRepository->getList([
+            'filter' => [
+                '=ENTITY_TYPE' => $entityType,
+                '=ENTITY_ID' => $entityId,
+                '=FIELD_ID' => $fieldId,
+            ],
+        ]);
+
+        return $ruleRepository->delete($rules);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteFieldMultipleRules(string $entityType, int $entityId, $fieldId): bool
+    {
+        if (!$entityType) {
+            throw new InvalidArgumentException('Аргумент $entityType не может быть пустым');
+        }
+        if (!$entityId) {
+            throw new InvalidArgumentException('Аргумент $entityId не может быть пустым');
+        }
+        if (!$fieldId) {
+            throw new InvalidArgumentException('Аргумент $fieldId не может быть пустым');
+        }
+
+        $ruleRepository = new RuleRepository();
+        $rules = $ruleRepository->getList([
+            'filter' => [
+                '=ENTITY_TYPE' => $entityType,
+                '=ENTITY_ID' => $entityId,
+                '=FIELD_ID' => $fieldId,
+                '=MULTIPLE' => 1,
+            ],
+        ]);
+
+        return $ruleRepository->delete($rules);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteEntityRules(string $entityType, int $entityId): bool
+    {
+        if (!$entityType) {
+            throw new InvalidArgumentException('Аргумент $entityType не может быть пустым');
+        }
+        if (!$entityId) {
+            throw new InvalidArgumentException('Аргумент $entityId не может быть пустым');
+        }
+
+        $ruleRepository = new RuleRepository();
+        $rules = $ruleRepository->getList([
+            'filter' => [
+                '=ENTITY_TYPE' => $entityType,
+                '=ENTITY_ID' => $entityId,
+            ],
+        ]);
+
+        return $ruleRepository->delete($rules);
+    }
 }

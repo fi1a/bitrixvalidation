@@ -6,6 +6,7 @@ use Bitrix\Main\DB\Connection;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ModuleManager;
+use Fi1a\BitrixValidation\Events\Events;
 use Fi1a\BitrixValidation\ORM\RuleTable;
 
 Loc::loadMessages(__FILE__);
@@ -28,12 +29,12 @@ class fi1a_bitrixvalidation extends CModule
     /**
      * @var string
      */
-    private $moduleDir = null;
+    private $moduleDir;
 
     /**
      * @var string
      */
-    private $bitrixAdminDir = null;
+    private $bitrixAdminDir;
 
     /**
      * Конструктор
@@ -230,6 +231,50 @@ class fi1a_bitrixvalidation extends CModule
      */
     public function InstallEvents(): bool
     {
+        RegisterModuleDependences(
+            'iblock',
+            'OnAfterIBlockPropertyDelete',
+            $this->MODULE_ID,
+            Events::class,
+            'onAfterIBlockPropertyDelete'
+        );
+        RegisterModuleDependences(
+            'iblock',
+            'OnBeforeIBlockPropertyUpdate',
+            $this->MODULE_ID,
+            Events::class,
+            'onBeforeIBlockPropertyUpdate'
+        );
+        RegisterModuleDependences(
+            'iblock',
+            'OnAfterIBlockPropertyUpdate',
+            $this->MODULE_ID,
+            Events::class,
+            'onAfterIBlockPropertyUpdate'
+        );
+        RegisterModuleDependences(
+            'iblock',
+            'OnAfterIBlockDelete',
+            $this->MODULE_ID,
+            Events::class,
+            'onAfterIBlockDelete'
+        );
+        RegisterModuleDependences(
+            'main',
+            'OnAfterUserTypeDelete',
+            $this->MODULE_ID,
+            Events::class,
+            'onAfterUserTypeDelete'
+        );
+        RegisterModuleDependences(
+            'highloadblock',
+            'HighloadblockOnDelete',
+            $this->MODULE_ID,
+            Events::class,
+            'highloadblockOnDelete'
+        );
+
+
         return true;
     }
 
@@ -326,6 +371,49 @@ class fi1a_bitrixvalidation extends CModule
      */
     public function UnInstallEvents(): bool
     {
+        UnRegisterModuleDependences(
+            'iblock',
+            'OnAfterIBlockPropertyDelete',
+            $this->MODULE_ID,
+            Events::class,
+            'onAfterIBlockPropertyDelete'
+        );
+        UnRegisterModuleDependences(
+            'iblock',
+            'OnBeforeIBlockPropertyUpdate',
+            $this->MODULE_ID,
+            Events::class,
+            'onBeforeIBlockPropertyUpdate'
+        );
+        UnRegisterModuleDependences(
+            'iblock',
+            'OnAfterIBlockPropertyUpdate',
+            $this->MODULE_ID,
+            Events::class,
+            'onAfterIBlockPropertyUpdate'
+        );
+        UnRegisterModuleDependences(
+            'iblock',
+            'OnAfterIBlockDelete',
+            $this->MODULE_ID,
+            Events::class,
+            'onAfterIBlockDelete'
+        );
+        UnRegisterModuleDependences(
+            'main',
+            'OnAfterUserTypeDelete',
+            $this->MODULE_ID,
+            Events::class,
+            'onAfterUserTypeDelete'
+        );
+        UnRegisterModuleDependences(
+            'highloadblock',
+            'HighloadblockOnDelete',
+            $this->MODULE_ID,
+            Events::class,
+            'highloadblockOnDelete'
+        );
+
         return true;
     }
 

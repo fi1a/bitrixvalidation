@@ -77,6 +77,9 @@ Loader::registerAutoloadClasses(
         // ORM
         '\Fi1a\BitrixValidation\ORM\Rule' => 'lib/ORM/Rule.php',
         '\Fi1a\BitrixValidation\ORM\RuleTable' => 'lib/ORM/RuleTable.php',
+
+        // События
+        '\Fi1a\BitrixValidation\Events\Events' => 'lib/Events/Events.php',
     ]
 );
 

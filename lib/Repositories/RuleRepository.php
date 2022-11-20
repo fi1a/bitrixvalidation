@@ -131,9 +131,19 @@ class RuleRepository implements RuleRepositoryInterface
                 throw new InvalidArgumentException(implode('; ', $result->getErrorMessages()));
             }
         }
-        foreach ($collection as $collectionRule) {
-            assert($collectionRule instanceof RuleInterface);
-            $result = RuleTable::delete($collectionRule->getId());
+        $this->delete($collection);
+
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(RuleCollectionInterface $rules): bool
+    {
+        foreach ($rules as $rule) {
+            assert($rule instanceof RuleInterface);
+            $result = RuleTable::delete($rule->getId());
             if (!$result->isSuccess()) {
                 throw new InvalidArgumentException(implode('; ', $result->getErrorMessages()));
             }

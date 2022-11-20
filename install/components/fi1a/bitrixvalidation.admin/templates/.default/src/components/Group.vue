@@ -140,6 +140,8 @@ export default {
 <style>
 .group {
   margin-bottom: 30px;
+  background: #fff;
+  padding: 10px 30px 30px 30px;
 }
 
 .internal {

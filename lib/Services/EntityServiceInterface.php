@@ -44,4 +44,23 @@ interface EntityServiceInterface
      * @return mixed[][]
      */
     public function getRules(): array;
+
+    /**
+     * Удаляет правила для поля
+     *
+     * @param int|string $fieldId
+     */
+    public function deleteFieldRules(string $entityType, int $entityId, $fieldId): bool;
+
+    /**
+     * Удаляет правила для множественного значения поля
+     *
+     * @param int|string $fieldId
+     */
+    public function deleteFieldMultipleRules(string $entityType, int $entityId, $fieldId): bool;
+
+    /**
+     * Удаляет правила для сущности
+     */
+    public function deleteEntityRules(string $entityType, int $entityId): bool;
 }

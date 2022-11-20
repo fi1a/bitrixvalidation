@@ -37,4 +37,9 @@ interface RuleRepositoryInterface
      * Сохранение коллекции правил
      */
     public function save(string $entityType, int $entityId, RuleCollectionInterface $rules): bool;
+
+    /**
+     * Удаление правил
+     */
+    public function delete(RuleCollectionInterface $rules): bool;
 }

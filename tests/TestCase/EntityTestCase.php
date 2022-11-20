@@ -44,6 +44,11 @@ class EntityTestCase extends ModuleTestCase
     protected static $iblockMultiplePropertyId;
 
     /**
+     * @var int
+     */
+    protected static $userTypeId;
+
+    /**
      * До начала вызова тестов
      */
     public static function setUpBeforeClass(): void
@@ -197,10 +202,46 @@ class EntityTestCase extends ModuleTestCase
         }
 
         $userTypeEntity  = new CUserTypeEntity();
-        $userTypeId = $userTypeEntity->Add([
+        static::$userTypeId = $userTypeEntity->Add([
             'ENTITY_ID' => 'HLBLOCK_' . static::$hlId,
             'FIELD_NAME' => 'UF_FBV_TEST1',
             'USER_TYPE_ID' => 'string',
+            'XML_ID' => '',
+            'SORT' => '500',
+            'MULTIPLE' => 'N',
+            'MANDATORY' => 'Y',
+            'SETTINGS' => [
+                'DEFAULT_VALUE' => '',
+                'SIZE' => '20',
+                'ROWS' => '1',
+                'MIN_LENGTH' => '0',
+                'MAX_LENGTH' => '0',
+                'REGEXP' => '',
+            ],
+            'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
+            'ERROR_MESSAGE' => null,
+            'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
+        ]);
+        if (!static::$userTypeId) {
+            throw new ErrorException('Не удалось добавить пользовательское поле');
+        }
+
+        $result = RuleTable::add([
+            'KEY' => 'min',
+            'OPTIONS' => '{"min": 10}',
+            'SORT' => 500,
+            'FIELD_ID' => (string) static::$userTypeId,
+            'ENTITY_TYPE' => 'hl',
+            'ENTITY_ID' => static::$hlId,
+        ]);
+        if ($result->isSuccess()) {
+            static::$ruleIds[] = $result->getId();
+        }
+
+        $userTypeId = $userTypeEntity->Add([
+            'ENTITY_ID' => 'HLBLOCK_' . static::$hlId,
+            'FIELD_NAME' => 'UF_FBV_TEST2',
+            'USER_TYPE_ID' => 'enumeration',
             'XML_ID' => '',
             'SORT' => '500',
             'MULTIPLE' => 'N',
@@ -231,30 +272,6 @@ class EntityTestCase extends ModuleTestCase
         ]);
         if ($result->isSuccess()) {
             static::$ruleIds[] = $result->getId();
-        }
-
-        $userTypeId = $userTypeEntity->Add([
-            'ENTITY_ID' => 'HLBLOCK_' . static::$hlId,
-            'FIELD_NAME' => 'UF_FBV_TEST2',
-            'USER_TYPE_ID' => 'enumeration',
-            'XML_ID' => '',
-            'SORT' => '500',
-            'MULTIPLE' => 'N',
-            'MANDATORY' => 'Y',
-            'SETTINGS' => [
-                'DEFAULT_VALUE' => '',
-                'SIZE' => '20',
-                'ROWS' => '1',
-                'MIN_LENGTH' => '0',
-                'MAX_LENGTH' => '0',
-                'REGEXP' => '',
-            ],
-            'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
-            'ERROR_MESSAGE' => null,
-            'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
-        ]);
-        if (!$userTypeId) {
-            throw new ErrorException('Не удалось добавить пользовательское поле');
         }
     }
 

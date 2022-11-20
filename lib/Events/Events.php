@@ -15,7 +15,7 @@ class Events
     /**
      * @var mixed[]
      */
-    private static $deleteMultipleRules = [];
+    private static $properties = [];
 
     /**
      * Событие удаления свойства инфоблока
@@ -39,7 +39,7 @@ class Events
             return true;
         }
         $prevProperty = CIBlockProperty::GetByID($property['ID'])->Fetch();
-        static::$deleteMultipleRules[$property['ID']] = $prevProperty['MULTIPLE'] === 'Y';
+        static::$properties[$property['ID']] = $prevProperty;
 
         return true;
     }
@@ -52,13 +52,17 @@ class Events
     public static function onAfterIBlockPropertyUpdate(array $property): void
     {
         if (
-            !isset(static::$deleteMultipleRules[$property['ID']])
-            || !static::$deleteMultipleRules[$property['ID']]
+            !isset(static::$properties[$property['ID']])
+            || static::$properties[$property['ID']]['MULTIPLE'] === 'N'
         ) {
             return;
         }
         $service = new EntityService();
-        $service->deleteFieldMultipleRules('ib', (int) $property['IBLOCK_ID'], $property['ID']);
+        $service->deleteFieldMultipleRules(
+            'ib',
+            (int) static::$properties[$property['ID']]['IBLOCK_ID'],
+            $property['ID']
+        );
     }
 
     /**
@@ -69,11 +73,8 @@ class Events
      */
     public static function onAfterUserTypeDelete(array $field, $id): void
     {
-        if (mb_substr($field['ENTITY_ID'], 0, 8) !== 'HLBLOCK_') {
-            return;
-        }
         $matches = [];
-        if (preg_match('/^HLBLOCK_([0-9]+)$/mui', $field['ENTITY_ID'], $matches) === false) {
+        if (preg_match('/^HLBLOCK_([0-9]+)$/mui', $field['ENTITY_ID'], $matches) <= 0) {
             return;
         }
         $id = (int) $matches[1];

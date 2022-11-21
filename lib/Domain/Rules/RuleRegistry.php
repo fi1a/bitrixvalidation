@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\BitrixValidation\Domain\Rule;
+namespace Fi1a\BitrixValidation\Domain\Rules;
 
 use InvalidArgumentException;
 

@@ -9,7 +9,7 @@ use CIBlock;
 use CIBlockProperty;
 use CIBlockType;
 use CUserTypeEntity;
-use Fi1a\BitrixValidation\Domain\Rule\RuleCollectionInterface;
+use Fi1a\BitrixValidation\Domain\Rules\RuleCollectionInterface;
 use Fi1a\BitrixValidation\Repositories\RuleRepository;
 use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 

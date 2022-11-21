@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fi1a\BitrixValidation\Domain;
 
-use Fi1a\BitrixValidation\Domain\Rule\RuleInterface;
+use Fi1a\BitrixValidation\Domain\Rules\RuleInterface;
 
 /**
  * Группа правил

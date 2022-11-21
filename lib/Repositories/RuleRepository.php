@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Fi1a\BitrixValidation\Repositories;
 
 use Bitrix\Main\Web\Json;
-use Fi1a\BitrixValidation\Domain\Rule\RuleCollection;
-use Fi1a\BitrixValidation\Domain\Rule\RuleCollectionInterface;
-use Fi1a\BitrixValidation\Domain\Rule\RuleInterface;
-use Fi1a\BitrixValidation\Domain\Rule\RuleRegistry;
+use Fi1a\BitrixValidation\Domain\Rules\RuleCollection;
+use Fi1a\BitrixValidation\Domain\Rules\RuleCollectionInterface;
+use Fi1a\BitrixValidation\Domain\Rules\RuleInterface;
+use Fi1a\BitrixValidation\Domain\Rules\RuleRegistry;
 use Fi1a\BitrixValidation\ORM\RuleTable;
 use InvalidArgumentException;
 

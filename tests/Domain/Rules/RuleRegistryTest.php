@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Unit\BitrixValidation\Domain\Rule;
+namespace Fi1a\Unit\BitrixValidation\Domain\Rules;
 
-use Fi1a\BitrixValidation\Domain\Rule\MinRule;
-use Fi1a\BitrixValidation\Domain\Rule\RuleRegistry;
+use Fi1a\BitrixValidation\Domain\Rules\MinRule;
+use Fi1a\BitrixValidation\Domain\Rules\RuleRegistry;
 use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
 use InvalidArgumentException;
 

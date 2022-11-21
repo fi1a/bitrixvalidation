@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Unit\BitrixValidation\Domain\Rule;
+namespace Fi1a\Unit\BitrixValidation\Domain\Rules;
 
-use Fi1a\BitrixValidation\Domain\Rule\MaxRule;
+use Fi1a\BitrixValidation\Domain\Rules\MinRule;
 use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
 use InvalidArgumentException;
 
 /**
- * Проверка на максимальное значение
+ * Проверка на минимальное значение
  */
-class MaxRuleTest extends ModuleTestCase
+class MinRuleTest extends ModuleTestCase
 {
     /**
      * Возврашаемые типы
      */
     public function testGetTypes(): void
     {
-        $this->assertEquals(['number'], MaxRule::getTypes());
+        $this->assertEquals(['number'], MinRule::getTypes());
     }
 
     /**
@@ -26,7 +26,7 @@ class MaxRuleTest extends ModuleTestCase
      */
     public function testGetTitle(): void
     {
-        $this->assertIsString(MaxRule::getTitle());
+        $this->assertIsString(MinRule::getTitle());
     }
 
     /**
@@ -34,10 +34,10 @@ class MaxRuleTest extends ModuleTestCase
      */
     public function testOptions(): void
     {
-        $rule = new MaxRule([
-            'key' => 'max',
+        $rule = new MinRule([
+            'key' => 'min',
             'options' => [
-                'max' => 10,
+                'min' => 10,
             ],
             'sort' => 500,
             'id' => 1,
@@ -46,7 +46,7 @@ class MaxRuleTest extends ModuleTestCase
             'entity_id' => 1,
             'multiple' => false,
         ]);
-        $this->assertEquals(['max' => 10,], $rule->getOptions());
+        $this->assertEquals(['min' => 10,], $rule->getOptions());
     }
 
     /**
@@ -55,8 +55,8 @@ class MaxRuleTest extends ModuleTestCase
     public function testOptionsExceptionEmpty(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new MaxRule([
-            'key' => 'max',
+        new MinRule([
+            'key' => 'min',
             'options' => [],
             'sort' => 500,
             'id' => 1,
@@ -73,10 +73,10 @@ class MaxRuleTest extends ModuleTestCase
     public function testOptionsExceptionNotNumeric(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new MaxRule([
-            'key' => 'max',
+        new MinRule([
+            'key' => 'min',
             'options' => [
-                'max' => 'foo',
+                'min' => 'foo',
             ],
             'sort' => 500,
             'id' => 1,

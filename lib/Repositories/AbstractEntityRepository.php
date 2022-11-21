@@ -13,8 +13,8 @@ use Fi1a\BitrixValidation\Domain\Group;
 use Fi1a\BitrixValidation\Domain\GroupCollection;
 use Fi1a\BitrixValidation\Domain\GroupCollectionInterface;
 use Fi1a\BitrixValidation\Domain\GroupInterface;
-use Fi1a\BitrixValidation\Domain\Rule\RuleCollection;
-use Fi1a\BitrixValidation\Domain\Rule\RuleInterface;
+use Fi1a\BitrixValidation\Domain\Rules\RuleCollection;
+use Fi1a\BitrixValidation\Domain\Rules\RuleInterface;
 
 /**
  * Абстрактный класс репозитория сущности

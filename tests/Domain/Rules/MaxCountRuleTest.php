@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Fi1a\Unit\BitrixValidation\Domain\Rule;
+namespace Fi1a\Unit\BitrixValidation\Domain\Rules;
 
-use Fi1a\BitrixValidation\Domain\Rule\MinRule;
+use Fi1a\BitrixValidation\Domain\Rules\MaxCountRule;
 use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
 use InvalidArgumentException;
 
 /**
- * Проверка на минимальное значение
+ * Проверка на максимальное количество значений в массиве
  */
-class MinRuleTest extends ModuleTestCase
+class MaxCountRuleTest extends ModuleTestCase
 {
     /**
      * Возврашаемые типы
      */
     public function testGetTypes(): void
     {
-        $this->assertEquals(['number'], MinRule::getTypes());
+        $this->assertEquals(['multiple'], MaxCountRule::getTypes());
     }
 
     /**
@@ -26,7 +26,7 @@ class MinRuleTest extends ModuleTestCase
      */
     public function testGetTitle(): void
     {
-        $this->assertIsString(MinRule::getTitle());
+        $this->assertIsString(MaxCountRule::getTitle());
     }
 
     /**
@@ -34,19 +34,19 @@ class MinRuleTest extends ModuleTestCase
      */
     public function testOptions(): void
     {
-        $rule = new MinRule([
-            'key' => 'min',
+        $rule = new MaxCountRule([
+            'key' => 'maxCount',
             'options' => [
-                'min' => 10,
+                'max' => 10,
             ],
             'sort' => 500,
             'id' => 1,
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
-            'multiple' => false,
+            'multiple' => true,
         ]);
-        $this->assertEquals(['min' => 10,], $rule->getOptions());
+        $this->assertEquals(['max' => 10,], $rule->getOptions());
     }
 
     /**
@@ -55,15 +55,15 @@ class MinRuleTest extends ModuleTestCase
     public function testOptionsExceptionEmpty(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new MinRule([
-            'key' => 'min',
+        new MaxCountRule([
+            'key' => 'maxCount',
             'options' => [],
             'sort' => 500,
             'id' => 1,
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
-            'multiple' => false,
+            'multiple' => true,
         ]);
     }
 
@@ -73,17 +73,37 @@ class MinRuleTest extends ModuleTestCase
     public function testOptionsExceptionNotNumeric(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new MinRule([
-            'key' => 'min',
+        new MaxCountRule([
+            'key' => 'maxCount',
             'options' => [
-                'min' => 'foo',
+                'max' => 'foo',
             ],
             'sort' => 500,
             'id' => 1,
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
-            'multiple' => false,
+            'multiple' => true,
+        ]);
+    }
+
+    /**
+     * Опции (исключение)
+     */
+    public function testOptionsExceptionNotInteger(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new MaxCountRule([
+            'key' => 'maxCount',
+            'options' => [
+                'max' => 10.5,
+            ],
+            'sort' => 500,
+            'id' => 1,
+            'field_id' => '1',
+            'entity_type' => 'ib',
+            'entity_id' => 1,
+            'multiple' => true,
         ]);
     }
 }

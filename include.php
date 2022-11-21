@@ -3,11 +3,11 @@ namespace Fi1a\UserSettings;
 
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
-use Fi1a\BitrixValidation\Domain\Rule\MaxRule;
-use Fi1a\BitrixValidation\Domain\Rule\MinRule;
-use Fi1a\BitrixValidation\Domain\Rule\MaxCountRule;
-use Fi1a\BitrixValidation\Domain\Rule\MinCountRule;
-use Fi1a\BitrixValidation\Domain\Rule\RuleRegistry;
+use Fi1a\BitrixValidation\Domain\Rules\MaxRule;
+use Fi1a\BitrixValidation\Domain\Rules\MinRule;
+use Fi1a\BitrixValidation\Domain\Rules\MaxCountRule;
+use Fi1a\BitrixValidation\Domain\Rules\MinCountRule;
+use Fi1a\BitrixValidation\Domain\Rules\RuleRegistry;
 use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
 
 if (is_file(__DIR__ . '/vendor/autoload.php')) {

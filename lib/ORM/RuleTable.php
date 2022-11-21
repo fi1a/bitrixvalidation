@@ -8,6 +8,7 @@ use Bitrix\Main\Entity\DataManager;
 use Bitrix\Main\ORM\Fields\BooleanField;
 use Bitrix\Main\ORM\Fields\IntegerField;
 use Bitrix\Main\ORM\Fields\StringField;
+use Bitrix\Main\ORM\Fields\TextField;
 
 /**
  * Правила
@@ -37,7 +38,7 @@ class RuleTable extends DataManager
             'KEY' => new StringField('KEY', [
                 'required' => true,
             ]),
-            'OPTIONS' => new StringField('OPTIONS', [
+            'OPTIONS' => new TextField('OPTIONS', [
                 'required' => true,
             ]),
             'SORT' => new IntegerField('SORT', [
@@ -54,6 +55,9 @@ class RuleTable extends DataManager
             ]),
             'MULTIPLE' => new BooleanField('MULTIPLE', [
                 'values' => [0, 1],
+            ]),
+            'MESSAGE' => new TextField('MESSAGE', [
+                'nullable' => true,
             ]),
         ];
     }

@@ -1,38 +1,42 @@
 <template>
   <tr :key="rule.id">
-      <td class="rule-cell">
-        <select v-model="v$.rule.key.$model" class="rule-select">
-          <option :value="null">{{$t('edit.selectRule')}}</option>
-          <option v-if="rule.key" :value="rule.key">{{getCurrentRule.title}}</option>
-          <option v-for="item in rulesByTypeAndFilterSelected" :value="item.key">{{item.title}}</option>
-        </select>
-        <p v-if="v$.rule.key.$invalid && v$.rule.key.$dirty" class="error">
+    <td class="rule-cell">
+      <select v-model="v$.rule.key.$model" class="rule-select">
+        <option :value="null">{{$t('edit.selectRule')}}</option>
+        <option v-if="rule.key" :value="rule.key">{{getCurrentRule.title}}</option>
+        <option v-for="item in rulesByTypeAndFilterSelected" :value="item.key">{{item.title}}</option>
+      </select>
+      <p v-if="v$.rule.key.$invalid && v$.rule.key.$dirty" class="error">
+        {{$t('errors.required')}}
+      </p>
+    </td>
+    <td class="rule-cell">
+      <MinRule v-if="rule.key === 'min'" :options="rule.options" @updateOptions="updateOptions($event)"/>
+      <MaxRule v-if="rule.key === 'max'" :options="rule.options" @updateOptions="updateOptions($event)"/>
+      <MinCountRule v-if="rule.key === 'minCount'" :options="rule.options" @updateOptions="updateOptions($event)"/>
+      <MaxCountRule v-if="rule.key === 'maxCount'" :options="rule.options" @updateOptions="updateOptions($event)"/>
+    </td>
+    <td class="rule-cell">
+      <input type="text" v-model="rule.message" class="rule-message">
+      <p class="rule-message-description" v-if="getCurrentRule">{{getCurrentRule.messageDescription}}</p>
+    </td>
+    <td class="rule-cell">
+      <input type="text" v-model="v$.rule.sort.$model" class="rule-sort">
+      <p v-if="v$.rule.sort.$invalid" class="error">
+        <template v-if="v$.rule.sort.integer.$invalid">
+          {{$t('errors.integer')}}
+        </template>
+        <template v-else-if="v$.rule.sort.required.$invalid">
           {{$t('errors.required')}}
-        </p>
-      </td>
-      <td class="rule-cell">
-        <MinRule v-if="rule.key === 'min'" :options="rule.options" @updateOptions="updateOptions($event)"/>
-        <MaxRule v-if="rule.key === 'max'" :options="rule.options" @updateOptions="updateOptions($event)"/>
-        <MinCountRule v-if="rule.key === 'minCount'" :options="rule.options" @updateOptions="updateOptions($event)"/>
-        <MaxCountRule v-if="rule.key === 'maxCount'" :options="rule.options" @updateOptions="updateOptions($event)"/>
-      </td>
-      <td class="rule-cell">
-        <input type="text" v-model="v$.rule.sort.$model" class="rule-sort">
-        <p v-if="v$.rule.sort.$invalid" class="error">
-          <template v-if="v$.rule.sort.integer.$invalid">
-            {{$t('errors.integer')}}
-          </template>
-          <template v-else-if="v$.rule.sort.required.$invalid">
-            {{$t('errors.required')}}
-          </template>
-          <template v-else-if="v$.rule.sort.minValue.$invalid">
-            {{$t('errors.minValue', {minValue: 0})}}
-          </template>
-        </p>
-      </td>
-      <td>
-        <input v-on:click.prevent="$emit('delete')" type="button" title="Удалить" value="Удалить">
-      </td>
+        </template>
+        <template v-else-if="v$.rule.sort.minValue.$invalid">
+          {{$t('errors.minValue', {minValue: 0})}}
+        </template>
+      </p>
+    </td>
+    <td>
+      <input class="rule-delete" v-on:click.prevent="$emit('delete')" type="button" :title="$t('edit.delete')" :value="$t('edit.delete')">
+    </td>
   </tr>
 </template>
 
@@ -107,7 +111,7 @@ export default {
         },
         sort: {
           required, integer, minValue: minValue(0)
-        }
+        },
       }
     }
   },
@@ -158,5 +162,19 @@ export default {
 .adm-workarea .rule-sort {
   width: 50px;
   margin-top: 18px !important;
+}
+
+.adm-workarea .rule-message {
+  min-width: 300px;
+  margin-top: 18px !important;
+}
+
+.rule-delete {
+  margin-top: 14px !important;
+}
+
+.rule-message-description {
+  margin-top: 2px;
+  font-style: italic;
 }
 </style>

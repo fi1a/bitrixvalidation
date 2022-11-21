@@ -93,6 +93,7 @@ class EntityService implements EntityServiceInterface
              */
             $rules[] = [
                 'title' => $ruleClass::getTitle(),
+                'messageDescription' => $ruleClass::getMessageDescription(),
                 'key' => $key,
                 'types' => $ruleClass::getTypes(),
             ];

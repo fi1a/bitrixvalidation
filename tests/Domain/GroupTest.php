@@ -180,6 +180,7 @@ class GroupTest extends ModuleTestCase
                     'entity_type' => 'ib',
                     'entity_id' => 1,
                     'multiple' => false,
+                    'message' => null,
                 ],
             ],
             'multiple_rules' => [
@@ -194,6 +195,7 @@ class GroupTest extends ModuleTestCase
                     'entity_type' => 'ib',
                     'entity_id' => 1,
                     'multiple' => true,
+                    'message' => null,
                 ],
             ],
         ];

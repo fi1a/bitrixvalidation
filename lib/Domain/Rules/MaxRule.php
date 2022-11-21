@@ -31,6 +31,14 @@ class MaxRule extends AbstractRule
     /**
      * @inheritDoc
      */
+    public static function getMessageDescription(): string
+    {
+        return Loc::getMessage('FBV_MAX_MESSAGE_DESCRIPTION');
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function setOptions(array $options): void
     {
         if (!isset($options['max'])) {

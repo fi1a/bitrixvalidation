@@ -57,6 +57,7 @@ class RuleRepositoryTest extends EntityTestCase
             'entity_type' => 'ib',
             'entity_id' => static::$iblockId,
             'multiple' => false,
+            'message' => null,
         ]);
         $this->assertTrue($repository->save('ib', static::$iblockId, $rules));
         $rules->delete(2);

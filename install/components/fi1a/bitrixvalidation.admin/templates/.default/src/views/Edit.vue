@@ -138,6 +138,7 @@ export default {
         entity_type: entity.entity_type,
         entity_id: entity.id,
         multiple: multiple,
+        message: null,
       }
     },
     load() {

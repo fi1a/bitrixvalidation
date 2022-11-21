@@ -62,6 +62,11 @@ interface RuleInterface extends IValueObject
     public function setOptions(array $options): void;
 
     /**
+     * Установить сообщение об ошибке
+     */
+    public function setMessage(?string $message): void;
+
+    /**
      * Массив с ключами в верхнем регистре
      *
      * @return mixed[]
@@ -79,4 +84,9 @@ interface RuleInterface extends IValueObject
      * Возвращает заголовок
      */
     public static function getTitle(): string;
+
+    /**
+     * Возвращает переменные для замены в сообщениях об ошибках
+     */
+    public static function getMessageDescription(): string;
 }

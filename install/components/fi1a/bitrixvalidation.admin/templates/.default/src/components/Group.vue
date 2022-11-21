@@ -8,6 +8,7 @@
         <tr class="heading">
           <td class="col-rule">{{$t('edit.rule')}}</td>
           <td>{{$t('edit.options')}}</td>
+          <td class="col-rule">{{$t('edit.message')}}</td>
           <td class="col-rule">{{$t('edit.sort')}}</td>
           <td class="col-delete">{{$t('edit.delete')}}</td>
         </tr>
@@ -23,6 +24,7 @@
       <tr class="heading">
         <td class="col-rule">{{$t('edit.rule')}}</td>
         <td>{{$t('edit.options')}}</td>
+        <td class="col-rule">{{$t('edit.message')}}</td>
         <td class="col-rule">{{$t('edit.sort')}}</td>
         <td class="col-delete">{{$t('edit.delete')}}</td>
       </tr>

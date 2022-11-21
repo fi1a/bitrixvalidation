@@ -29,6 +29,7 @@ class AbstractRuleTest extends ModuleTestCase
             'entity_type' => 'ib',
             'entity_id' => 1,
             'multiple' => false,
+            'message' => null,
         ];
         $rule = new MinRule($fields);
         $this->assertEquals($fields, $rule->toArray());
@@ -173,6 +174,7 @@ class AbstractRuleTest extends ModuleTestCase
             'ENTITY_TYPE' => 'ib',
             'ENTITY_ID' => 1,
             'MULTIPLE' => false,
+            'MESSAGE' => null,
         ], $rule->toArrayUpperCase());
     }
 }

@@ -39,6 +39,7 @@ class RuleRepository implements RuleRepositoryInterface
                 'entity_type' => $entity['ENTITY_TYPE'],
                 'entity_id' => $entity['ENTITY_ID'],
                 'multiple' => (int) $entity['MULTIPLE'] === 1,
+                'message' => $entity['MESSAGE'],
             ];
         }
 

@@ -16,7 +16,7 @@ abstract class AbstractRule extends ValueObject implements RuleInterface
      * @var string[]
      */
     protected $modelKeys = [
-        'key', 'options', 'sort', 'id', 'field_id', 'entity_type', 'entity_id', 'multiple',
+        'key', 'options', 'sort', 'id', 'field_id', 'entity_type', 'entity_id', 'multiple', 'message',
     ];
 
     /**
@@ -93,6 +93,14 @@ abstract class AbstractRule extends ValueObject implements RuleInterface
     public function setMultiple(bool $multiple): void
     {
         $this->modelSet('multiple', $multiple);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setMessage(?string $message): void
+    {
+        $this->modelSet('message', $message);
     }
 
     /**

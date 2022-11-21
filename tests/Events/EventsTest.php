@@ -50,7 +50,7 @@ class EventsTest extends EntityTestCase
     /**
      * Удаление множественных правил при переключении множественности у поля
      */
-    public function testIBlockPropertyUpdate(): void
+    public function testIBlockPropertyUpdateMultiple(): void
     {
         $ruleRepository = new RuleRepository();
         $rules = $ruleRepository->getList([
@@ -87,6 +87,47 @@ class EventsTest extends EntityTestCase
                 '=ENTITY_ID' => static::$iblockId,
                 '=FIELD_ID' => static::$iblockMultiplePropertyId,
                 '=MULTIPLE' => 1,
+            ],
+        ]);
+        $this->assertInstanceOf(RuleCollectionInterface::class, $rules);
+        $this->assertCount(0, $rules);
+    }
+
+    /**
+     * Удаление правил при переключении типа у поля
+     */
+    public function testIBlockPropertyUpdateNotFound(): void
+    {
+        $ibp = new CIBlockProperty();
+        $ibp->Update(static::$iblockPropertyId, ['PROPERTY_TYPE' => 'S',]);
+        $this->assertTrue(true);
+    }
+
+    /**
+     * Удаление правил при переключении типа у поля
+     */
+    public function testIBlockPropertyUpdateChangeType(): void
+    {
+        $ruleRepository = new RuleRepository();
+        $rules = $ruleRepository->getList([
+            'filter' => [
+                '=ENTITY_TYPE' => 'ib',
+                '=ENTITY_ID' => static::$iblockId,
+                '=FIELD_ID' => static::$iblockMultiplePropertyId,
+            ],
+        ]);
+        $this->assertInstanceOf(RuleCollectionInterface::class, $rules);
+        $this->assertGreaterThanOrEqual(1, count($rules));
+
+        $ibp = new CIBlockProperty();
+
+        $ibp->Update(static::$iblockMultiplePropertyId, ['PROPERTY_TYPE' => 'S',]);
+
+        $rules = $ruleRepository->getList([
+            'filter' => [
+                '=ENTITY_TYPE' => 'ib',
+                '=ENTITY_ID' => static::$iblockId,
+                '=FIELD_ID' => static::$iblockMultiplePropertyId,
             ],
         ]);
         $this->assertInstanceOf(RuleCollectionInterface::class, $rules);
@@ -180,7 +221,7 @@ class EventsTest extends EntityTestCase
             ],
         ]);
         $this->assertInstanceOf(RuleCollectionInterface::class, $rules);
-        $this->assertCount(2, $rules);
+        $this->assertGreaterThanOrEqual(1, count($rules));
 
         CIBlock::Delete(static::$iblockId);
         CIBlockType::Delete('fbv_test');

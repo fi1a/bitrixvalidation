@@ -35,11 +35,7 @@ class Events
      */
     public static function onBeforeIBlockPropertyUpdate(array $property): bool
     {
-        if ($property['MULTIPLE'] === 'Y') {
-            return true;
-        }
-        $prevProperty = CIBlockProperty::GetByID($property['ID'])->Fetch();
-        static::$properties[$property['ID']] = $prevProperty;
+        static::$properties[$property['ID']] = CIBlockProperty::GetByID($property['ID'])->Fetch();
 
         return true;
     }
@@ -51,18 +47,32 @@ class Events
      */
     public static function onAfterIBlockPropertyUpdate(array $property): void
     {
-        if (
-            !isset(static::$properties[$property['ID']])
-            || static::$properties[$property['ID']]['MULTIPLE'] === 'N'
-        ) {
+        if (static::$properties[$property['ID']] === false) {
             return;
         }
-        $service = new EntityService();
-        $service->deleteFieldMultipleRules(
-            'ib',
-            (int) static::$properties[$property['ID']]['IBLOCK_ID'],
-            $property['ID']
-        );
+        if (
+            isset($property['MULTIPLE'])
+            && $property['MULTIPLE'] === 'N'
+            && static::$properties[$property['ID']]['MULTIPLE'] === 'Y'
+        ) {
+            $service = new EntityService();
+            $service->deleteFieldMultipleRules(
+                'ib',
+                (int) static::$properties[$property['ID']]['IBLOCK_ID'],
+                $property['ID']
+            );
+        }
+        if (
+            isset($property['PROPERTY_TYPE'])
+            && $property['PROPERTY_TYPE'] !== static::$properties[$property['ID']]['PROPERTY_TYPE']
+        ) {
+            $service = new EntityService();
+            $service->deleteFieldRules(
+                'ib',
+                (int) static::$properties[$property['ID']]['IBLOCK_ID'],
+                $property['ID']
+            );
+        }
     }
 
     /**

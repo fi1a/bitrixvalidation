@@ -273,7 +273,27 @@ class fi1a_bitrixvalidation extends CModule
             Events::class,
             'highloadblockOnDelete'
         );
-
+        RegisterModuleDependences(
+            'iblock',
+            'OnBeforeIBlockElementAdd',
+            $this->MODULE_ID,
+            Events::class,
+            'onBeforeIBlockElementAddAndUpdate'
+        );
+        RegisterModuleDependences(
+            'iblock',
+            'OnBeforeIBlockElementUpdate',
+            $this->MODULE_ID,
+            Events::class,
+            'onBeforeIBlockElementAddAndUpdate'
+        );
+        RegisterModuleDependences(
+            'main',
+            'OnBeforeProlog',
+            $this->MODULE_ID,
+            Events::class,
+            'onBeforeProlog'
+        );
 
         return true;
     }
@@ -412,6 +432,27 @@ class fi1a_bitrixvalidation extends CModule
             $this->MODULE_ID,
             Events::class,
             'highloadblockOnDelete'
+        );
+        UnRegisterModuleDependences(
+            'iblock',
+            'OnBeforeIBlockElementAdd',
+            $this->MODULE_ID,
+            Events::class,
+            'onBeforeIBlockElementAddAndUpdate'
+        );
+        UnRegisterModuleDependences(
+            'iblock',
+            'OnBeforeIBlockElementUpdate',
+            $this->MODULE_ID,
+            Events::class,
+            'onBeforeIBlockElementAddAndUpdate'
+        );
+        UnRegisterModuleDependences(
+            'main',
+            'OnBeforeProlog',
+            $this->MODULE_ID,
+            Events::class,
+            'onBeforeProlog'
         );
 
         return true;

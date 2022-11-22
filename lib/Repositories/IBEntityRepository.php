@@ -43,6 +43,7 @@ class IBEntityRepository extends AbstractEntityRepository
             [
                 'id' => 'NAME',
                 'name' => Loc::getMessage('FBV_FIELD_NAME'),
+                'title' => Loc::getMessage('FBV_FIELD_NAME_TITLE'),
                 'type' => 'string',
                 'internal_type' => 'field',
                 'multiple' => false,
@@ -50,6 +51,7 @@ class IBEntityRepository extends AbstractEntityRepository
             [
                 'id' => 'CODE',
                 'name' => Loc::getMessage('FBV_FIELD_CODE'),
+                'title' => Loc::getMessage('FBV_FIELD_CODE_TITLE'),
                 'type' => 'string',
                 'internal_type' => 'field',
                 'multiple' => false,
@@ -57,6 +59,7 @@ class IBEntityRepository extends AbstractEntityRepository
             [
                 'id' => 'PREVIEW_TEXT',
                 'name' => Loc::getMessage('FBV_FIELD_PREVIEW_TEXT'),
+                'title' => Loc::getMessage('FBV_FIELD_PREVIEW_TEXT_TITLE'),
                 'type' => 'string',
                 'internal_type' => 'field',
                 'multiple' => false,
@@ -64,6 +67,7 @@ class IBEntityRepository extends AbstractEntityRepository
             [
                 'id' => 'DETAIL_TEXT',
                 'name' => Loc::getMessage('FBV_FIELD_DETAIL_TEXT'),
+                'title' => Loc::getMessage('FBV_FIELD_DETAIL_TEXT_TITLE'),
                 'type' => 'string',
                 'internal_type' => 'field',
                 'multiple' => false,
@@ -123,6 +127,7 @@ class IBEntityRepository extends AbstractEntityRepository
                             'id' => $property['ID'],
                             'name' => Loc::getMessage('FBV_PROPERTY') . ': '
                                 . $property['NAME'] . ' (' . $property['CODE'] . ')',
+                            'title' => $property['NAME'],
                             'type' => $this->mapType($property['PROPERTY_TYPE']),
                             'internal_type' => 'property',
                             'multiple' => $property['MULTIPLE'] === 'Y',

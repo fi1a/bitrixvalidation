@@ -15,7 +15,7 @@ class Group extends Field implements GroupInterface
      * @var string[]
      */
     protected $modelKeys = [
-        'id', 'name', 'type', 'internal_type', 'multiple', 'rules', 'multiple_rules',
+        'id', 'name', 'type', 'internal_type', 'multiple', 'rules', 'multiple_rules', 'title',
     ];
 
     /**

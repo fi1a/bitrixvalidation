@@ -1,6 +1,8 @@
 <?php
 namespace Fi1a\UserSettings;
 
+use Bitrix\Highloadblock\HighloadBlockTable;
+use Bitrix\Main\EventManager;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Fi1a\BitrixValidation\Domain\Rules\MaxRule;

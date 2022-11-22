@@ -84,7 +84,8 @@ class HLEntityRepository extends AbstractEntityRepository
                     }
                     $hl['FIELDS'][] = $this->factoryField([
                         'id' => $field['ID'],
-                        'name' => $field['EDIT_FORM_LABEL'] . ' (' . $field['FIELD_NAME'] . ')',
+                        'name' => trim($field['EDIT_FORM_LABEL'] . ' (' . $field['FIELD_NAME'] . ')'),
+                        'title' => $field['EDIT_FORM_LABEL'] ?: $field['FIELD_NAME'],
                         'type' => $this->mapType($field['USER_TYPE_ID']),
                         'internal_type' => 'field',
                         'multiple' => $field['MULTIPLE'] === 'Y',

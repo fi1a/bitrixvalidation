@@ -22,6 +22,7 @@ class GroupCollectionTest extends ModuleTestCase
         $collection[] = new Group([
             'id' => 1,
             'name' => 'Field 1',
+            'title' => 'Field 1',
             'type' => 'string',
             'internal_type' => 'field',
             'multiple' => false,
@@ -29,6 +30,7 @@ class GroupCollectionTest extends ModuleTestCase
         $collection[] = new Group([
             'id' => 2,
             'name' => 'Field 2',
+            'title' => 'Field 2',
             'type' => 'string',
             'internal_type' => 'field',
             'multiple' => false,
@@ -36,6 +38,7 @@ class GroupCollectionTest extends ModuleTestCase
         $collection[] = new Group([
             'id' => 3,
             'name' => 'Field 3',
+            'title' => 'Field 3',
             'type' => 'string',
             'internal_type' => 'field',
             'multiple' => false,

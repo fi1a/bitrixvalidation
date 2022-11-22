@@ -33,6 +33,7 @@ class EntityTest extends ModuleTestCase
         $field = new Field([
             'id' => 1,
             'name' => 'Field 1',
+            'title' => 'Field 1',
             'type' => 'string',
             'internal_type' => 'field',
             'multiple' => false,
@@ -40,6 +41,7 @@ class EntityTest extends ModuleTestCase
         $group = new Group([
             'id' => 1,
             'name' => 'Field 1',
+            'title' => 'Field 1',
             'type' => 'string',
             'internal_type' => 'field',
             'multiple' => false,

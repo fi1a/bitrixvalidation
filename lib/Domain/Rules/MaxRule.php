@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\BitrixValidation\Domain\Rules;
 
 use Bitrix\Main\Localization\Loc;
+use Fi1a\Validation\ChainInterface;
 use InvalidArgumentException;
 
 /**
@@ -49,5 +50,14 @@ class MaxRule extends AbstractRule
         }
 
         $this->modelSet('options', $options);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function configure(ChainInterface $chain): void
+    {
+        $options = $this->getOptions();
+        $chain->max($options['max']);
     }
 }

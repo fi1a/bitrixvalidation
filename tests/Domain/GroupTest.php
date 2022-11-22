@@ -23,12 +23,14 @@ class GroupTest extends ModuleTestCase
         $field = new Group([
             'id' => 1,
             'name' => 'Field 1',
+            'title' => 'Field 1',
             'type' => 'string',
             'internal_type' => 'field',
             'multiple' => false,
         ]);
         $this->assertEquals(1, $field->id);
         $this->assertEquals('Field 1', $field->name);
+        $this->assertEquals('Field 1', $field->title);
         $this->assertEquals('string', $field->type);
         $this->assertEquals('field', $field->internalType);
         $this->assertFalse($field->multiple);
@@ -132,6 +134,7 @@ class GroupTest extends ModuleTestCase
         $fields = [
             'id' => 1,
             'name' => 'Field 1',
+            'title' => 'Field 1',
             'type' => 'string',
             'internal_type' => 'field',
             'multiple' => false,
@@ -165,6 +168,7 @@ class GroupTest extends ModuleTestCase
         $equals = [
             'id' => 1,
             'name' => 'Field 1',
+            'title' => 'Field 1',
             'type' => 'string',
             'internal_type' => 'field',
             'multiple' => false,

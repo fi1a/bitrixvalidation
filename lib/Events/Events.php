@@ -4,8 +4,22 @@ declare(strict_types=1);
 
 namespace Fi1a\BitrixValidation\Events;
 
+use Bitrix\Highloadblock\HighloadBlockTable;
+use Bitrix\Main\Entity\Event;
+use Bitrix\Main\Entity\EventResult;
+use Bitrix\Main\Entity\FieldError;
+use Bitrix\Main\EventManager;
+use Bitrix\Main\Loader;
 use CIBlockProperty;
+use CUserTypeEntity;
+use Fi1a\BitrixValidation\Domain\GroupInterface;
+use Fi1a\BitrixValidation\Domain\Rules\RuleInterface;
+use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
 use Fi1a\BitrixValidation\Services\EntityService;
+use Fi1a\Validation\AllOf;
+use Fi1a\Validation\ChainInterface;
+use Fi1a\Validation\ErrorInterface;
+use Fi1a\Validation\Validator;
 
 /**
  * События инфоблоков
@@ -115,5 +129,267 @@ class Events
     {
         $service = new EntityService();
         $service->deleteEntityRules('hl', (int) $fields['ID']);
+    }
+
+    /**
+     * Событие до сохранения элемента инфоблока
+     *
+     * @param mixed[] $fields
+     */
+    public static function onBeforeIBlockElementAddAndUpdate(array $fields): bool
+    {
+        if (!(int) $fields['IBLOCK_ID']) {
+            return true;
+        }
+
+        $values = [];
+        $rules = [];
+        $titles = [];
+        $messages = [];
+
+        $service = new EntityService();
+        $entity = $service->getEntity('ib', (int) $fields['IBLOCK_ID']);
+
+        foreach ($entity->getGroups() as $group) {
+            assert($group instanceof GroupInterface);
+
+            $titles = self::getTitles($group, $titles);
+            $chain = self::getChain($group);
+            $messages = array_merge($messages, self::getMessages($group));
+
+            if ($group->getMultiple()) {
+                $rules[$group->getId()] = self::getMultipleChain($group);
+                $rules[$group->getId() . ':*'] = $chain;
+            } else {
+                $rules[$group->getId()] = $chain;
+            }
+
+            if ($group->getInternalType() === 'property') {
+                foreach ($fields['PROPERTY_VALUES'] as $propertyId => $property) {
+                    if ((int) $propertyId === (int) $group->getId()) {
+                        if ($group->getMultiple()) {
+                            $values[$group->getId()] = [];
+                        }
+                        foreach ($property as $value) {
+                            if ($group->getMultiple()) {
+                                if (!$value['VALUE']) {
+                                    continue;
+                                }
+                                $values[$group->getId()][] = $value['VALUE'];
+
+                                continue;
+                            }
+
+                            $values[$group->getId()] = $value['VALUE'];
+                        }
+                    }
+                }
+
+                continue;
+            }
+
+            if (isset($fields[$group->getId()])) {
+                $values[$group->getId()] = $fields[$group->getId()];
+            }
+        }
+
+        if (!count($rules)) {
+            return true;
+        }
+
+        $validator = new Validator();
+
+        $validation = $validator->make($values, $rules, $messages, $titles);
+        $result = $validation->validate();
+
+        if (!$result->isSuccess()) {
+            ModuleRegistry::getApplication()->ThrowException($result->getErrors()->join("\n"));
+        }
+
+        return $result->isSuccess();
+    }
+
+    /**
+     * Событие до сохранения элемента highloadblock'a
+     */
+    public static function onBeforeHighloadBlockAddAndUpdate(Event $event): EventResult
+    {
+        $hlEntity = $event->getEntity();
+        $fields = $event->getParameter('fields');
+        $fieldByIds = [];
+        $mapFields = [];
+        $result = new EventResult();
+
+        $hl = HighloadBlockTable::getList([
+            'filter' => [
+                '=NAME' => $hlEntity->getName(),
+            ],
+            'limit' => 1,
+        ])->fetch();
+
+        $values = [];
+        $rules = [];
+        $titles = [];
+        $messages = [];
+
+        $service = new EntityService();
+        $entity = $service->getEntity('hl', (int) $hl['ID']);
+
+        if (count($entity->getGroups())) {
+            $iterator = CUserTypeEntity::GetList([], [
+                'ENTITY_ID' => 'HLBLOCK_' . $hl['ID'],
+            ]);
+            while ($item = $iterator->Fetch()) {
+                foreach ($fields as $fieldName => $value) {
+                    if ($item['FIELD_NAME'] === $fieldName) {
+                        $fieldByIds[(int) $item['ID']] = $value;
+                        $mapFields[(int) $item['ID']] = $item['FIELD_NAME'];
+                    }
+                }
+            }
+        }
+
+        foreach ($entity->getGroups() as $group) {
+            assert($group instanceof GroupInterface);
+
+            $titles = self::getTitles($group, $titles);
+            $chain = self::getChain($group);
+            $messages = array_merge($messages, self::getMessages($group));
+
+            if ($group->getMultiple()) {
+                $rules[$group->getId()] = self::getMultipleChain($group);
+                $rules[$group->getId() . ':*'] = $chain;
+            } else {
+                $rules[$group->getId()] = $chain;
+            }
+
+            foreach ($fieldByIds as $fieldId => $fieldValue) {
+                if ((int) $fieldId !== (int) $group->getId()) {
+                    continue;
+                }
+                if ($group->getMultiple()) {
+                    $values[$group->getId()] = [];
+                    foreach ($fieldValue as $value) {
+                        if (!$value) {
+                            continue;
+                        }
+                        $values[$group->getId()][] = $value;
+                    }
+
+                    continue;
+                }
+
+                $values[$group->getId()] = $fieldValue;
+            }
+        }
+
+        if (!count($rules)) {
+            return $result;
+        }
+
+        $validator = new Validator();
+
+        $validation = $validator->make($values, $rules, $messages, $titles);
+        $resultValidation = $validation->validate();
+
+        if (!$resultValidation->isSuccess()) {
+            foreach ($resultValidation->getErrors() as $error) {
+                assert($error instanceof ErrorInterface);
+                $result->addError(new FieldError(
+                    $hlEntity->getField($mapFields[(int) $error->getFieldName()]),
+                    $error->getMessage()
+                ));
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Вызывается в выполняемой части пролога сайта. Регистрируем события для highloadblock'ов
+     */
+    public static function onBeforeProlog(): void
+    {
+        Loader::includeModule('fi1a.bitrixvalidation');
+        Loader::includeModule('highloadblock');
+
+        $iterator = HighloadBlockTable::getList();
+
+        $eventManager = EventManager::getInstance();
+
+        while ($hl = $iterator->fetch()) {
+            $eventManager->addEventHandler(
+                '',
+                $hl['NAME'] . 'OnBeforeAdd',
+                [self::class, 'onBeforeHighloadBlockAddAndUpdate']
+            );
+            $eventManager->addEventHandler(
+                '',
+                $hl['NAME'] . 'OnBeforeUpdate',
+                [self::class, 'onBeforeHighloadBlockAddAndUpdate']
+            );
+        }
+    }
+
+    /**
+     * Возвращает заголовки
+     *
+     * @param string[] $titles
+     *
+     * @return string[]
+     */
+    private static function getTitles(GroupInterface $group, array $titles): array
+    {
+        $titles[$group->getId()] = $group->getTitle();
+        if ($group->getMultiple()) {
+            $titles[$group->getId() . ':*'] = $group->getTitle();
+        }
+
+        return $titles;
+    }
+
+    /**
+     * Возвращает цепочку правил
+     */
+    private static function getChain(GroupInterface $group): ChainInterface
+    {
+        $chain = AllOf::create();
+        foreach ($group->getRules() as $rule) {
+            assert($rule instanceof RuleInterface);
+            $rule->configure($chain);
+        }
+
+        return $chain;
+    }
+
+    /**
+     * Возвращает сообщения об ошибках
+     *
+     * @return string[]
+     */
+    private static function getMessages(GroupInterface $group): array
+    {
+        $messages = [];
+        foreach ($group->getRules() as $rule) {
+            if ($rule->getMessage()) {
+                $messages[$group->getId() . '|' . $rule->getKey()] = $rule->getMessage();
+            }
+        }
+
+        return $messages;
+    }
+
+    /**
+     * Возвращает цепочку правил для множественного значения
+     */
+    private static function getMultipleChain(GroupInterface $group): ChainInterface
+    {
+        $multipleChain = AllOf::create()->array();
+        foreach ($group->getMultipleRules() as $rule) {
+            assert($rule instanceof RuleInterface);
+            $rule->configure($multipleChain);
+        }
+
+        return $multipleChain;
     }
 }

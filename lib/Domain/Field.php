@@ -16,7 +16,7 @@ class Field extends ValueObject implements FieldInterface
      * @var string[]
      */
     protected $modelKeys = [
-        'id', 'name', 'type', 'internal_type', 'multiple',
+        'id', 'name', 'type', 'internal_type', 'multiple', 'title',
     ];
 
     /**
@@ -43,6 +43,18 @@ class Field extends ValueObject implements FieldInterface
         }
 
         $this->modelSet('name', $name);
+    }
+
+    /**
+     * Установить название поля
+     */
+    public function setTitle(string $title): void
+    {
+        if (!$title) {
+            throw new InvalidArgumentException('title не может быть пустым');
+        }
+
+        $this->modelSet('title', $title);
     }
 
     /**

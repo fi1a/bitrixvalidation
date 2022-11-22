@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\BitrixValidation\Domain\Rules;
 
 use Bitrix\Main\Localization\Loc;
+use Fi1a\Validation\ChainInterface;
 use InvalidArgumentException;
 
 use const FILTER_VALIDATE_INT;
@@ -52,5 +53,14 @@ class MaxCountRule extends AbstractRule
         $options['max'] = (int) $options['max'];
 
         $this->modelSet('options', $options);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function configure(ChainInterface $chain): void
+    {
+        $options = $this->getOptions();
+        $chain->maxCount($options['max']);
     }
 }

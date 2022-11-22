@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\BitrixValidation\Domain\Rules;
 
 use Fi1a\Collection\DataType\IValueObject;
+use Fi1a\Validation\ChainInterface;
 
 /**
  * Правило
@@ -16,6 +17,8 @@ use Fi1a\Collection\DataType\IValueObject;
  * @method string getEntityType()
  * @method int getEntityId()
  * @method bool getMultiple()
+ * @method mixed[] getOptions()
+ * @method string getMessage()
  */
 interface RuleInterface extends IValueObject
 {
@@ -89,4 +92,9 @@ interface RuleInterface extends IValueObject
      * Возвращает переменные для замены в сообщениях об ошибках
      */
     public static function getMessageDescription(): string;
+
+    /**
+     * Возвращает правило для валидации
+     */
+    public function configure(ChainInterface $chain): void;
 }

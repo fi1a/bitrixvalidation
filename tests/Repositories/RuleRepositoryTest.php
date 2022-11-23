@@ -33,7 +33,7 @@ class RuleRepositoryTest extends EntityTestCase
             ],
         ]);
         $this->assertInstanceOf(RuleCollectionInterface::class, $collection);
-        $this->assertCount(4, $collection);
+        $this->assertCount(5, $collection);
     }
 
     /**

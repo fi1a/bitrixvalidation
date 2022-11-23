@@ -94,7 +94,7 @@ interface RuleInterface extends IValueObject
     public static function getMessageDescription(): string;
 
     /**
-     * Возвращает правило для валидации
+     * Конфигурирует правило для валидации
      */
     public function configure(ChainInterface $chain): void;
 }

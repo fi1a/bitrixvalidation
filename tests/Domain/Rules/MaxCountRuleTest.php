@@ -6,6 +6,7 @@ namespace Fi1a\Unit\BitrixValidation\Domain\Rules;
 
 use Fi1a\BitrixValidation\Domain\Rules\MaxCountRule;
 use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
+use Fi1a\Validation\AllOf;
 use InvalidArgumentException;
 
 /**
@@ -27,6 +28,14 @@ class MaxCountRuleTest extends ModuleTestCase
     public function testGetTitle(): void
     {
         $this->assertIsString(MaxCountRule::getTitle());
+    }
+
+    /**
+     * Возврашаемые описание
+     */
+    public function testGetMessageDescription(): void
+    {
+        $this->assertIsString(MaxCountRule::getMessageDescription());
     }
 
     /**
@@ -105,5 +114,29 @@ class MaxCountRuleTest extends ModuleTestCase
             'entity_id' => 1,
             'multiple' => true,
         ]);
+    }
+
+    /**
+     * Конфигурирует правило для валидации
+     */
+    public function testConfigure(): void
+    {
+        $rule = new MaxCountRule([
+            'key' => 'maxCount',
+            'options' => [
+                'max' => 1,
+            ],
+            'sort' => 500,
+            'id' => 1,
+            'field_id' => '1',
+            'entity_type' => 'ib',
+            'entity_id' => 1,
+            'multiple' => true,
+        ]);
+
+        $chain = AllOf::create();
+        $rule->configure($chain);
+        $this->assertTrue($chain->validate([1])->isSuccess());
+        $this->assertFalse($chain->validate([1, 2])->isSuccess());
     }
 }

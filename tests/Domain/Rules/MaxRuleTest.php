@@ -6,6 +6,7 @@ namespace Fi1a\Unit\BitrixValidation\Domain\Rules;
 
 use Fi1a\BitrixValidation\Domain\Rules\MaxRule;
 use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
+use Fi1a\Validation\AllOf;
 use InvalidArgumentException;
 
 /**
@@ -27,6 +28,14 @@ class MaxRuleTest extends ModuleTestCase
     public function testGetTitle(): void
     {
         $this->assertIsString(MaxRule::getTitle());
+    }
+
+    /**
+     * Возврашаемые описание
+     */
+    public function testGetMessageDescription(): void
+    {
+        $this->assertIsString(MaxRule::getMessageDescription());
     }
 
     /**
@@ -85,5 +94,29 @@ class MaxRuleTest extends ModuleTestCase
             'entity_id' => 1,
             'multiple' => false,
         ]);
+    }
+
+    /**
+     * Конфигурирует правило для валидации
+     */
+    public function testConfigure(): void
+    {
+        $rule = new MaxRule([
+            'key' => 'max',
+            'options' => [
+                'max' => 1,
+            ],
+            'sort' => 500,
+            'id' => 1,
+            'field_id' => '1',
+            'entity_type' => 'ib',
+            'entity_id' => 1,
+            'multiple' => false,
+        ]);
+
+        $chain = AllOf::create();
+        $rule->configure($chain);
+        $this->assertTrue($chain->validate(1)->isSuccess());
+        $this->assertFalse($chain->validate(2)->isSuccess());
     }
 }

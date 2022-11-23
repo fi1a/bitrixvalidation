@@ -67,6 +67,22 @@ class GroupTest extends ModuleTestCase
     }
 
     /**
+     * Исключение при пустом title
+     */
+    public function testTitleException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new Group([
+            'id' => 1,
+            'name' => 'Field 1',
+            'title' => '',
+            'type' => 'string',
+            'internal_type' => 'field',
+            'multiple' => false,
+        ]);
+    }
+
+    /**
      * Исключение при пустом type
      */
     public function testTypeException(): void

@@ -6,6 +6,7 @@ namespace Fi1a\Unit\BitrixValidation\Domain\Rules;
 
 use Fi1a\BitrixValidation\Domain\Rules\MinRule;
 use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
+use Fi1a\Validation\AllOf;
 use InvalidArgumentException;
 
 /**
@@ -27,6 +28,14 @@ class MinRuleTest extends ModuleTestCase
     public function testGetTitle(): void
     {
         $this->assertIsString(MinRule::getTitle());
+    }
+
+    /**
+     * Возврашаемые описание
+     */
+    public function testGetMessageDescription(): void
+    {
+        $this->assertIsString(MinRule::getMessageDescription());
     }
 
     /**
@@ -85,5 +94,29 @@ class MinRuleTest extends ModuleTestCase
             'entity_id' => 1,
             'multiple' => false,
         ]);
+    }
+
+    /**
+     * Конфигурирует правило для валидации
+     */
+    public function testConfigure(): void
+    {
+        $rule = new MinRule([
+            'key' => 'min',
+            'options' => [
+                'min' =>  2,
+            ],
+            'sort' => 500,
+            'id' => 1,
+            'field_id' => '1',
+            'entity_type' => 'ib',
+            'entity_id' => 1,
+            'multiple' => false,
+        ]);
+
+        $chain = AllOf::create();
+        $rule->configure($chain);
+        $this->assertTrue($chain->validate(2)->isSuccess());
+        $this->assertFalse($chain->validate(1)->isSuccess());
     }
 }

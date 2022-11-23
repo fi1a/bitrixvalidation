@@ -290,7 +290,7 @@ class EntityServiceTest extends EntityTestCase
             ],
         ]);
         $this->assertInstanceOf(RuleCollectionInterface::class, $rules);
-        $this->assertCount(2, $rules);
+        $this->assertCount(3, $rules);
 
         $service = new EntityService();
         $service->deleteEntityRules('hl', static::$hlId);

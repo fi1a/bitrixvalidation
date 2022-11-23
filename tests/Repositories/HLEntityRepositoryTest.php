@@ -46,9 +46,9 @@ class HLEntityRepositoryTest extends EntityTestCase
         $entity = $repository->getEntity(static::$hlId, $select);
         $this->assertInstanceOf(EntityInterface::class, $entity);
         $this->assertInstanceOf(FieldCollectionInterface::class, $entity->getFields());
-        $this->assertCount(1, $entity->getFields());
+        $this->assertCount(2, $entity->getFields());
         $this->assertInstanceOf(GroupCollectionInterface::class, $entity->getGroups());
-        $this->assertCount(1, $entity->getGroups());
+        $this->assertCount(2, $entity->getGroups());
     }
 
     /**

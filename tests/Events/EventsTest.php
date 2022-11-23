@@ -6,10 +6,12 @@ namespace Fi1a\Unit\BitrixValidation\Events;
 
 use Bitrix\Highloadblock\HighloadBlockTable;
 use CIBlock;
+use CIBlockElement;
 use CIBlockProperty;
 use CIBlockType;
 use CUserTypeEntity;
 use Fi1a\BitrixValidation\Domain\Rules\RuleCollectionInterface;
+use Fi1a\BitrixValidation\Events\Events;
 use Fi1a\BitrixValidation\Repositories\RuleRepository;
 use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 
@@ -18,6 +20,166 @@ use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
  */
 class EventsTest extends EntityTestCase
 {
+    /**
+     * Валидация при добавлении элемента инфоблока
+     */
+    public function testOnBeforeIBlockElementAddAndUpdate(): void
+    {
+        $instance = new CIBlockElement();
+
+        $result = $instance->Add([
+            'IBLOCK_ID' => static::$iblockId,
+            'NAME' => 'Test name 1',
+            'ACTIVE' => 'Y',
+            'PROPERTY_VALUES' => [
+                'FBV_TEST1' => 1,
+                'FBV_TEST3' => [1, '',],
+            ],
+        ]);
+
+        $this->assertFalse($result);
+
+        $id = $instance->Add([
+            'IBLOCK_ID' => static::$iblockId,
+            'NAME' => '20',
+            'ACTIVE' => 'Y',
+            'PROPERTY_VALUES' => [
+                'FBV_TEST1' => 10,
+                'FBV_TEST2' => 10,
+                'FBV_TEST3' => [10, 20,],
+            ],
+        ]);
+
+        $this->assertIsNumeric($id);
+
+        $result = $instance->Update($id, [
+            'NAME' => 'Test name 1',
+            'PROPERTY_VALUES' => [
+                'FBV_TEST1' => 1,
+                'FBV_TEST3' => [1, '',],
+            ],
+        ]);
+
+        $this->assertFalse($result);
+
+        $result = $instance->Update($id, [
+            'NAME' => '20',
+            'PROPERTY_VALUES' => [
+                'FBV_TEST1' => 10,
+                'FBV_TEST2' => 10,
+                'FBV_TEST3' => [10, 20,],
+            ],
+        ]);
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * Валидация при добавлении элемента инфоблока
+     */
+    public function testOnBeforeIBlockElementAddAndUpdateAdmin(): void
+    {
+        $instance = new CIBlockElement();
+
+        $result = $instance->Add([
+            'IBLOCK_ID' => static::$iblockId,
+            'NAME' => 'Test name 1',
+            'ACTIVE' => 'Y',
+            'PROPERTY_VALUES' => [
+                'FBV_TEST1' => [['VALUE' => 1,]],
+                'FBV_TEST3' => [
+                    [
+                        'VALUE' => 1,
+                    ],
+                    [
+                        'VALUE' => '',
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertFalse($result);
+    }
+
+    /**
+     * Валидация при добавлении элемента инфоблока
+     */
+    public function testOnBeforeIBlockElementAddAndUpdateNoRules(): void
+    {
+        $instance = new CIBlockElement();
+
+        $result = $instance->Add([
+            'IBLOCK_ID' => static::$iblockId2,
+            'NAME' => 'Test name 1',
+            'ACTIVE' => 'Y',
+            'PROPERTY_VALUES' => [
+                'FBV_TEST1' => 1,
+                'FBV_TEST3' => [1, '',],
+            ],
+        ]);
+
+        $this->assertIsNumeric($result);
+    }
+
+    /**
+     * Валидация при добавлении элемента highloadblock'а
+     */
+    public function testOnBeforeHighloadBlockAddAndUpdate(): void
+    {
+        Events::onBeforeProlog();
+
+        $entity = HighloadBlockTable::compileEntity(static::$hlId);
+        $class = $entity->getDataClass();
+
+        $result = $class::add([
+            'UF_FBV_TEST1' => 5,
+            'UF_FBV_TEST3' => [1, ''],
+        ]);
+
+        $this->assertFalse($result->isSuccess());
+
+        $result = $class::add([
+            'UF_FBV_TEST1' => 10,
+            'UF_FBV_TEST2' => 10,
+            'UF_FBV_TEST3' => [1, 2,],
+        ]);
+
+        $this->assertTrue($result->isSuccess());
+        $id = $result->getId();
+
+        $result = $class::update($id, [
+            'UF_FBV_TEST1' => 5,
+            'UF_FBV_TEST3' => [1, ''],
+        ]);
+
+        $this->assertFalse($result->isSuccess());
+
+        $result = $class::update($id, [
+            'UF_FBV_TEST1' => 10,
+            'UF_FBV_TEST2' => 10,
+            'UF_FBV_TEST3' => [1, 2,],
+        ]);
+
+        $this->assertTrue($result->isSuccess());
+    }
+
+    /**
+     * Валидация при добавлении элемента highloadblock'а
+     */
+    public function testOnBeforeHighloadBlockAddAndUpdateNoRules(): void
+    {
+        Events::onBeforeProlog();
+
+        $entity = HighloadBlockTable::compileEntity(static::$hlId2);
+        $class = $entity->getDataClass();
+
+        $result = $class::add([
+            'UF_FBV_TEST1' => 5,
+        ]);
+
+        $this->assertTrue($result->isSuccess());
+    }
+
     /**
      * Удаление правил при удалении свойства инфоблока
      */
@@ -249,7 +411,7 @@ class EventsTest extends EntityTestCase
             ],
         ]);
         $this->assertInstanceOf(RuleCollectionInterface::class, $rules);
-        $this->assertCount(1, $rules);
+        $this->assertGreaterThanOrEqual(1, count($rules));
 
         HighloadBlockTable::delete(static::$hlId);
 

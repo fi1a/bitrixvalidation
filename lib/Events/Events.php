@@ -138,17 +138,29 @@ class Events
      */
     public static function onBeforeIBlockElementAddAndUpdate(array $fields): bool
     {
-        if (!(int) $fields['IBLOCK_ID']) {
-            return true;
-        }
-
         $values = [];
         $rules = [];
         $titles = [];
         $messages = [];
+        $propertyByIds = [];
 
         $service = new EntityService();
         $entity = $service->getEntity('ib', (int) $fields['IBLOCK_ID']);
+
+        if (count($entity->getGroups())) {
+            $iterator = CIBlockProperty::GetList([], [
+                '=IBLOCK_ID' => (int) $fields['IBLOCK_ID'],
+                '=CODE' => array_keys($fields['PROPERTY_VALUES']),
+            ]);
+            $propertyByIds = $fields['PROPERTY_VALUES'];
+            while ($property = $iterator->Fetch()) {
+                foreach ($fields['PROPERTY_VALUES'] as $propertyCode => $value) {
+                    if ($propertyCode === $property['CODE']) {
+                        $propertyByIds[(int) $property['ID']] = $value;
+                    }
+                }
+            }
+        }
 
         foreach ($entity->getGroups() as $group) {
             assert($group instanceof GroupInterface);
@@ -165,22 +177,38 @@ class Events
             }
 
             if ($group->getInternalType() === 'property') {
-                foreach ($fields['PROPERTY_VALUES'] as $propertyId => $property) {
+                foreach ($propertyByIds as $propertyId => $property) {
                     if ((int) $propertyId === (int) $group->getId()) {
                         if ($group->getMultiple()) {
                             $values[$group->getId()] = [];
                         }
+                        if (!is_array($property)) {
+                            $property = [$property];
+                        }
                         foreach ($property as $value) {
                             if ($group->getMultiple()) {
-                                if (!$value['VALUE']) {
+                                if (
+                                    (
+                                        is_array($value)
+                                        && array_key_exists('VALUE', $value)
+                                        && !$value['VALUE']
+                                    )
+                                    || !$value
+                                ) {
                                     continue;
                                 }
-                                $values[$group->getId()][] = $value['VALUE'];
+                                $values[$group->getId()][] = is_array($value)
+                                && array_key_exists('VALUE', $value)
+                                    ? $value['VALUE']
+                                    : $value;
 
                                 continue;
                             }
 
-                            $values[$group->getId()] = $value['VALUE'];
+                            $values[$group->getId()] = is_array($value)
+                            && array_key_exists('VALUE', $value)
+                                ? $value['VALUE']
+                                : $value;
                         }
                     }
                 }

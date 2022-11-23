@@ -26,7 +26,17 @@ class EntityTestCase extends ModuleTestCase
     /**
      * @var int
      */
+    protected static $iblockId2;
+
+    /**
+     * @var int
+     */
     protected static $hlId;
+
+    /**
+     * @var int
+     */
+    protected static $hlId2;
 
     /**
      * @var int[]
@@ -98,6 +108,38 @@ class EntityTestCase extends ModuleTestCase
             throw new ErrorException('Не удалось добавить инфоблок');
         }
 
+        $result = RuleTable::add([
+            'KEY' => 'min',
+            'OPTIONS' => '{"min": 10}',
+            'SORT' => 500,
+            'FIELD_ID' => 'NAME',
+            'ENTITY_TYPE' => 'ib',
+            'ENTITY_ID' => static::$iblockId,
+            'MESSAGE' => '{{name}}, {{min}}',
+        ]);
+        if ($result->isSuccess()) {
+            static::$ruleIds[] = $result->getId();
+        }
+
+        static::$iblockId2 = (int) $ib->Add([
+            'ACTIVE' => 'Y',
+            'NAME' => 'BitrixValidation Test 2',
+            'CODE' => 'BITRIXVALIDATION_TEST_2',
+            'LIST_PAGE_URL' => '',
+            'DETAIL_PAGE_URL' => '',
+            'IBLOCK_TYPE_ID' => 'fbv_test',
+            'SITE_ID' => ['s1'],
+            'SORT' => 100,
+            'PICTURE' => null,
+            'DESCRIPTION' => null,
+            'DESCRIPTION_TYPE' => null,
+            'GROUP_ID' => [],
+        ]);
+
+        if (!static::$iblockId2) {
+            throw new ErrorException('Не удалось добавить инфоблок');
+        }
+
         $ibp = new CIBlockProperty();
         static::$iblockPropertyId = $ibp->Add([
             'NAME' => 'FBV Test 1',
@@ -123,6 +165,20 @@ class EntityTestCase extends ModuleTestCase
         ]);
         if ($result->isSuccess()) {
             static::$ruleIds[] = $result->getId();
+        }
+
+        $propertyId = $ibp->Add([
+            'NAME' => 'FBV Test 1',
+            'ACTIVE' => 'Y',
+            'SORT' => '600',
+            'CODE' => 'FBV_TEST1',
+            'PROPERTY_TYPE' => 'N',
+            'USER_TYPE' => '',
+            'IBLOCK_ID' => static::$iblockId2,
+        ]);
+
+        if (!$propertyId) {
+            throw new ErrorException('Не удалось добавить свойство инфоблока');
         }
 
         $propertyId = $ibp->Add([
@@ -156,7 +212,7 @@ class EntityTestCase extends ModuleTestCase
 
         $result = RuleTable::add([
             'KEY' => 'min',
-            'OPTIONS' => '{"min": 10}',
+            'OPTIONS' => '{"min": 2}',
             'SORT' => 500,
             'FIELD_ID' => static::$iblockMultiplePropertyId,
             'ENTITY_TYPE' => 'ib',
@@ -168,7 +224,7 @@ class EntityTestCase extends ModuleTestCase
 
         $result = RuleTable::add([
             'KEY' => 'minCount',
-            'OPTIONS' => '{"min": 10}',
+            'OPTIONS' => '{"min": 2}',
             'SORT' => 500,
             'FIELD_ID' => static::$iblockMultiplePropertyId,
             'ENTITY_TYPE' => 'ib',
@@ -191,6 +247,21 @@ class EntityTestCase extends ModuleTestCase
             static::$ruleIds[] = $result->getId();
         }
 
+        $propertyId = $ibp->Add([
+            'NAME' => 'FBV Test 3',
+            'ACTIVE' => 'Y',
+            'SORT' => '600',
+            'CODE' => 'FBV_TEST3',
+            'PROPERTY_TYPE' => 'N',
+            'USER_TYPE' => '',
+            'IBLOCK_ID' => static::$iblockId2,
+            'MULTIPLE' => 'Y',
+        ]);
+
+        if (!$propertyId) {
+            throw new ErrorException('Не удалось добавить свойство инфоблока');
+        }
+
         $result = HighloadBlockTable::add([
             'NAME' => 'BitrixValidationTest',
             'TABLE_NAME' => 'bitrix_validation_test',
@@ -205,7 +276,7 @@ class EntityTestCase extends ModuleTestCase
         static::$userTypeId = $userTypeEntity->Add([
             'ENTITY_ID' => 'HLBLOCK_' . static::$hlId,
             'FIELD_NAME' => 'UF_FBV_TEST1',
-            'USER_TYPE_ID' => 'string',
+            'USER_TYPE_ID' => 'integer',
             'XML_ID' => '',
             'SORT' => '500',
             'MULTIPLE' => 'N',
@@ -273,6 +344,79 @@ class EntityTestCase extends ModuleTestCase
         if ($result->isSuccess()) {
             static::$ruleIds[] = $result->getId();
         }
+
+        $userTypeId = $userTypeEntity->Add([
+            'ENTITY_ID' => 'HLBLOCK_' . static::$hlId,
+            'FIELD_NAME' => 'UF_FBV_TEST3',
+            'USER_TYPE_ID' => 'integer',
+            'XML_ID' => '',
+            'SORT' => '500',
+            'MULTIPLE' => 'Y',
+            'MANDATORY' => 'Y',
+            'SETTINGS' => [
+                'DEFAULT_VALUE' => '',
+                'SIZE' => '20',
+                'ROWS' => '1',
+                'MIN_LENGTH' => '0',
+                'MAX_LENGTH' => '0',
+                'REGEXP' => '',
+            ],
+            'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
+            'ERROR_MESSAGE' => null,
+            'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
+        ]);
+        if (!$userTypeId) {
+            throw new ErrorException('Не удалось добавить пользовательское поле');
+        }
+
+        $result = RuleTable::add([
+            'KEY' => 'minCount',
+            'OPTIONS' => '{"min": 2}',
+            'SORT' => 500,
+            'FIELD_ID' => (string) $userTypeId,
+            'ENTITY_TYPE' => 'hl',
+            'ENTITY_ID' => static::$hlId,
+            'MESSAGE' => '{{name}}, {{min}}',
+            'MULTIPLE' => 1,
+        ]);
+        if ($result->isSuccess()) {
+            static::$ruleIds[] = $result->getId();
+        }
+
+        $result = HighloadBlockTable::add([
+            'NAME' => 'BitrixValidationTest2',
+            'TABLE_NAME' => 'bitrix_validation_test_2',
+        ]);
+        if ($result->isSuccess()) {
+            static::$hlId2 = (int) $result->getId();
+        } else {
+            throw new ErrorException(implode('; ', $result->getErrorMessages()));
+        }
+
+        $userTypeEntity  = new CUserTypeEntity();
+        $userTypeId = $userTypeEntity->Add([
+            'ENTITY_ID' => 'HLBLOCK_' . static::$hlId2,
+            'FIELD_NAME' => 'UF_FBV_TEST1',
+            'USER_TYPE_ID' => 'integer',
+            'XML_ID' => '',
+            'SORT' => '500',
+            'MULTIPLE' => 'N',
+            'MANDATORY' => 'Y',
+            'SETTINGS' => [
+                'DEFAULT_VALUE' => '',
+                'SIZE' => '20',
+                'ROWS' => '1',
+                'MIN_LENGTH' => '0',
+                'MAX_LENGTH' => '0',
+                'REGEXP' => '',
+            ],
+            'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
+            'ERROR_MESSAGE' => null,
+            'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
+        ]);
+        if (!$userTypeId) {
+            throw new ErrorException('Не удалось добавить пользовательское поле');
+        }
     }
 
     /**
@@ -282,10 +426,14 @@ class EntityTestCase extends ModuleTestCase
     {
         if (static::$iblockId) {
             CIBlock::Delete(static::$iblockId);
+            CIBlock::Delete(static::$iblockId2);
             CIBlockType::Delete('fbv_test');
         }
         if (static::$hlId) {
             HighloadBlockTable::delete(static::$hlId);
+        }
+        if (static::$hlId2) {
+            HighloadBlockTable::delete(static::$hlId2);
         }
         if (count(static::$ruleIds)) {
             foreach (static::$ruleIds as $id) {

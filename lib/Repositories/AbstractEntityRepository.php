@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Fi1a\BitrixValidation\Repositories;
 
 use ErrorException;
-use Fi1a\BitrixValidation\Domain\EntityInterface;
-use Fi1a\BitrixValidation\Domain\Field;
-use Fi1a\BitrixValidation\Domain\FieldCollectionInterface;
-use Fi1a\BitrixValidation\Domain\FieldInterface;
-use Fi1a\BitrixValidation\Domain\Group;
-use Fi1a\BitrixValidation\Domain\GroupCollection;
-use Fi1a\BitrixValidation\Domain\GroupCollectionInterface;
-use Fi1a\BitrixValidation\Domain\GroupInterface;
-use Fi1a\BitrixValidation\Domain\Rules\RuleCollection;
-use Fi1a\BitrixValidation\Domain\Rules\RuleInterface;
+use Fi1a\BitrixValidation\Model\EntityInterface;
+use Fi1a\BitrixValidation\Model\Field;
+use Fi1a\BitrixValidation\Model\FieldCollectionInterface;
+use Fi1a\BitrixValidation\Model\FieldInterface;
+use Fi1a\BitrixValidation\Model\Group;
+use Fi1a\BitrixValidation\Model\GroupCollection;
+use Fi1a\BitrixValidation\Model\GroupCollectionInterface;
+use Fi1a\BitrixValidation\Model\GroupInterface;
+use Fi1a\BitrixValidation\Model\Rules\RuleCollection;
+use Fi1a\BitrixValidation\Model\Rules\RuleInterface;
 
 /**
  * Абстрактный класс репозитория сущности

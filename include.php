@@ -5,11 +5,11 @@ use Bitrix\Highloadblock\HighloadBlockTable;
 use Bitrix\Main\EventManager;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
-use Fi1a\BitrixValidation\Domain\Rules\MaxRule;
-use Fi1a\BitrixValidation\Domain\Rules\MinRule;
-use Fi1a\BitrixValidation\Domain\Rules\MaxCountRule;
-use Fi1a\BitrixValidation\Domain\Rules\MinCountRule;
-use Fi1a\BitrixValidation\Domain\Rules\RuleRegistry;
+use Fi1a\BitrixValidation\Model\Rules\MaxRule;
+use Fi1a\BitrixValidation\Model\Rules\MinRule;
+use Fi1a\BitrixValidation\Model\Rules\MaxCountRule;
+use Fi1a\BitrixValidation\Model\Rules\MinCountRule;
+use Fi1a\BitrixValidation\Model\Rules\RuleRegistry;
 use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
 
 if (is_file(__DIR__ . '/vendor/autoload.php')) {

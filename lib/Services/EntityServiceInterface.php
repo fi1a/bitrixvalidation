@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Fi1a\BitrixValidation\Services;
 
-use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
-use Fi1a\BitrixValidation\Domain\EntityInterface;
+use Fi1a\BitrixValidation\Model\EntityCollectionInterface;
+use Fi1a\BitrixValidation\Model\EntityInterface;
 
 /**
  * Интерфейс сервиса сущностей

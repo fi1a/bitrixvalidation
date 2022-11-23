@@ -9,12 +9,12 @@ use Bitrix\Highloadblock\HighloadBlockTable;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use CUserTypeEntity;
-use Fi1a\BitrixValidation\Domain\Entity;
-use Fi1a\BitrixValidation\Domain\EntityCollection;
-use Fi1a\BitrixValidation\Domain\EntityCollectionInterface;
-use Fi1a\BitrixValidation\Domain\EntityInterface;
-use Fi1a\BitrixValidation\Domain\FieldCollection;
-use Fi1a\BitrixValidation\Domain\GroupCollection;
+use Fi1a\BitrixValidation\Model\Entity;
+use Fi1a\BitrixValidation\Model\EntityCollection;
+use Fi1a\BitrixValidation\Model\EntityCollectionInterface;
+use Fi1a\BitrixValidation\Model\EntityInterface;
+use Fi1a\BitrixValidation\Model\FieldCollection;
+use Fi1a\BitrixValidation\Model\GroupCollection;
 
 /**
  *  Репозиторий сущностей

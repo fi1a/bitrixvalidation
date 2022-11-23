@@ -10,8 +10,8 @@ use CIBlockElement;
 use CIBlockProperty;
 use CIBlockType;
 use CUserTypeEntity;
-use Fi1a\BitrixValidation\Domain\Rules\RuleCollectionInterface;
 use Fi1a\BitrixValidation\Events\Events;
+use Fi1a\BitrixValidation\Model\Rules\RuleCollectionInterface;
 use Fi1a\BitrixValidation\Repositories\RuleRepository;
 use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 

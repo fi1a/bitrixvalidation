@@ -21,7 +21,7 @@ Loc::loadMessages(__FILE__);
 
 $menuItem = [
     [
-        'parent_menu' => 'global_menu_services',
+        'parent_menu' => 'global_menu_content',
         'sort' => 2000,
         'text' => Loc::getMessage('FBV_MENU_TEXT'),
         'url'  => 'fi1a_bitrixvalidation.php?lang='.LANGUAGE_ID,

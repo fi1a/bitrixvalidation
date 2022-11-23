@@ -221,6 +221,13 @@ class fi1a_bitrixvalidation extends CModule
             return false;
         }
 
+        \CopyDirFiles(
+            $this->createPath($this->moduleDir, 'install', 'themes', '.default'),
+            $this->createPath(Application::getDocumentRoot(), BX_ROOT, 'themes', '.default'),
+            true,
+            true
+        );
+
         return true;
     }
 
@@ -380,6 +387,14 @@ class fi1a_bitrixvalidation extends CModule
         if (!$this->unlinkAdminFiles()) {
             return false;
         }
+
+        \DeleteDirFiles(
+            $this->createPath($this->moduleDir, 'install', 'themes', '.default'),
+            $this->createPath(Application::getDocumentRoot(), BX_ROOT, 'themes', '.default')
+        );
+        (new \Bitrix\Main\IO\Directory(
+            $this->createPath(Application::getDocumentRoot(), BX_ROOT, 'themes', '.default', 'icons', 'fi1a.bitrixvalidation')
+        ))->delete();
 
         return true;
     }

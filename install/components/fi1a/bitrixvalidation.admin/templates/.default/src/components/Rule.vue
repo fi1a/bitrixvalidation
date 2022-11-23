@@ -49,6 +49,7 @@ import BetweenCountRule from "./Rules/BetweenCountRule.vue";
 import BetweenRule from "./Rules/BetweenRule.vue";
 import MinLengthRule from "./Rules/MinLengthRule.vue";
 import MaxLengthRule from "./Rules/MaxLengthRule.vue";
+import BetweenLengthRule from "./Rules/BetweenLengthRule.vue";
 
 export default {
   name: "Rule",
@@ -67,7 +68,8 @@ export default {
   },
 
   components: {
-    MinRule, MaxRule, MinCountRule, MaxCountRule, BetweenCountRule, BetweenRule, MinLengthRule, MaxLengthRule
+    MinRule, MaxRule, MinCountRule, MaxCountRule, BetweenCountRule, BetweenRule, MinLengthRule, MaxLengthRule,
+    BetweenLengthRule,
   },
 
   emits: ['delete'],

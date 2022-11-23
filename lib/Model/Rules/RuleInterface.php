@@ -10,7 +10,7 @@ use Fi1a\Validation\ChainInterface;
 /**
  * Правило
  *
- * @method int getId()
+ * @method PrimaryIdInterface getId()
  * @method string getKey()
  * @method int getSort()
  * @method string getFieldId()
@@ -25,7 +25,7 @@ interface RuleInterface extends IValueObject
     /**
      * ИД
      */
-    public function setId(?int $id): void;
+    public function setId(PrimaryIdInterface $id): void;
 
     /**
      * Ключ правила

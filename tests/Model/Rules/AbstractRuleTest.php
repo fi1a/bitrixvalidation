@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\Unit\BitrixValidation\Model\Rules;
 
 use Fi1a\BitrixValidation\Model\Rules\MinRule;
+use Fi1a\BitrixValidation\Model\Rules\PrimaryId;
 use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
 use InvalidArgumentException;
 
@@ -24,6 +25,19 @@ class AbstractRuleTest extends ModuleTestCase
                 'min' => 10,
             ],
             'sort' => 500,
+            'id' => new PrimaryId(1),
+            'field_id' => '1',
+            'entity_type' => 'ib',
+            'entity_id' => 1,
+            'multiple' => false,
+            'message' => null,
+        ];
+        $equal = [
+            'key' => 'min',
+            'options' => [
+                'min' => 10,
+            ],
+            'sort' => 500,
             'id' => 1,
             'field_id' => '1',
             'entity_type' => 'ib',
@@ -32,7 +46,7 @@ class AbstractRuleTest extends ModuleTestCase
             'message' => null,
         ];
         $rule = new MinRule($fields);
-        $this->assertEquals($fields, $rule->toArray());
+        $this->assertEquals($equal, $rule->toArray());
     }
 
     /**
@@ -47,7 +61,7 @@ class AbstractRuleTest extends ModuleTestCase
                 'min' => 10,
             ],
             'sort' => 500,
-            'id' => 1,
+            'id' => new PrimaryId(1),
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
@@ -69,7 +83,7 @@ class AbstractRuleTest extends ModuleTestCase
                 'min' => 10,
             ],
             'sort' => 500,
-            'id' => 1,
+            'id' => new PrimaryId(1),
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
@@ -91,7 +105,7 @@ class AbstractRuleTest extends ModuleTestCase
                 'min' => 10,
             ],
             'sort' => 500,
-            'id' => 1,
+            'id' => new PrimaryId(1),
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
@@ -113,7 +127,7 @@ class AbstractRuleTest extends ModuleTestCase
                 'min' => 10,
             ],
             'sort' => 500,
-            'id' => 1,
+            'id' => new PrimaryId(1),
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
@@ -135,7 +149,7 @@ class AbstractRuleTest extends ModuleTestCase
                 'min' => 10,
             ],
             'sort' => 500,
-            'id' => 1,
+            'id' => new PrimaryId(1),
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
@@ -153,7 +167,7 @@ class AbstractRuleTest extends ModuleTestCase
         $fields = [
             'key' => 'min',
             'sort' => 500,
-            'id' => 1,
+            'id' => new PrimaryId(1),
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,

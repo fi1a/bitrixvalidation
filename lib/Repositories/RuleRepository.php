@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\BitrixValidation\Repositories;
 
 use Bitrix\Main\Web\Json;
+use Fi1a\BitrixValidation\Model\Rules\PrimaryId;
 use Fi1a\BitrixValidation\Model\Rules\RuleCollection;
 use Fi1a\BitrixValidation\Model\Rules\RuleCollectionInterface;
 use Fi1a\BitrixValidation\Model\Rules\RuleInterface;
@@ -68,6 +69,7 @@ class RuleRepository implements RuleRepositoryInterface
         if (isset($rule['id']) && $rule['id']) {
             $rule['id'] = (int) $rule['id'];
         }
+        $rule['id'] = new PrimaryId($rule['id'] ?: null);
         if (isset($rule['sort'])) {
             $rule['sort'] = (int) $rule['sort'];
         }
@@ -104,10 +106,10 @@ class RuleRepository implements RuleRepositoryInterface
 
         foreach ($rules as $rule) {
             assert($rule instanceof RuleInterface);
-            if ($rule->getId()) {
+            if (!$rule->getId()->isNew()) {
                 foreach ($collection as $index => $collectionRule) {
                     assert($collectionRule instanceof RuleInterface);
-                    if ($collectionRule->getId() === $rule->getId()) {
+                    if ($collectionRule->getId()->getValue() === $rule->getId()->getValue()) {
                         unset($collection[$index]);
                     }
                 }
@@ -124,9 +126,9 @@ class RuleRepository implements RuleRepositoryInterface
                 $fields[$key] = $value;
             }
 
-            $result = $rule->getId()
-                ? RuleTable::update($rule->getId(), $fields)
-                : RuleTable::add($fields);
+            $result = $rule->getId()->isNew()
+                ? RuleTable::add($fields)
+                : RuleTable::update($rule->getId()->getValue(), $fields);
 
             if (!$result->isSuccess()) {
                 throw new InvalidArgumentException(implode('; ', $result->getErrorMessages()));
@@ -144,7 +146,10 @@ class RuleRepository implements RuleRepositoryInterface
     {
         foreach ($rules as $rule) {
             assert($rule instanceof RuleInterface);
-            $result = RuleTable::delete($rule->getId());
+            if ($rule->getId()->isNew()) {
+                continue;
+            }
+            $result = RuleTable::delete($rule->getId()->getValue());
             if (!$result->isSuccess()) {
                 throw new InvalidArgumentException(implode('; ', $result->getErrorMessages()));
             }

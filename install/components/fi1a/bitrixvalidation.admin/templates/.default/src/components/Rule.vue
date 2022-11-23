@@ -169,10 +169,6 @@ export default {
   margin-top: 18px !important;
 }
 
-.rule-delete {
-  margin-top: 14px !important;
-}
-
 .rule-message-description {
   margin-top: 2px;
   font-style: italic;

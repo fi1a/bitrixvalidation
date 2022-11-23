@@ -8,6 +8,7 @@ use ErrorException;
 use Fi1a\BitrixValidation\Model\EntityCollectionInterface;
 use Fi1a\BitrixValidation\Model\EntityInterface;
 use Fi1a\BitrixValidation\Model\Rules\MinRule;
+use Fi1a\BitrixValidation\Model\Rules\PrimaryId;
 use Fi1a\BitrixValidation\Model\Rules\RuleCollectionInterface;
 use Fi1a\BitrixValidation\ORM\RuleTable;
 use Fi1a\BitrixValidation\Repositories\RuleRepository;
@@ -108,6 +109,7 @@ class EntityServiceTest extends EntityTestCase
             'entity_id' => static::$iblockId,
             'multiple' => false,
             'message' => null,
+            'id' => new PrimaryId(),
         ]);
         $service = new EntityService();
         $this->assertTrue($service->saveEntityRules('ib', static::$iblockId, $rules->toArray()));

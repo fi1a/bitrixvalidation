@@ -22,7 +22,7 @@ abstract class AbstractRule extends ValueObject implements RuleInterface
     /**
      * @inheritDoc
      */
-    public function setId(?int $id): void
+    public function setId(PrimaryIdInterface $id): void
     {
         $this->modelSet('id', $id);
     }
@@ -101,6 +101,26 @@ abstract class AbstractRule extends ValueObject implements RuleInterface
     public function setMessage(?string $message): void
     {
         $this->modelSet('message', $message);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toArray(): array
+    {
+        $data = [];
+        $keys = array_keys($this->getArrayCopy());
+        foreach ($keys as $key) {
+            /**
+             * @var mixed
+             */
+            $data[$key] = $this->offsetGet($key);
+            if ($key === 'id') {
+                $data[$key] = $data[$key]->getValue();
+            }
+        }
+
+        return $data;
     }
 
     /**

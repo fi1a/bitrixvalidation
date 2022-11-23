@@ -9,6 +9,8 @@ use Bitrix\Main\Entity\EventResult;
 use Bitrix\Main\Event;
 use Bitrix\Main\EventManager;
 use Fi1a\BitrixValidation\Model\Rules\MinRule;
+use Fi1a\BitrixValidation\Model\Rules\PrimaryId;
+use Fi1a\BitrixValidation\Model\Rules\RuleCollection;
 use Fi1a\BitrixValidation\Model\Rules\RuleCollectionInterface;
 use Fi1a\BitrixValidation\Model\Rules\RuleInterface;
 use Fi1a\BitrixValidation\Repositories\RuleRepository;
@@ -58,10 +60,47 @@ class RuleRepositoryTest extends EntityTestCase
             'entity_id' => static::$iblockId,
             'multiple' => false,
             'message' => null,
+            'id' => new PrimaryId(),
         ]);
         $this->assertTrue($repository->save('ib', static::$iblockId, $rules));
         $rules->delete(2);
         $this->assertTrue($repository->save('ib', static::$iblockId, $rules));
+    }
+
+    public function testDeleteNew(): void
+    {
+        $repository = new RuleRepository();
+
+        $rules = $repository->getList([
+            'filter' => [
+                '=ENTITY_TYPE' => 'ib',
+                '=ENTITY_ID' => static::$iblockId,
+            ],
+        ]);
+        $equals = count($rules);
+        $this->assertGreaterThanOrEqual(1, $equals);
+
+        $rules = new RuleCollection();
+        $rules[] = new MinRule([
+            'key' => 'min',
+            'options' => ['min' => 10],
+            'sort' => 500,
+            'field_id' => (string) static::$iblockPropertyId,
+            'entity_type' => 'ib',
+            'entity_id' => static::$iblockId,
+            'multiple' => false,
+            'message' => null,
+            'id' => new PrimaryId(),
+        ]);
+        $this->assertTrue($repository->delete($rules));
+
+        $rules = $repository->getList([
+            'filter' => [
+                '=ENTITY_TYPE' => 'ib',
+                '=ENTITY_ID' => static::$iblockId,
+            ],
+        ]);
+        $this->assertEquals($equals, count($rules));
     }
 
     /**

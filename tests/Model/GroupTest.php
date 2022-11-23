@@ -6,6 +6,7 @@ namespace Fi1a\Unit\BitrixValidation\Model;
 
 use Fi1a\BitrixValidation\Model\Group;
 use Fi1a\BitrixValidation\Model\Rules\MinRule;
+use Fi1a\BitrixValidation\Model\Rules\PrimaryId;
 use Fi1a\BitrixValidation\Model\Rules\RuleCollection;
 use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
 use InvalidArgumentException;
@@ -160,7 +161,7 @@ class GroupTest extends ModuleTestCase
                     'min' => 10,
                 ],
                 'sort' => 500,
-                'id' => 1,
+                'id' => new PrimaryId(1),
                 'field_id' => '1',
                 'entity_type' => 'ib',
                 'entity_id' => 1,
@@ -173,7 +174,7 @@ class GroupTest extends ModuleTestCase
                     'min' => 10,
                 ],
                 'sort' => 500,
-                'id' => 1,
+                'id' => new PrimaryId(1),
                 'field_id' => '1',
                 'entity_type' => 'ib',
                 'entity_id' => 1,

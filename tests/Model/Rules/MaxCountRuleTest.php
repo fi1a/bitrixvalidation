@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\Unit\BitrixValidation\Model\Rules;
 
 use Fi1a\BitrixValidation\Model\Rules\MaxCountRule;
+use Fi1a\BitrixValidation\Model\Rules\PrimaryId;
 use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
 use Fi1a\Validation\AllOf;
 use InvalidArgumentException;
@@ -49,7 +50,7 @@ class MaxCountRuleTest extends ModuleTestCase
                 'max' => 10,
             ],
             'sort' => 500,
-            'id' => 1,
+            'id' => new PrimaryId(1),
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
@@ -127,7 +128,7 @@ class MaxCountRuleTest extends ModuleTestCase
                 'max' => 1,
             ],
             'sort' => 500,
-            'id' => 1,
+            'id' => new PrimaryId(1),
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,

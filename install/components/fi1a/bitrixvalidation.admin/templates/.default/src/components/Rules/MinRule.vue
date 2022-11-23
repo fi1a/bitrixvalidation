@@ -1,12 +1,12 @@
 <template>
-  <div class="rule-max-row">
-    <label for="max">{{$t('max.max')}}</label>
-    <input id="max" type="text" :value="values.max" @input="setMax($event.target.value)">
-    <p v-if="v$.values.max.$invalid" class="error">
-      <template v-if="v$.values.max.decimal.$invalid">
+  <div class="rule-min-row">
+    <label for="min">{{$t('min.min')}}</label>
+    <input id="min" type="text" :value="values.min" @input="setMin($event.target.value)">
+    <p v-if="v$.values.min.$invalid" class="error">
+      <template v-if="v$.values.min.decimal.$invalid">
         {{$t('errors.decimal')}}
       </template>
-      <template v-else-if="v$.values.max.required.$invalid">
+      <template v-else-if="v$.values.min.required.$invalid">
         {{$t('errors.required')}}
       </template>
     </p>
@@ -17,10 +17,10 @@
 
 import { useVuelidate } from '@vuelidate/core'
 import { required, decimal } from '@vuelidate/validators'
-import RuleMixin from './../mixins/RuleMixin.vue';
+import RuleMixin from './../../mixins/RuleMixin.vue';
 
 export default {
-  name: "MaxRule",
+  name: "MinRule",
 
   setup () {
     return {
@@ -36,7 +36,7 @@ export default {
 
   data() {
     let values = Object.assign({
-      max: 0
+      min: 0
     }, this.options)
     return {
       values
@@ -50,7 +50,7 @@ export default {
   validations () {
     return {
       values: {
-        max: {
+        min: {
           required, decimal
         }
       }
@@ -58,11 +58,11 @@ export default {
   },
 
   methods: {
-    setMax(max) {
-      this.values.max = max;
+    setMin(min) {
+      this.values.min = min;
       this.v$.$touch();
-      if (!this.v$.values.max.$error) {
-        this.$emit('updateOptions', {max: max});
+      if (!this.v$.values.min.$error) {
+        this.$emit('updateOptions', {min: min});
       }
     }
   }
@@ -70,16 +70,16 @@ export default {
 </script>
 
 <style>
-.rule-max-row {
+.rule-min-row {
   min-height: 60px;
   vertical-align: top;
 }
 
-.rule-max-row input {
+.rule-min-row input {
   width: 300px;
 }
 
-.rule-max-row label {
+.rule-min-row label {
   display: block;
   margin-bottom: 2px;
 }

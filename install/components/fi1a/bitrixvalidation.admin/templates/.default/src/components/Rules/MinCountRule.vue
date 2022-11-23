@@ -1,10 +1,10 @@
 <template>
-  <div class="rule-min-row">
-    <label for="min">{{$t('min.min')}}</label>
+  <div class="rule-min-count-row">
+    <label for="min">{{$t('minCount.min')}}</label>
     <input id="min" type="text" :value="values.min" @input="setMin($event.target.value)">
     <p v-if="v$.values.min.$invalid" class="error">
-      <template v-if="v$.values.min.decimal.$invalid">
-        {{$t('errors.decimal')}}
+      <template v-if="v$.values.min.integer.$invalid">
+        {{$t('errors.integer')}}
       </template>
       <template v-else-if="v$.values.min.required.$invalid">
         {{$t('errors.required')}}
@@ -16,11 +16,11 @@
 <script>
 
 import { useVuelidate } from '@vuelidate/core'
-import { required, decimal } from '@vuelidate/validators'
-import RuleMixin from './../mixins/RuleMixin.vue';
+import { required, integer } from '@vuelidate/validators'
+import RuleMixin from './../../mixins/RuleMixin.vue';
 
 export default {
-  name: "MinRule",
+  name: "MinCountRule",
 
   setup () {
     return {
@@ -51,7 +51,7 @@ export default {
     return {
       values: {
         min: {
-          required, decimal
+          required, integer
         }
       }
     }
@@ -70,16 +70,16 @@ export default {
 </script>
 
 <style>
-.rule-min-row {
+.rule-min-count-row {
   min-height: 60px;
   vertical-align: top;
 }
 
-.rule-min-row input {
+.rule-min-count-row input {
   width: 300px;
 }
 
-.rule-min-row label {
+.rule-min-count-row label {
   display: block;
   margin-bottom: 2px;
 }

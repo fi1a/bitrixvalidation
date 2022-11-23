@@ -5,6 +5,7 @@ use Bitrix\Highloadblock\HighloadBlockTable;
 use Bitrix\Main\EventManager;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
+use Fi1a\BitrixValidation\Model\Rules\BetweenCountRule;
 use Fi1a\BitrixValidation\Model\Rules\MaxRule;
 use Fi1a\BitrixValidation\Model\Rules\MinRule;
 use Fi1a\BitrixValidation\Model\Rules\MaxCountRule;
@@ -19,10 +20,11 @@ if (is_file(__DIR__ . '/vendor/autoload.php')) {
 $classLocFilePaths = [
     __DIR__ . '/lib/Repositories/IBEntityRepository.php',
     __DIR__ . '/lib/Repositories/HLEntityRepository.php',
-    __DIR__ . '/lib/Domain/Rule/MinRule.php',
-    __DIR__ . '/lib/Domain/Rule/MaxRule.php',
-    __DIR__ . '/lib/Domain/Rule/MinCountRule.php',
-    __DIR__ . '/lib/Domain/Rule/MaxCountRule.php',
+    __DIR__ . '/lib/Model/Rule/MinRule.php',
+    __DIR__ . '/lib/Model/Rule/MaxRule.php',
+    __DIR__ . '/lib/Model/Rule/MinCountRule.php',
+    __DIR__ . '/lib/Model/Rule/MaxCountRule.php',
+    __DIR__ . '/lib/Model/Rule/BetweenCountRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -93,3 +95,4 @@ RuleRegistry::add('min', MinRule::class);
 RuleRegistry::add('max', MaxRule::class);
 RuleRegistry::add('minCount', MinCountRule::class);
 RuleRegistry::add('maxCount', MaxCountRule::class);
+RuleRegistry::add('betweenCount', BetweenCountRule::class);

@@ -41,10 +41,11 @@
 
 import { useVuelidate } from '@vuelidate/core'
 import { required, integer, minValue } from '@vuelidate/validators'
-import MinRule from "./MinRule.vue";
-import MaxRule from "./MaxRule.vue";
-import MinCountRule from "./MinCountRule.vue";
-import MaxCountRule from "./MaxCountRule.vue";
+import MinRule from "./Rules/MinRule.vue";
+import MaxRule from "./Rules/MaxRule.vue";
+import MinCountRule from "./Rules/MinCountRule.vue";
+import MaxCountRule from "./Rules/MaxCountRule.vue";
+import BetweenCountRule from "./Rules/BetweenCountRule.vue";
 
 export default {
   name: "Rule",
@@ -62,7 +63,7 @@ export default {
     groupRules: Array,
   },
 
-  components: {MinRule, MaxRule, MinCountRule, MaxCountRule},
+  components: {MinRule, MaxRule, MinCountRule, MaxCountRule, BetweenCountRule},
 
   emits: ['delete'],
 
@@ -148,7 +149,7 @@ export default {
 
 <style>
 .adm-workarea .rule-select {
-  min-width: 300px;
+  width: 300px;
   margin-top: 18px;
 }
 

@@ -1,10 +1,10 @@
 <template>
-  <div class="rule-max-count-row">
-    <label for="max">{{$t('maxCount.max')}}</label>
+  <div class="rule-max-row">
+    <label for="max">{{$t('max.max')}}</label>
     <input id="max" type="text" :value="values.max" @input="setMax($event.target.value)">
     <p v-if="v$.values.max.$invalid" class="error">
-      <template v-if="v$.values.max.integer.$invalid">
-        {{$t('errors.integer')}}
+      <template v-if="v$.values.max.decimal.$invalid">
+        {{$t('errors.decimal')}}
       </template>
       <template v-else-if="v$.values.max.required.$invalid">
         {{$t('errors.required')}}
@@ -16,11 +16,11 @@
 <script>
 
 import { useVuelidate } from '@vuelidate/core'
-import { required, integer } from '@vuelidate/validators'
-import RuleMixin from './../mixins/RuleMixin.vue';
+import { required, decimal } from '@vuelidate/validators'
+import RuleMixin from './../../mixins/RuleMixin.vue';
 
 export default {
-  name: "MaxCountRule",
+  name: "MaxRule",
 
   setup () {
     return {
@@ -51,7 +51,7 @@ export default {
     return {
       values: {
         max: {
-          required, integer
+          required, decimal
         }
       }
     }
@@ -70,16 +70,16 @@ export default {
 </script>
 
 <style>
-.rule-max-count-row {
+.rule-max-row {
   min-height: 60px;
   vertical-align: top;
 }
 
-.rule-max-count-row input {
+.rule-max-row input {
   width: 300px;
 }
 
-.rule-max-count-row label {
+.rule-max-row label {
   display: block;
   margin-bottom: 2px;
 }

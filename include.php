@@ -1,11 +1,10 @@
 <?php
 namespace Fi1a\UserSettings;
 
-use Bitrix\Highloadblock\HighloadBlockTable;
-use Bitrix\Main\EventManager;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Fi1a\BitrixValidation\Model\Rules\BetweenCountRule;
+use Fi1a\BitrixValidation\Model\Rules\BetweenRule;
 use Fi1a\BitrixValidation\Model\Rules\MaxRule;
 use Fi1a\BitrixValidation\Model\Rules\MinRule;
 use Fi1a\BitrixValidation\Model\Rules\MaxCountRule;
@@ -25,6 +24,7 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Model/Rule/MinCountRule.php',
     __DIR__ . '/lib/Model/Rule/MaxCountRule.php',
     __DIR__ . '/lib/Model/Rule/BetweenCountRule.php',
+    __DIR__ . '/lib/Model/Rule/BetweenRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -96,3 +96,4 @@ RuleRegistry::add('max', MaxRule::class);
 RuleRegistry::add('minCount', MinCountRule::class);
 RuleRegistry::add('maxCount', MaxCountRule::class);
 RuleRegistry::add('betweenCount', BetweenCountRule::class);
+RuleRegistry::add('between', BetweenRule::class);

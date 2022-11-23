@@ -46,6 +46,7 @@ import MaxRule from "./Rules/MaxRule.vue";
 import MinCountRule from "./Rules/MinCountRule.vue";
 import MaxCountRule from "./Rules/MaxCountRule.vue";
 import BetweenCountRule from "./Rules/BetweenCountRule.vue";
+import BetweenRule from "./Rules/BetweenRule.vue";
 
 export default {
   name: "Rule",
@@ -63,7 +64,7 @@ export default {
     groupRules: Array,
   },
 
-  components: {MinRule, MaxRule, MinCountRule, MaxCountRule, BetweenCountRule},
+  components: {MinRule, MaxRule, MinCountRule, MaxCountRule, BetweenCountRule, BetweenRule},
 
   emits: ['delete'],
 

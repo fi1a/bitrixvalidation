@@ -11,10 +11,7 @@
       </p>
     </td>
     <td class="rule-cell">
-      <MinRule v-if="rule.key === 'min'" :options="rule.options" @updateOptions="updateOptions($event)"/>
-      <MaxRule v-if="rule.key === 'max'" :options="rule.options" @updateOptions="updateOptions($event)"/>
-      <MinCountRule v-if="rule.key === 'minCount'" :options="rule.options" @updateOptions="updateOptions($event)"/>
-      <MaxCountRule v-if="rule.key === 'maxCount'" :options="rule.options" @updateOptions="updateOptions($event)"/>
+      <component :is="rule.key + 'Rule'" :options="rule.options" @updateOptions="updateOptions($event)"/>
     </td>
     <td class="rule-cell">
       <input type="text" v-model="rule.message" class="rule-message">

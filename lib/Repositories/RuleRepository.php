@@ -25,7 +25,7 @@ class RuleRepository implements RuleRepositoryInterface
     {
         $parameters['select'] = ['*'];
         if (!isset($parameters['order'])) {
-            $parameters['order'] = ['SORT' => 'asc'];
+            $parameters['order'] = ['SORT' => 'asc', 'ID' => 'desc'];
         }
 
         $iterator = RuleTable::getList($parameters);

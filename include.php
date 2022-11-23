@@ -6,6 +6,7 @@ use Bitrix\Main\Localization\Loc;
 use Fi1a\BitrixValidation\Model\Rules\BetweenCountRule;
 use Fi1a\BitrixValidation\Model\Rules\BetweenRule;
 use Fi1a\BitrixValidation\Model\Rules\MaxRule;
+use Fi1a\BitrixValidation\Model\Rules\MinLengthRule;
 use Fi1a\BitrixValidation\Model\Rules\MinRule;
 use Fi1a\BitrixValidation\Model\Rules\MaxCountRule;
 use Fi1a\BitrixValidation\Model\Rules\MinCountRule;
@@ -25,6 +26,7 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Model/Rule/MaxCountRule.php',
     __DIR__ . '/lib/Model/Rule/BetweenCountRule.php',
     __DIR__ . '/lib/Model/Rule/BetweenRule.php',
+    __DIR__ . '/lib/Model/Rule/MinLengthRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -97,3 +99,4 @@ RuleRegistry::add('minCount', MinCountRule::class);
 RuleRegistry::add('maxCount', MaxCountRule::class);
 RuleRegistry::add('betweenCount', BetweenCountRule::class);
 RuleRegistry::add('between', BetweenRule::class);
+RuleRegistry::add('minLength', MinLengthRule::class);

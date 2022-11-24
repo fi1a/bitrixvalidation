@@ -52,6 +52,7 @@ import MaxLengthRule from "./Rules/MaxLengthRule.vue";
 import BetweenLengthRule from "./Rules/BetweenLengthRule.vue";
 import AlphaNumericRule from "./Rules/AlphaNumericRule.vue";
 import AlphaRule from "./Rules/AlphaRule.vue";
+import BooleanRule from "./Rules/BooleanRule.vue";
 
 export default {
   name: "Rule",
@@ -71,7 +72,7 @@ export default {
 
   components: {
     MinRule, MaxRule, MinCountRule, MaxCountRule, BetweenCountRule, BetweenRule, MinLengthRule, MaxLengthRule,
-    BetweenLengthRule, AlphaNumericRule, AlphaRule,
+    BetweenLengthRule, AlphaNumericRule, AlphaRule, BooleanRule,
   },
 
   emits: ['delete'],

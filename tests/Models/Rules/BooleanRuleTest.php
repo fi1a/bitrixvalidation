@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Fi1a\Unit\BitrixValidation\Models\Rules;
 
-use Fi1a\BitrixValidation\Models\Rules\AlphaRule;
+use Fi1a\BitrixValidation\Models\Rules\BooleanRule;
 use Fi1a\BitrixValidation\Models\Rules\PrimaryId;
 use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
 use Fi1a\Validation\AllOf;
 
 /**
- * Является ли значение только буквенным(без чисел)
+ * Является ли значение логическим
  */
-class AlphaRuleTest extends ModuleTestCase
+class BooleanRuleTest extends ModuleTestCase
 {
     /**
      * Возврашаемые типы
      */
     public function testGetTypes(): void
     {
-        $this->assertEquals(['string'], AlphaRule::getTypes());
+        $this->assertEquals(['string', 'number'], BooleanRule::getTypes());
     }
 
     /**
@@ -27,7 +27,7 @@ class AlphaRuleTest extends ModuleTestCase
      */
     public function testGetTitle(): void
     {
-        $this->assertIsString(AlphaRule::getTitle());
+        $this->assertIsString(BooleanRule::getTitle());
     }
 
     /**
@@ -35,7 +35,7 @@ class AlphaRuleTest extends ModuleTestCase
      */
     public function testGetMessageDescription(): void
     {
-        $this->assertIsString(AlphaRule::getMessageDescription());
+        $this->assertIsString(BooleanRule::getMessageDescription());
     }
 
     /**
@@ -43,8 +43,8 @@ class AlphaRuleTest extends ModuleTestCase
      */
     public function testOptions(): void
     {
-        $rule = new AlphaRule([
-            'key' => 'alpha',
+        $rule = new BooleanRule([
+            'key' => 'boolean',
             'options' => [],
             'sort' => 500,
             'id' => new PrimaryId(1),
@@ -61,8 +61,8 @@ class AlphaRuleTest extends ModuleTestCase
      */
     public function testConfigure(): void
     {
-        $rule = new AlphaRule([
-            'key' => 'alpha',
+        $rule = new BooleanRule([
+            'key' => 'boolean',
             'options' => [],
             'sort' => 500,
             'id' => new PrimaryId(1),
@@ -74,7 +74,7 @@ class AlphaRuleTest extends ModuleTestCase
 
         $chain = AllOf::create();
         $rule->configure($chain);
-        $this->assertTrue($chain->validate('abc')->isSuccess());
-        $this->assertFalse($chain->validate('abc123')->isSuccess());
+        $this->assertTrue($chain->validate('Y')->isSuccess());
+        $this->assertFalse($chain->validate('f')->isSuccess());
     }
 }

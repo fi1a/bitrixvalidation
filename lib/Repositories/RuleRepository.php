@@ -25,7 +25,7 @@ class RuleRepository implements RuleRepositoryInterface
     {
         $parameters['select'] = ['*'];
         if (!isset($parameters['order'])) {
-            $parameters['order'] = ['SORT' => 'asc', 'ID' => 'desc'];
+            $parameters['order'] = ['SORT' => 'asc',];
         }
 
         $iterator = RuleTable::getList($parameters);
@@ -78,6 +78,9 @@ class RuleRepository implements RuleRepositoryInterface
         }
         if (isset($rule['multiple']) && is_string($rule['multiple'])) {
             $rule['multiple'] = $rule['multiple'] === 'true';
+        }
+        if (!isset($rule['options'])) {
+            $rule['options'] = [];
         }
 
         $class = RuleRegistry::get($rule['key']);

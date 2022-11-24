@@ -217,8 +217,7 @@ class RuleRepositoryTest extends EntityTestCase
     {
         $repository = new RuleRepository();
         $this->assertInstanceOf(RuleInterface::class, $repository->factory([
-            'key' => 'min',
-            'options' => ['min' => 10],
+            'key' => 'alphaNumeric',
             'sort' => 500,
             'field_id' => (string) static::$iblockPropertyId,
             'entity_type' => 'ib',

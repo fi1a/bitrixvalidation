@@ -171,7 +171,7 @@ export default {
         }
       })
       if (field) {
-        this.entity.groups.unshift(
+        this.entity.groups.push(
           Object.assign(
             {
               rules: [

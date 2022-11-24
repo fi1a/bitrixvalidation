@@ -3,6 +3,7 @@ namespace Fi1a\UserSettings;
 
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
+use Fi1a\BitrixValidation\Models\Rules\AlphaNumericRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenCountRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenLengthRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenRule;
@@ -65,10 +66,16 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Models\Rules\RuleInterface' => 'lib/Models/Rules/RuleInterface.php',
         '\Fi1a\BitrixValidation\Models\Rules\RuleRegistryInterface' => 'lib/Models/Rules/RuleRegistryInterface.php',
         '\Fi1a\BitrixValidation\Models\Rules\RuleRegistry' => 'lib/Models/Rules/RuleRegistry.php',
-        '\Fi1a\BitrixValidation\Models\Rules\MaxRule' => 'lib/Models/Rules/MaxRule.php',
-        '\Fi1a\BitrixValidation\Models\Rules\MinRule' => 'lib/Models/Rules/MinRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\BetweenCountRule' => 'lib/Models/Rules/BetweenCountRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\BetweenLengthRule' => 'lib/Models/Rules/BetweenLengthRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\BetweenRule' => 'lib/Models/Rules/BetweenRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\MaxCountRule' => 'lib/Models/Rules/MaxCountRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\MaxLengthRule' => 'lib/Models/Rules/MaxLengthRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\MaxRule' => 'lib/Models/Rules/MaxRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\MinCountRule' => 'lib/Models/Rules/MinCountRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\MinLengthRule' => 'lib/Models/Rules/MinLengthRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\MinRule' => 'lib/Models/Rules/MinRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\AlphaNumericRule' => 'lib/Models/Rules/AlphaNumericRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -106,3 +113,4 @@ RuleRegistry::add('between', BetweenRule::class);
 RuleRegistry::add('minLength', MinLengthRule::class);
 RuleRegistry::add('maxLength', MaxLengthRule::class);
 RuleRegistry::add('betweenLength', BetweenLengthRule::class);
+RuleRegistry::add('alphaNumeric', AlphaNumericRule::class);

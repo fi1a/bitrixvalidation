@@ -50,7 +50,7 @@ export default {
 
   mixins: [RuleMixin],
 
-  emits:['updateOptions'],
+  emits: ['updateOptions'],
 
   props: {
     options: Object

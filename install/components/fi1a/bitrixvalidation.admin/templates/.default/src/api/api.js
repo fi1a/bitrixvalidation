@@ -45,7 +45,7 @@ export default {
                 data: {
                     entityType,
                     entityId,
-                    rules: rules
+                    rules
                 },
             }
         );

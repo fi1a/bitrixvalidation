@@ -54,6 +54,8 @@ export default {
     options: Object
   },
 
+  emits: ['updateOptions'],
+
   data() {
     let values = Object.assign({
       min: 0,

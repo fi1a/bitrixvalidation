@@ -20,6 +20,7 @@ use Fi1a\BitrixValidation\Models\Rules\MinRule;
 use Fi1a\BitrixValidation\Models\Rules\MaxCountRule;
 use Fi1a\BitrixValidation\Models\Rules\MinCountRule;
 use Fi1a\BitrixValidation\Models\Rules\NumericRule;
+use Fi1a\BitrixValidation\Models\Rules\RegexRule;
 use Fi1a\BitrixValidation\Models\Rules\RuleRegistry;
 use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
 
@@ -47,6 +48,7 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Models/Rules/EmailRule.php',
     __DIR__ . '/lib/Models/Rules/DateRule.php',
     __DIR__ . '/lib/Models/Rules/JsonRule.php',
+    __DIR__ . '/lib/Models/Rules/RegexRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -98,6 +100,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Models\Rules\EmailRule' => 'lib/Models/Rules/EmailRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\DateRule' => 'lib/Models/Rules/DateRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\JsonRule' => 'lib/Models/Rules/JsonRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\RegexRule' => 'lib/Models/Rules/RegexRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -143,3 +146,4 @@ RuleRegistry::add('numeric', NumericRule::class);
 RuleRegistry::add('email', EmailRule::class);
 RuleRegistry::add('date', DateRule::class);
 RuleRegistry::add('json', JsonRule::class);
+RuleRegistry::add('regex', RegexRule::class);

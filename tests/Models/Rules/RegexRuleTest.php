@@ -4,22 +4,23 @@ declare(strict_types=1);
 
 namespace Fi1a\Unit\BitrixValidation\Models\Rules;
 
-use Fi1a\BitrixValidation\Models\Rules\DateRule;
 use Fi1a\BitrixValidation\Models\Rules\PrimaryId;
+use Fi1a\BitrixValidation\Models\Rules\RegexRule;
 use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
 use Fi1a\Validation\AllOf;
+use InvalidArgumentException;
 
 /**
- * Проверка на формат даты
+ * Проверка на регулярное выражение
  */
-class DateRuleTest extends ModuleTestCase
+class RegexRuleTest extends ModuleTestCase
 {
     /**
      * Возврашаемые типы
      */
     public function testGetTypes(): void
     {
-        $this->assertEquals(['string'], DateRule::getTypes());
+        $this->assertEquals(['string'], RegexRule::getTypes());
     }
 
     /**
@@ -27,7 +28,7 @@ class DateRuleTest extends ModuleTestCase
      */
     public function testGetTitle(): void
     {
-        $this->assertIsString(DateRule::getTitle());
+        $this->assertIsString(RegexRule::getTitle());
     }
 
     /**
@@ -35,7 +36,7 @@ class DateRuleTest extends ModuleTestCase
      */
     public function testGetMessageDescription(): void
     {
-        $this->assertIsString(DateRule::getMessageDescription());
+        $this->assertIsString(RegexRule::getMessageDescription());
     }
 
     /**
@@ -43,10 +44,10 @@ class DateRuleTest extends ModuleTestCase
      */
     public function testOptions(): void
     {
-        $rule = new DateRule([
-            'key' => 'date',
+        $rule = new RegexRule([
+            'key' => 'regex',
             'options' => [
-                'format' => 'd.m.Y',
+                'regex' => '/[0-9]+/mui',
             ],
             'sort' => 500,
             'id' => new PrimaryId(1),
@@ -55,16 +56,17 @@ class DateRuleTest extends ModuleTestCase
             'entity_id' => 1,
             'multiple' => false,
         ]);
-        $this->assertEquals(['format' => 'd.m.Y',], $rule->getOptions());
+        $this->assertEquals(['regex' => '/[0-9]+/mui',], $rule->getOptions());
     }
 
     /**
-     * Опции
+     * Опции (исключение)
      */
-    public function testEmptyOptions(): void
+    public function testOptionsExceptionEmpty(): void
     {
-        $rule = new DateRule([
-            'key' => 'date',
+        $this->expectException(InvalidArgumentException::class);
+        new RegexRule([
+            'key' => 'regex',
             'options' => [],
             'sort' => 500,
             'id' => new PrimaryId(1),
@@ -73,7 +75,6 @@ class DateRuleTest extends ModuleTestCase
             'entity_id' => 1,
             'multiple' => false,
         ]);
-        $this->assertEquals(['format' => null,], $rule->getOptions());
     }
 
     /**
@@ -81,10 +82,10 @@ class DateRuleTest extends ModuleTestCase
      */
     public function testConfigure(): void
     {
-        $rule = new DateRule([
-            'key' => 'date',
+        $rule = new RegexRule([
+            'key' => 'regex',
             'options' => [
-                'format' => 'd.m.Y',
+                'regex' => '/[0-9]+/mui',
             ],
             'sort' => 500,
             'id' => new PrimaryId(1),
@@ -96,7 +97,7 @@ class DateRuleTest extends ModuleTestCase
 
         $chain = AllOf::create();
         $rule->configure($chain);
-        $this->assertTrue($chain->validate('10.10.2022')->isSuccess());
-        $this->assertFalse($chain->validate('10-10-2022')->isSuccess());
+        $this->assertTrue($chain->validate('123')->isSuccess());
+        $this->assertFalse($chain->validate('foo')->isSuccess());
     }
 }

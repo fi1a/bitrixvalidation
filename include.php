@@ -9,6 +9,7 @@ use Fi1a\BitrixValidation\Models\Rules\BetweenCountRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenLengthRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenRule;
 use Fi1a\BitrixValidation\Models\Rules\BooleanRule;
+use Fi1a\BitrixValidation\Models\Rules\DateRule;
 use Fi1a\BitrixValidation\Models\Rules\EmailRule;
 use Fi1a\BitrixValidation\Models\Rules\IntegerRule;
 use Fi1a\BitrixValidation\Models\Rules\MaxLengthRule;
@@ -43,6 +44,7 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Models/Rules/IntegerRule.php',
     __DIR__ . '/lib/Models/Rules/NumericRule.php',
     __DIR__ . '/lib/Models/Rules/EmailRule.php',
+    __DIR__ . '/lib/Models/Rules/DateRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -92,6 +94,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Models\Rules\IntegerRule' => 'lib/Models/Rules/IntegerRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\NumericRule' => 'lib/Models/Rules/NumericRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\EmailRule' => 'lib/Models/Rules/EmailRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\DateRule' => 'lib/Models/Rules/DateRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -135,3 +138,4 @@ RuleRegistry::add('boolean', BooleanRule::class);
 RuleRegistry::add('integer', IntegerRule::class);
 RuleRegistry::add('numeric', NumericRule::class);
 RuleRegistry::add('email', EmailRule::class);
+RuleRegistry::add('date', DateRule::class);

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Fi1a\BitrixValidation\Services;
 
 use ErrorException;
-use Fi1a\BitrixValidation\Model\EntityCollectionInterface;
-use Fi1a\BitrixValidation\Model\EntityInterface;
-use Fi1a\BitrixValidation\Model\Rules\RuleInterface;
-use Fi1a\BitrixValidation\Model\Rules\RuleRegistry;
+use Fi1a\BitrixValidation\Models\EntityCollectionInterface;
+use Fi1a\BitrixValidation\Models\EntityInterface;
+use Fi1a\BitrixValidation\Models\Rules\RuleInterface;
+use Fi1a\BitrixValidation\Models\Rules\RuleRegistry;
 use Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface;
 use Fi1a\BitrixValidation\Repositories\EntitySelect;
 use Fi1a\BitrixValidation\Repositories\HLEntityRepository;

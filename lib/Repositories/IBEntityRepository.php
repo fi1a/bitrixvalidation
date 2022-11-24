@@ -9,12 +9,12 @@ use Bitrix\Iblock\PropertyTable;
 use Bitrix\Iblock\TypeLanguageTable;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
-use Fi1a\BitrixValidation\Model\Entity;
-use Fi1a\BitrixValidation\Model\EntityCollection;
-use Fi1a\BitrixValidation\Model\EntityCollectionInterface;
-use Fi1a\BitrixValidation\Model\EntityInterface;
-use Fi1a\BitrixValidation\Model\FieldCollection;
-use Fi1a\BitrixValidation\Model\GroupCollection;
+use Fi1a\BitrixValidation\Models\Entity;
+use Fi1a\BitrixValidation\Models\EntityCollection;
+use Fi1a\BitrixValidation\Models\EntityCollectionInterface;
+use Fi1a\BitrixValidation\Models\EntityInterface;
+use Fi1a\BitrixValidation\Models\FieldCollection;
+use Fi1a\BitrixValidation\Models\GroupCollection;
 
 /**
  *  Репозиторий сущностей

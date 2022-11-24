@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Fi1a\BitrixValidation\Repositories;
 
-use Fi1a\BitrixValidation\Model\EntityCollectionInterface;
-use Fi1a\BitrixValidation\Model\EntityInterface;
+use Fi1a\BitrixValidation\Models\EntityCollectionInterface;
+use Fi1a\BitrixValidation\Models\EntityInterface;
 
 /**
  *  Репозиторий сущностей

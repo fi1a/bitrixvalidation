@@ -3,16 +3,16 @@ namespace Fi1a\UserSettings;
 
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
-use Fi1a\BitrixValidation\Model\Rules\BetweenCountRule;
-use Fi1a\BitrixValidation\Model\Rules\BetweenLengthRule;
-use Fi1a\BitrixValidation\Model\Rules\BetweenRule;
-use Fi1a\BitrixValidation\Model\Rules\MaxLengthRule;
-use Fi1a\BitrixValidation\Model\Rules\MaxRule;
-use Fi1a\BitrixValidation\Model\Rules\MinLengthRule;
-use Fi1a\BitrixValidation\Model\Rules\MinRule;
-use Fi1a\BitrixValidation\Model\Rules\MaxCountRule;
-use Fi1a\BitrixValidation\Model\Rules\MinCountRule;
-use Fi1a\BitrixValidation\Model\Rules\RuleRegistry;
+use Fi1a\BitrixValidation\Models\Rules\BetweenCountRule;
+use Fi1a\BitrixValidation\Models\Rules\BetweenLengthRule;
+use Fi1a\BitrixValidation\Models\Rules\BetweenRule;
+use Fi1a\BitrixValidation\Models\Rules\MaxLengthRule;
+use Fi1a\BitrixValidation\Models\Rules\MaxRule;
+use Fi1a\BitrixValidation\Models\Rules\MinLengthRule;
+use Fi1a\BitrixValidation\Models\Rules\MinRule;
+use Fi1a\BitrixValidation\Models\Rules\MaxCountRule;
+use Fi1a\BitrixValidation\Models\Rules\MinCountRule;
+use Fi1a\BitrixValidation\Models\Rules\RuleRegistry;
 use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
 
 if (is_file(__DIR__ . '/vendor/autoload.php')) {

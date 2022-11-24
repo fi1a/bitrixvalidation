@@ -3,11 +3,14 @@
     <label for="min">{{$t('between.min')}}</label>
     <input id="min" type="text" :value="values.min" @input="setMin($event.target.value)">
     <p v-if="v$.values.min.$invalid" class="error">
-      <template v-if="v$.values.min.integer.$invalid">
-        {{$t('errors.integer')}}
+      <template v-if="v$.values.min.decimal.$invalid">
+        {{$t('errors.decimal')}}
       </template>
       <template v-else-if="v$.values.min.required.$invalid">
         {{$t('errors.required')}}
+      </template>
+      <template v-else-if="v$.values.min.mustBeLessOrEqual.$invalid && !v$.values.max.decimal.$invalid">
+        {{$t('errors.mustBeLessOrEqual', {value: String(this.values.max)})}}
       </template>
     </p>
   </div>
@@ -15,11 +18,14 @@
     <label for="max">{{$t('between.max')}}</label>
     <input id="max" type="text" :value="values.max" @input="setMax($event.target.value)">
     <p v-if="v$.values.max.$invalid" class="error">
-      <template v-if="v$.values.max.integer.$invalid">
-        {{$t('errors.integer')}}
+      <template v-if="v$.values.max.decimal.$invalid">
+        {{$t('errors.decimal')}}
       </template>
       <template v-else-if="v$.values.max.required.$invalid">
         {{$t('errors.required')}}
+      </template>
+      <template v-else-if="v$.values.max.mustBeGreaterOrEqual.$invalid && !v$.values.min.decimal.$invalid">
+        {{$t('errors.mustBeGreaterOrEqual', {value: String(this.values.min)})}}
       </template>
     </p>
   </div>
@@ -30,6 +36,8 @@
 import { useVuelidate } from '@vuelidate/core'
 import { required, decimal } from '@vuelidate/validators'
 import RuleMixin from './../../mixins/RuleMixin.vue';
+import {mustBeGreaterOrEqual} from '../../validations/mustBeGreaterOrEqual';
+import {mustBeLessOrEqual} from '../../validations/mustBeLessOrEqual';
 
 export default {
   name: "BetweenRule",
@@ -64,10 +72,10 @@ export default {
     return {
       values: {
         min: {
-          required, decimal
+          required, decimal, mustBeLessOrEqual: mustBeLessOrEqual('max')
         },
         max: {
-          required, decimal
+          required, decimal, mustBeGreaterOrEqual: mustBeGreaterOrEqual('min')
         }
       }
     }
@@ -77,15 +85,15 @@ export default {
     setMax(max) {
       this.values.max = max;
       this.v$.$touch();
-      if (!this.v$.values.max.$error) {
-        this.$emit('updateOptions', {max: max});
+      if (!this.v$.$error) {
+        this.$emit('updateOptions', this.values);
       }
     },
     setMin(min) {
       this.values.min = min;
       this.v$.$touch();
-      if (!this.v$.values.min.$error) {
-        this.$emit('updateOptions', {min: min});
+      if (!this.v$.$error) {
+        this.$emit('updateOptions', this.values);
       }
     }
   }

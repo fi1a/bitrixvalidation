@@ -70,7 +70,7 @@ class BetweenLengthRuleTest extends ModuleTestCase
             'key' => 'betweenLength',
             'options' => [],
             'sort' => 500,
-            'id' => 1,
+            'id' => new PrimaryId(1),
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
@@ -90,7 +90,7 @@ class BetweenLengthRuleTest extends ModuleTestCase
                 'min' => 10,
             ],
             'sort' => 500,
-            'id' => 1,
+            'id' => new PrimaryId(1),
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
@@ -110,7 +110,7 @@ class BetweenLengthRuleTest extends ModuleTestCase
                 'min' => 'foo',
             ],
             'sort' => 500,
-            'id' => 1,
+            'id' => new PrimaryId(1),
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
@@ -131,7 +131,7 @@ class BetweenLengthRuleTest extends ModuleTestCase
                 'max' => 'foo',
             ],
             'sort' => 500,
-            'id' => 1,
+            'id' => new PrimaryId(1),
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,
@@ -151,7 +151,28 @@ class BetweenLengthRuleTest extends ModuleTestCase
                 'max' => 10.5,
             ],
             'sort' => 500,
-            'id' => 1,
+            'id' => new PrimaryId(1),
+            'field_id' => '1',
+            'entity_type' => 'ib',
+            'entity_id' => 1,
+            'multiple' => false,
+        ]);
+    }
+
+    /**
+     * Опции (исключение)
+     */
+    public function testOptionsExceptionGreaterAndLess(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new BetweenLengthRule([
+            'key' => 'betweenLength',
+            'options' => [
+                'min' => 10,
+                'max' => 5,
+            ],
+            'sort' => 500,
+            'id' => new PrimaryId(1),
             'field_id' => '1',
             'entity_type' => 'ib',
             'entity_id' => 1,

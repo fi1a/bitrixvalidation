@@ -54,6 +54,9 @@ class BetweenRule extends AbstractRule
         if (!is_numeric($options['max'])) {
             throw new InvalidArgumentException('Значение max должно быть числом');
         }
+        if ($options['min'] > $options['max']) {
+            throw new InvalidArgumentException('Значение max должен быть больше min');
+        }
 
         $this->modelSet('options', $options);
     }

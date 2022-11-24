@@ -9,6 +9,9 @@
       <template v-else-if="v$.values.min.required.$invalid">
         {{$t('errors.required')}}
       </template>
+      <template v-else-if="v$.values.min.mustBeLessOrEqual.$invalid && !v$.values.max.integer.$invalid">
+        {{$t('errors.mustBeLessOrEqual', {value: String(this.values.max)})}}
+      </template>
     </p>
   </div>
   <div class="rule-max-count-row">
@@ -21,6 +24,9 @@
       <template v-else-if="v$.values.max.required.$invalid">
         {{$t('errors.required')}}
       </template>
+      <template v-else-if="v$.values.max.mustBeGreaterOrEqual.$invalid && !v$.values.min.integer.$invalid">
+        {{$t('errors.mustBeGreaterOrEqual', {value: String(this.values.min)})}}
+      </template>
     </p>
   </div>
 </template>
@@ -30,6 +36,8 @@
 import { useVuelidate } from '@vuelidate/core'
 import { required, integer } from '@vuelidate/validators'
 import RuleMixin from './../../mixins/RuleMixin.vue';
+import {mustBeGreaterOrEqual} from '../../validations/mustBeGreaterOrEqual';
+import {mustBeLessOrEqual} from '../../validations/mustBeLessOrEqual';
 
 export default {
   name: "BetweenCountRule",
@@ -41,6 +49,8 @@ export default {
   },
 
   mixins: [RuleMixin],
+
+  emits:['updateOptions'],
 
   props: {
     options: Object
@@ -64,10 +74,10 @@ export default {
     return {
       values: {
         min: {
-          required, integer
+          required, integer, mustBeLessOrEqual: mustBeLessOrEqual('max')
         },
         max: {
-          required, integer
+          required, integer, mustBeGreaterOrEqual: mustBeGreaterOrEqual('min')
         }
       }
     }
@@ -77,15 +87,15 @@ export default {
     setMax(max) {
       this.values.max = max;
       this.v$.$touch();
-      if (!this.v$.values.max.$error) {
-        this.$emit('updateOptions', {max: max});
+      if (!this.v$.$error) {
+        this.$emit('updateOptions', this.values);
       }
     },
     setMin(min) {
       this.values.min = min;
       this.v$.$touch();
-      if (!this.v$.values.min.$error) {
-        this.$emit('updateOptions', {min: min});
+      if (!this.v$.$error) {
+        this.$emit('updateOptions', this.values);
       }
     }
   }

@@ -59,6 +59,7 @@ import EmailRule from "./Rules/EmailRule.vue";
 import DateRule from "./Rules/DateRule.vue";
 import JsonRule from "./Rules/JsonRule.vue";
 import RegexRule from "./Rules/RegexRule.vue";
+import InRule from "./Rules/InRule.vue";
 
 export default {
   name: "Rule",
@@ -79,7 +80,7 @@ export default {
   components: {
     MinRule, MaxRule, MinCountRule, MaxCountRule, BetweenCountRule, BetweenRule, MinLengthRule, MaxLengthRule,
     BetweenLengthRule, AlphaNumericRule, AlphaRule, BooleanRule, IntegerRule, NumericRule, EmailRule, DateRule,
-    JsonRule, RegexRule,
+    JsonRule, RegexRule, InRule,
   },
 
   emits: ['delete'],

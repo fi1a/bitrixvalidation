@@ -9,6 +9,7 @@ use Fi1a\BitrixValidation\Models\Rules\BetweenCountRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenLengthRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenRule;
 use Fi1a\BitrixValidation\Models\Rules\BooleanRule;
+use Fi1a\BitrixValidation\Models\Rules\IntegerRule;
 use Fi1a\BitrixValidation\Models\Rules\MaxLengthRule;
 use Fi1a\BitrixValidation\Models\Rules\MaxRule;
 use Fi1a\BitrixValidation\Models\Rules\MinLengthRule;
@@ -37,6 +38,7 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Models/Rules/AlphaNumericRule.php',
     __DIR__ . '/lib/Models/Rules/AlphaRule.php',
     __DIR__ . '/lib/Models/Rules/BooleanRule.php',
+    __DIR__ . '/lib/Models/Rules/IntegerRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -83,6 +85,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Models\Rules\AlphaNumericRule' => 'lib/Models/Rules/AlphaNumericRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\AlphaRule' => 'lib/Models/Rules/AlphaRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\BooleanRule' => 'lib/Models/Rules/BooleanRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\IntegerRule' => 'lib/Models/Rules/IntegerRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -123,3 +126,4 @@ RuleRegistry::add('betweenLength', BetweenLengthRule::class);
 RuleRegistry::add('alphaNumeric', AlphaNumericRule::class);
 RuleRegistry::add('alpha', AlphaRule::class);
 RuleRegistry::add('boolean', BooleanRule::class);
+RuleRegistry::add('integer', IntegerRule::class);

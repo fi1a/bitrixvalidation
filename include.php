@@ -4,6 +4,7 @@ namespace Fi1a\UserSettings;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Fi1a\BitrixValidation\Models\Rules\AlphaNumericRule;
+use Fi1a\BitrixValidation\Models\Rules\AlphaRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenCountRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenLengthRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenRule;
@@ -76,6 +77,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Models\Rules\MinLengthRule' => 'lib/Models/Rules/MinLengthRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\MinRule' => 'lib/Models/Rules/MinRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\AlphaNumericRule' => 'lib/Models/Rules/AlphaNumericRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\AlphaRule' => 'lib/Models/Rules/AlphaRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -114,3 +116,4 @@ RuleRegistry::add('minLength', MinLengthRule::class);
 RuleRegistry::add('maxLength', MaxLengthRule::class);
 RuleRegistry::add('betweenLength', BetweenLengthRule::class);
 RuleRegistry::add('alphaNumeric', AlphaNumericRule::class);
+RuleRegistry::add('alpha', AlphaRule::class);

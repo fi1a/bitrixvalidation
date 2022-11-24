@@ -16,6 +16,7 @@ use Fi1a\BitrixValidation\Models\Rules\MinLengthRule;
 use Fi1a\BitrixValidation\Models\Rules\MinRule;
 use Fi1a\BitrixValidation\Models\Rules\MaxCountRule;
 use Fi1a\BitrixValidation\Models\Rules\MinCountRule;
+use Fi1a\BitrixValidation\Models\Rules\NumericRule;
 use Fi1a\BitrixValidation\Models\Rules\RuleRegistry;
 use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
 
@@ -39,6 +40,7 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Models/Rules/AlphaRule.php',
     __DIR__ . '/lib/Models/Rules/BooleanRule.php',
     __DIR__ . '/lib/Models/Rules/IntegerRule.php',
+    __DIR__ . '/lib/Models/Rules/NumericRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -86,6 +88,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Models\Rules\AlphaRule' => 'lib/Models/Rules/AlphaRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\BooleanRule' => 'lib/Models/Rules/BooleanRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\IntegerRule' => 'lib/Models/Rules/IntegerRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\NumericRule' => 'lib/Models/Rules/NumericRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -127,3 +130,4 @@ RuleRegistry::add('alphaNumeric', AlphaNumericRule::class);
 RuleRegistry::add('alpha', AlphaRule::class);
 RuleRegistry::add('boolean', BooleanRule::class);
 RuleRegistry::add('integer', IntegerRule::class);
+RuleRegistry::add('numeric', NumericRule::class);

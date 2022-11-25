@@ -6,6 +6,7 @@ use Bitrix\Main\DB\Connection;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ModuleManager;
+use Bitrix\Main\IO\FileDeleteException;
 use Fi1a\BitrixValidation\Events\Events;
 use Fi1a\BitrixValidation\ORM\RuleTable;
 
@@ -227,6 +228,12 @@ class fi1a_bitrixvalidation extends CModule
             true,
             true
         );
+        \CopyDirFiles(
+            $this->createPath($this->moduleDir, 'install', 'components'),
+            $this->createPath(Application::getDocumentRoot(), BX_ROOT, 'components'),
+            true,
+            true
+        );
 
         return true;
     }
@@ -385,6 +392,9 @@ class fi1a_bitrixvalidation extends CModule
         }
 
         if (!$this->unlinkAdminFiles()) {
+            return false;
+        }
+        if (!$this->unlinkComponents()) {
             return false;
         }
 
@@ -613,9 +623,73 @@ class fi1a_bitrixvalidation extends CModule
             }
 
             $filePath = $this->createPath($this->bitrixAdminDir, $fileSystemEntry->getName());
+            if (!is_file($filePath)) {
+                continue;
+            }
             if (!unlink($filePath)) {
                 $APPLICATION->ResetException();
                 $APPLICATION->ThrowException(Loc::getMessage('FBV_DELETE_FILE_ERROR', ['#FILE_PATH#' => $filePath]));
+
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Удаляет компоненты модуля
+     *
+     * @return bool
+     *
+     * @throws \Bitrix\Main\IO\FileNotFoundException
+     */
+    private function unlinkComponents(): bool
+    {
+        global $APPLICATION;
+
+        $moduleComponentDir = new \Bitrix\Main\IO\Directory(
+            $this->createPath($this->moduleDir, 'install', 'components', 'fi1a')
+        );
+
+        foreach ($moduleComponentDir->getChildren() as $entry) {
+            if (!$entry->isDirectory()) {
+                continue;
+            }
+
+            try {
+                (new \Bitrix\Main\IO\Directory(
+                    $this->createPath(Application::getDocumentRoot(), BX_ROOT, 'components', 'fi1a', $entry->getName())
+                ))->delete();
+            } catch (FileDeleteException $exception) {
+                $APPLICATION->ResetException();
+                $APPLICATION->ThrowException($exception->getMessage());
+
+                return false;
+            }
+
+        }
+        unset($entry);
+
+        $componentDirectory = new \Bitrix\Main\IO\Directory(
+            $this->createPath(Application::getDocumentRoot(), BX_ROOT, 'components', 'fi1a')
+        );
+        $unlink = true;
+        foreach ($componentDirectory->getChildren() as $entry) {
+            if ($entry->isFile() || $entry->isDirectory()) {
+                $unlink = false;
+
+                break;
+            }
+        }
+        unset($entry);
+
+        if ($unlink) {
+            try {
+                $componentDirectory->delete();
+            } catch (FileDeleteException $exception) {
+                $APPLICATION->ResetException();
+                $APPLICATION->ThrowException($exception->getMessage());
 
                 return false;
             }

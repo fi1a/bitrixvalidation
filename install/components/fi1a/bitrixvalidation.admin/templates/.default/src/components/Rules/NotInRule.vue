@@ -59,7 +59,12 @@ export default {
   },
 
   mounted() {
-    this.$emit('updateOptions', this.values);
+    let values = [];
+    this.values.notIn.forEach((item) => {
+      values.push(item.value)
+    });
+
+    this.$emit('updateOptions', {notIn: values});
   },
 
   validations () {

@@ -10,7 +10,7 @@ use Fi1a\BitrixValidation\Models\EntityInterface;
 use Fi1a\BitrixValidation\Models\Rules\RuleInterface;
 use Fi1a\BitrixValidation\Models\Rules\RuleRegistry;
 use Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface;
-use Fi1a\BitrixValidation\Repositories\EntitySelect;
+use Fi1a\BitrixValidation\Repositories\EntitySelector;
 use Fi1a\BitrixValidation\Repositories\HLEntityRepository;
 use Fi1a\BitrixValidation\Repositories\IBEntityRepository;
 use Fi1a\BitrixValidation\Repositories\RuleRepository;
@@ -44,7 +44,7 @@ class EntityService implements EntityServiceInterface
     {
         return $this->factoryRepository($type)->getEntity(
             $id,
-            new EntitySelect(true, true)
+            new EntitySelector(true, true)
         );
     }
 

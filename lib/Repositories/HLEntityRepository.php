@@ -37,10 +37,10 @@ class HLEntityRepository extends AbstractEntityRepository
     /**
      * @inheritDoc
      */
-    public function getList(array $parameters = [], ?EntitySelectInterface $select = null): EntityCollectionInterface
+    public function getList(array $parameters = [], ?EntitySelectorInterface $select = null): EntityCollectionInterface
     {
         if (!$select) {
-            $select = new EntitySelect();
+            $select = new EntitySelector();
         }
         Loader::includeModule('highloadblock');
 

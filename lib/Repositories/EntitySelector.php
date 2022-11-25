@@ -7,7 +7,7 @@ namespace Fi1a\BitrixValidation\Repositories;
 /**
  * Объект определяющий выборку полей сущности
  */
-class EntitySelect implements EntitySelectInterface
+class EntitySelector implements EntitySelectorInterface
 {
     /**
      * @var bool

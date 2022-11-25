@@ -17,10 +17,10 @@ interface EntityRepositoryInterface
      *
      * @param mixed[][] $parameters
      */
-    public function getList(array $parameters = [], ?EntitySelectInterface $select = null): EntityCollectionInterface;
+    public function getList(array $parameters = [], ?EntitySelectorInterface $select = null): EntityCollectionInterface;
 
     /**
      * Возвращает сущность
      */
-    public function getEntity(int $id, ?EntitySelectInterface $select = null): EntityInterface;
+    public function getEntity(int $id, ?EntitySelectorInterface $select = null): EntityInterface;
 }

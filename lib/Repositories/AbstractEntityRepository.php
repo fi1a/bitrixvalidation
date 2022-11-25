@@ -24,7 +24,7 @@ abstract class AbstractEntityRepository implements EntityRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getEntity(int $id, ?EntitySelectInterface $select = null): EntityInterface
+    public function getEntity(int $id, ?EntitySelectorInterface $select = null): EntityInterface
     {
         $collection = $this->getList(['filter' => ['=ID' => $id],], $select);
 

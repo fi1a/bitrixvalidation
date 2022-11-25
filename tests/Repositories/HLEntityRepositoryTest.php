@@ -9,7 +9,7 @@ use Fi1a\BitrixValidation\Models\EntityCollectionInterface;
 use Fi1a\BitrixValidation\Models\EntityInterface;
 use Fi1a\BitrixValidation\Models\FieldCollectionInterface;
 use Fi1a\BitrixValidation\Models\GroupCollectionInterface;
-use Fi1a\BitrixValidation\Repositories\EntitySelect;
+use Fi1a\BitrixValidation\Repositories\EntitySelector;
 use Fi1a\BitrixValidation\Repositories\HLEntityRepository;
 use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 
@@ -41,7 +41,7 @@ class HLEntityRepositoryTest extends EntityTestCase
      */
     public function testGetEntity(): void
     {
-        $select = new EntitySelect(true, true);
+        $select = new EntitySelector(true, true);
         $repository = new HLEntityRepository();
         $entity = $repository->getEntity(static::$hlId, $select);
         $this->assertInstanceOf(EntityInterface::class, $entity);

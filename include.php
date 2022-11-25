@@ -24,6 +24,7 @@ use Fi1a\BitrixValidation\Models\Rules\NotInRule;
 use Fi1a\BitrixValidation\Models\Rules\NumericRule;
 use Fi1a\BitrixValidation\Models\Rules\RegexRule;
 use Fi1a\BitrixValidation\Models\Rules\RuleRegistry;
+use Fi1a\BitrixValidation\Models\Rules\StrictInRule;
 use \Fi1a\BitrixValidation\Models\Rules\UniqueRule;
 use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
 use Fi1a\BitrixValidation\ValidationRules\UniqueRule as ValidationUniqueRule;
@@ -56,6 +57,7 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Models/Rules/RegexRule.php',
     __DIR__ . '/lib/Models/Rules/InRule.php',
     __DIR__ . '/lib/Models/Rules/NotInRule.php',
+    __DIR__ . '/lib/Models/Rules/StrictInRule.php',
     __DIR__ . '/lib/Models/Rules/UniqueRule.php',
     __DIR__ . '/lib/ValidationRules/UniqueRule.php',
 ];
@@ -111,8 +113,9 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Models\Rules\JsonRule' => 'lib/Models/Rules/JsonRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\RegexRule' => 'lib/Models/Rules/RegexRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\InRule' => 'lib/Models/Rules/InRule.php',
-        '\Fi1a\BitrixValidation\Models\Rules\UniqueRule' => 'lib/Models/Rules/UniqueRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\NotInRule' => 'lib/Models/Rules/NotInRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\StrictInRule' => 'lib/Models/Rules/StrictInRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\UniqueRule' => 'lib/Models/Rules/UniqueRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -166,4 +169,5 @@ RuleRegistry::add('json', JsonRule::class);
 RuleRegistry::add('regex', RegexRule::class);
 RuleRegistry::add('in', InRule::class);
 RuleRegistry::add('notIn', NotInRule::class);
+RuleRegistry::add('strictIn', StrictInRule::class);
 RuleRegistry::add('unique', UniqueRule::class);

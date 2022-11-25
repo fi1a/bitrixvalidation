@@ -62,6 +62,7 @@ import RegexRule from "./Rules/RegexRule.vue";
 import UniqueRule from "./Rules/UniqueRule.vue";
 import InRule from "./Rules/InRule.vue";
 import NotInRule from "./Rules/NotInRule.vue";
+import StrictInRule from "./Rules/StrictInRule.vue";
 
 export default {
   name: "Rule",
@@ -82,7 +83,7 @@ export default {
   components: {
     MinRule, MaxRule, MinCountRule, MaxCountRule, BetweenCountRule, BetweenRule, MinLengthRule, MaxLengthRule,
     BetweenLengthRule, AlphaNumericRule, AlphaRule, BooleanRule, IntegerRule, NumericRule, EmailRule, DateRule,
-    JsonRule, RegexRule, UniqueRule, InRule, NotInRule,
+    JsonRule, RegexRule, UniqueRule, InRule, NotInRule, StrictInRule,
   },
 
   emits: ['delete'],

@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace Fi1a\Unit\BitrixValidation\Models\Rules;
 
-use Fi1a\BitrixValidation\Models\Rules\InRule;
 use Fi1a\BitrixValidation\Models\Rules\PrimaryId;
+use Fi1a\BitrixValidation\Models\Rules\StrictInRule;
 use Fi1a\BitrixValidation\Services\EntityService;
 use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 use Fi1a\Validation\AllOf;
 use InvalidArgumentException;
 
 /**
- * Допустимые значения (не строгая проверка значения)
+ * Допустимые значения (строгая проверка значения)
  */
-class InRuleTest extends EntityTestCase
+class StrictInRuleTest extends EntityTestCase
 {
     /**
      * Возврашаемые типы
      */
     public function testGetTypes(): void
     {
-        $this->assertEquals(['number', 'string'], InRule::getTypes());
+        $this->assertEquals(['number', 'string'], StrictInRule::getTypes());
     }
 
     /**
@@ -29,7 +29,7 @@ class InRuleTest extends EntityTestCase
      */
     public function testGetTitle(): void
     {
-        $this->assertIsString(InRule::getTitle());
+        $this->assertIsString(StrictInRule::getTitle());
     }
 
     /**
@@ -37,7 +37,7 @@ class InRuleTest extends EntityTestCase
      */
     public function testGetMessageDescription(): void
     {
-        $this->assertIsString(InRule::getMessageDescription());
+        $this->assertIsString(StrictInRule::getMessageDescription());
     }
 
     /**
@@ -45,8 +45,8 @@ class InRuleTest extends EntityTestCase
      */
     public function testOptions(): void
     {
-        $rule = new InRule([
-            'key' => 'in',
+        $rule = new StrictInRule([
+            'key' => 'strictIn',
             'options' => [
                 'in' => ['foo', 'bar'],
             ],
@@ -66,8 +66,8 @@ class InRuleTest extends EntityTestCase
     public function testOptionsExceptionEmpty(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new InRule([
-            'key' => 'in',
+        new StrictInRule([
+            'key' => 'strictIn',
             'options' => [],
             'sort' => 500,
             'id' => new PrimaryId(1),
@@ -87,8 +87,8 @@ class InRuleTest extends EntityTestCase
         $entity = $service->getEntity('ib', static::$iblockId);
         $group = $entity->getGroups()[0];
 
-        $rule = new InRule([
-            'key' => 'in',
+        $rule = new StrictInRule([
+            'key' => 'strictIn',
             'options' => [
                 'in' => ['foo', 'bar'],
             ],
@@ -102,8 +102,7 @@ class InRuleTest extends EntityTestCase
 
         $chain = AllOf::create();
         $rule->configure($chain, $entity, $group, null);
-        $this->assertTrue($chain->validate('FOO')->isSuccess());
         $this->assertTrue($chain->validate('foo')->isSuccess());
-        $this->assertFalse($chain->validate('baz')->isSuccess());
+        $this->assertFalse($chain->validate('FOO')->isSuccess());
     }
 }

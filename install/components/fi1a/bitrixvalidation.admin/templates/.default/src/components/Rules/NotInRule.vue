@@ -1,11 +1,11 @@
 <template>
-  <div class="rule-in-row">
-    <label for="in">{{$t('in.in')}}</label>
-    <div class="rule-in" v-for="(find, index) in v$.values.in.$model">
-      <input class="value" type="text" v-model.trim="find.value" :key="index"><input v-if="values.in.length > 1" class="delete" v-on:click.prevent="deleteItem(index)" type="button" title="X" value="X">
+  <div class="rule-not-in-row">
+    <label for="in">{{$t('notIn.notIn')}}</label>
+    <div class="rule-not-in" v-for="(find, index) in v$.values.notIn.$model">
+      <input class="value" type="text" v-model.trim="find.value" :key="index"><input v-if="values.notIn.length > 1" class="delete" v-on:click.prevent="deleteItem(index)" type="button" title="X" value="X">
     </div>
-    <p v-if="v$.values.in.multipleRequired.$invalid && v$.values.$dirty" class="error">
-      <template v-if="v$.values.in.multipleRequired.$invalid">
+    <p v-if="v$.values.notIn.multipleRequired.$invalid && v$.values.$dirty" class="error">
+      <template v-if="v$.values.notIn.multipleRequired.$invalid">
         {{$t('errors.required')}}
       </template>
     </p>
@@ -20,7 +20,7 @@ import RuleMixin from './../../mixins/RuleMixin.vue';
 import {multipleRequired} from '../../validations/multipleRequired';
 
 export default {
-  name: "InRule",
+  name: "NotInRule",
 
   setup () {
     return {
@@ -39,8 +39,8 @@ export default {
   data() {
     let optionValues = [];
 
-    if (typeof this.options.in !== "undefined") {
-      this.options.in.forEach((item) => {
+    if (typeof this.options.notIn !== "undefined") {
+      this.options.notIn.forEach((item) => {
         optionValues.push({
           value: item,
         });
@@ -53,7 +53,7 @@ export default {
 
     return {
       values: {
-        in: optionValues
+        notIn: optionValues
       }
     }
   },
@@ -65,7 +65,7 @@ export default {
   validations () {
     return {
       values: {
-        in: {
+        notIn: {
           multipleRequired
         }
       }
@@ -74,13 +74,13 @@ export default {
 
   methods: {
     addItem() {
-      this.values.in.push({
+      this.values.notIn.push({
         value: ''
       });
     },
     deleteItem(index) {
-      if (this.values.in.length > 1) {
-        this.values.in.splice(index, 1);
+      if (this.values.notIn.length > 1) {
+        this.values.notIn.splice(index, 1);
       }
     }
   },
@@ -91,10 +91,10 @@ export default {
         this.v$.$touch();
         if (!this.v$.$error) {
           let values = [];
-          this.values.in.forEach((item) => {
+          this.values.notIn.forEach((item) => {
             values.push(item.value)
           });
-          this.$emit('updateOptions', {in: values});
+          this.$emit('updateOptions', {notIn: values});
         }
       },
       deep: true,
@@ -104,25 +104,25 @@ export default {
 </script>
 
 <style>
-.rule-in-row {
+.rule-not-in-row {
   min-height: 60px;
   vertical-align: top;
 }
 
-.rule-in-row .rule-in input.value {
+.rule-not-in-row .rule-not-in input.value {
   width: 260px;
 }
 
-.rule-in-row .rule-in input.delete {
+.rule-not-in-row .rule-not-in input.delete {
   margin-left: 10px;
 }
 
-.rule-in-row label {
+.rule-not-in-row label {
   display: block;
   margin-bottom: 2px;
 }
 
-.rule-in-row .rule-in {
+.rule-not-in-row .rule-not-in {
   margin-bottom: 10px;
 }
 </style>

@@ -40,7 +40,7 @@
         </span></div>
       </td>
       <td class="main-grid-cell main-grid-cell-left">
-        <div class="main-grid-cell-inner"><span class="main-grid-cell-content">20</span></div>
+        <div class="main-grid-cell-inner"><span class="main-grid-cell-content">{{entity.count_rules}}</span></div>
       </td>
     </tr>
     </tbody>

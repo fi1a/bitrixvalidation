@@ -9,6 +9,7 @@ use Fi1a\BitrixValidation\Models\EntityCollectionInterface;
 use Fi1a\BitrixValidation\Models\EntityInterface;
 use Fi1a\BitrixValidation\Models\Rules\RuleInterface;
 use Fi1a\BitrixValidation\Models\Rules\RuleRegistry;
+use Fi1a\BitrixValidation\ORM\RuleTable;
 use Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface;
 use Fi1a\BitrixValidation\Repositories\EntitySelector;
 use Fi1a\BitrixValidation\Repositories\HLEntityRepository;
@@ -26,7 +27,7 @@ class EntityService implements EntityServiceInterface
      */
     public function getListIB(array $parameters = []): EntityCollectionInterface
     {
-        return $this->factoryRepository('ib')->getList($parameters);
+        return $this->addCountRules($this->factoryRepository('ib')->getList($parameters));
     }
 
     /**
@@ -34,7 +35,27 @@ class EntityService implements EntityServiceInterface
      */
     public function getListHL(array $parameters = []): EntityCollectionInterface
     {
-        return $this->factoryRepository('hl')->getList($parameters);
+        return $this->addCountRules($this->factoryRepository('hl')->getList($parameters));
+    }
+
+    /**
+     * Добавляет кол-во правил к сущностям
+     */
+    private function addCountRules(EntityCollectionInterface $collection): EntityCollectionInterface
+    {
+        $counts = $this->getCountRules($collection);
+        foreach ($collection->keys() as $index) {
+            $collection[$index]['count_rules'] = 0;
+        }
+        foreach ($counts as $count) {
+            foreach ($collection as $index => $item) {
+                if ((int) $item['id'] === (int) $count['entity_id']) {
+                    $collection[$index]['count_rules'] = (int) $count['count'];
+                }
+            }
+        }
+
+        return $collection;
     }
 
     /**
@@ -178,5 +199,57 @@ class EntityService implements EntityServiceInterface
         ]);
 
         return $ruleRepository->delete($rules);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getCountRules(EntityCollectionInterface $collection): array
+    {
+        $result = [];
+
+        if (!count($collection)) {
+            return $result;
+        }
+
+        $idsByType = [];
+
+        foreach ($collection as $entity) {
+            assert($entity instanceof EntityInterface);
+            if (!isset($idsByType[$entity->getEntityType()])) {
+                $idsByType[$entity->getEntityType()] = [];
+            }
+            $idsByType[$entity->getEntityType()][] = $entity->getId();
+        }
+
+        foreach ($idsByType as $type => $ids) {
+            $filter = [
+                '=entity_id' => $ids,
+                '=entity_type' => $type,
+            ];
+
+            $iterator = RuleTable::query()
+                ->registerRuntimeField(
+                    'count',
+                    [
+                        'data_type' => 'integer',
+                        'expression' => ['count(%s)', 'ID'],
+                    ]
+                )
+                ->setSelect(['count', 'entity_id', 'entity_type'])
+                ->setFilter($filter)
+                ->setGroup(['entity_id', 'entity_type'])
+                ->exec();
+
+            while ($item = $iterator->fetch()) {
+                $result[] = [
+                    'count' => $item['count'],
+                    'entity_id' => $item['ENTITY_ID'],
+                    'entity_type' => $item['ENTITY_TYPE'],
+                ];
+            }
+        }
+
+        return $result;
     }
 }

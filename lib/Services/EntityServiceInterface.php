@@ -63,4 +63,11 @@ interface EntityServiceInterface
      * Удаляет правила для сущности
      */
     public function deleteEntityRules(string $entityType, int $entityId): bool;
+
+    /**
+     * Возвращает кол-во правил для сущностей
+     *
+     * @return mixed[]
+     */
+    public function getCountRules(EntityCollectionInterface $collection): array;
 }

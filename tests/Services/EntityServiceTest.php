@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\Unit\BitrixValidation\Services;
 
 use ErrorException;
+use Fi1a\BitrixValidation\Models\EntityCollection;
 use Fi1a\BitrixValidation\Models\EntityCollectionInterface;
 use Fi1a\BitrixValidation\Models\EntityInterface;
 use Fi1a\BitrixValidation\Models\Rules\MinRule;
@@ -29,7 +30,7 @@ class EntityServiceTest extends EntityTestCase
         $service = new EntityService();
         $collection = $service->getListIB();
         $this->assertInstanceOf(EntityCollectionInterface::class, $collection);
-        $this->assertGreaterThanOrEqual(1, count($collection));
+        $this->assertGreaterThanOrEqual(2, count($collection));
         $find = false;
         foreach ($collection as $item) {
             if ((int) $item['id'] === static::$iblockId) {
@@ -55,6 +56,21 @@ class EntityServiceTest extends EntityTestCase
             }
         }
         $this->assertTrue($find);
+    }
+
+    /**
+     * Кол-во записей
+     */
+    public function testGetCount(): void
+    {
+        $service = new EntityService();
+        $collection = $service->getListIB();
+        $this->assertInstanceOf(EntityCollectionInterface::class, $collection);
+        $this->assertGreaterThanOrEqual(2, count($collection));
+        $this->assertGreaterThanOrEqual(1, count($service->getCountRules($collection)));
+
+        $collection = new EntityCollection();
+        $this->assertEquals(0, count($service->getCountRules($collection)));
     }
 
     /**

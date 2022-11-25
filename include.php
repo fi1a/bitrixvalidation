@@ -23,7 +23,10 @@ use Fi1a\BitrixValidation\Models\Rules\MinCountRule;
 use Fi1a\BitrixValidation\Models\Rules\NumericRule;
 use Fi1a\BitrixValidation\Models\Rules\RegexRule;
 use Fi1a\BitrixValidation\Models\Rules\RuleRegistry;
+use \Fi1a\BitrixValidation\Models\Rules\UniqueRule;
 use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
+use Fi1a\BitrixValidation\ValidationRules\UniqueRule as ValidationUniqueRule;
+use Fi1a\Validation\Validator;
 
 if (is_file(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
@@ -51,6 +54,8 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Models/Rules/JsonRule.php',
     __DIR__ . '/lib/Models/Rules/RegexRule.php',
     __DIR__ . '/lib/Models/Rules/InRule.php',
+    __DIR__ . '/lib/Models/Rules/UniqueRule.php',
+    __DIR__ . '/lib/ValidationRules/UniqueRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -104,6 +109,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Models\Rules\JsonRule' => 'lib/Models/Rules/JsonRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\RegexRule' => 'lib/Models/Rules/RegexRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\InRule' => 'lib/Models/Rules/InRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\UniqueRule' => 'lib/Models/Rules/UniqueRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -125,12 +131,17 @@ Loader::registerAutoloadClasses(
 
         // События
         '\Fi1a\BitrixValidation\Events\Events' => 'lib/Events/Events.php',
+
+        // Правила валидации
+        '\Fi1a\BitrixValidation\ValidationRules\UniqueRule' => 'lib/ValidationRules/UniqueRule.php',
     ]
 );
 
 global $APPLICATION;
 
 ModuleRegistry::configure($APPLICATION, $GLOBALS);
+
+Validator::addRule(ValidationUniqueRule::class);
 
 RuleRegistry::add('min', MinRule::class);
 RuleRegistry::add('max', MaxRule::class);
@@ -151,3 +162,4 @@ RuleRegistry::add('date', DateRule::class);
 RuleRegistry::add('json', JsonRule::class);
 RuleRegistry::add('regex', RegexRule::class);
 RuleRegistry::add('in', InRule::class);
+RuleRegistry::add('unique', UniqueRule::class);

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Fi1a\BitrixValidation\Models\Rules;
 
 use Bitrix\Main\Localization\Loc;
+use Fi1a\BitrixValidation\Models\EntityInterface;
+use Fi1a\BitrixValidation\Models\GroupInterface;
 use Fi1a\Validation\ChainInterface;
 use InvalidArgumentException;
 
@@ -64,7 +66,7 @@ class BetweenRule extends AbstractRule
     /**
      * @inheritDoc
      */
-    public function configure(ChainInterface $chain): void
+    public function configure(ChainInterface $chain, EntityInterface $entity, GroupInterface $group, $id): void
     {
         $options = $this->getOptions();
         $chain->between($options['min'], $options['max']);

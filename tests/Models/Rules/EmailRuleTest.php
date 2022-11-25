@@ -6,13 +6,14 @@ namespace Fi1a\Unit\BitrixValidation\Models\Rules;
 
 use Fi1a\BitrixValidation\Models\Rules\EmailRule;
 use Fi1a\BitrixValidation\Models\Rules\PrimaryId;
-use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
+use Fi1a\BitrixValidation\Services\EntityService;
+use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 use Fi1a\Validation\AllOf;
 
 /**
  * Является ли значение email адресом
  */
-class EmailRuleTest extends ModuleTestCase
+class EmailRuleTest extends EntityTestCase
 {
     /**
      * Возврашаемые типы
@@ -61,6 +62,10 @@ class EmailRuleTest extends ModuleTestCase
      */
     public function testConfigure(): void
     {
+        $service = new EntityService();
+        $entity = $service->getEntity('ib', static::$iblockId);
+        $group = $entity->getGroups()[0];
+
         $rule = new EmailRule([
             'key' => 'email',
             'options' => [],
@@ -73,7 +78,7 @@ class EmailRuleTest extends ModuleTestCase
         ]);
 
         $chain = AllOf::create();
-        $rule->configure($chain);
+        $rule->configure($chain, $entity, $group, null);
         $this->assertTrue($chain->validate('foo@bar.ru')->isSuccess());
         $this->assertFalse($chain->validate('foo')->isSuccess());
     }

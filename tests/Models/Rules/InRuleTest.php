@@ -6,14 +6,15 @@ namespace Fi1a\Unit\BitrixValidation\Models\Rules;
 
 use Fi1a\BitrixValidation\Models\Rules\InRule;
 use Fi1a\BitrixValidation\Models\Rules\PrimaryId;
-use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
+use Fi1a\BitrixValidation\Services\EntityService;
+use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 use Fi1a\Validation\AllOf;
 use InvalidArgumentException;
 
 /**
  * Допустимые значения (не строгая проверка значения)
  */
-class InRuleTest extends ModuleTestCase
+class InRuleTest extends EntityTestCase
 {
     /**
      * Возврашаемые типы
@@ -82,6 +83,10 @@ class InRuleTest extends ModuleTestCase
      */
     public function testConfigure(): void
     {
+        $service = new EntityService();
+        $entity = $service->getEntity('ib', static::$iblockId);
+        $group = $entity->getGroups()[0];
+
         $rule = new InRule([
             'key' => 'in',
             'options' => [
@@ -96,7 +101,7 @@ class InRuleTest extends ModuleTestCase
         ]);
 
         $chain = AllOf::create();
-        $rule->configure($chain);
+        $rule->configure($chain, $entity, $group, null);
         $this->assertTrue($chain->validate(1)->isSuccess());
         $this->assertFalse($chain->validate(3)->isSuccess());
     }

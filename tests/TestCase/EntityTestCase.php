@@ -263,8 +263,8 @@ class EntityTestCase extends ModuleTestCase
         }
 
         $result = HighloadBlockTable::add([
-            'NAME' => 'BitrixValidationTest',
-            'TABLE_NAME' => 'bitrix_validation_test',
+            'NAME' => 'BitrixValidationTest' . uniqid(),
+            'TABLE_NAME' => 'bitrix_validation_test' . uniqid(),
         ]);
         if ($result->isSuccess()) {
             static::$hlId = (int) $result->getId();
@@ -384,8 +384,8 @@ class EntityTestCase extends ModuleTestCase
         }
 
         $result = HighloadBlockTable::add([
-            'NAME' => 'BitrixValidationTest2',
-            'TABLE_NAME' => 'bitrix_validation_test_2',
+            'NAME' => 'BitrixValidationTest' . uniqid(),
+            'TABLE_NAME' => 'bitrix_validation_test_' . uniqid(),
         ]);
         if ($result->isSuccess()) {
             static::$hlId2 = (int) $result->getId();

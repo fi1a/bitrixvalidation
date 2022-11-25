@@ -6,14 +6,15 @@ namespace Fi1a\Unit\BitrixValidation\Models\Rules;
 
 use Fi1a\BitrixValidation\Models\Rules\MinCountRule;
 use Fi1a\BitrixValidation\Models\Rules\PrimaryId;
-use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
+use Fi1a\BitrixValidation\Services\EntityService;
+use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 use Fi1a\Validation\AllOf;
 use InvalidArgumentException;
 
 /**
  * Проверка на минимальное количество значений в массиве
  */
-class MinCountRuleTest extends ModuleTestCase
+class MinCountRuleTest extends EntityTestCase
 {
     /**
      * Возврашаемые типы
@@ -122,6 +123,10 @@ class MinCountRuleTest extends ModuleTestCase
      */
     public function testConfigure(): void
     {
+        $service = new EntityService();
+        $entity = $service->getEntity('ib', static::$iblockId);
+        $group = $entity->getGroups()[0];
+
         $rule = new MinCountRule([
             'key' => 'minCount',
             'options' => [
@@ -136,7 +141,7 @@ class MinCountRuleTest extends ModuleTestCase
         ]);
 
         $chain = AllOf::create();
-        $rule->configure($chain);
+        $rule->configure($chain, $entity, $group, null);
         $this->assertTrue($chain->validate([1, 2])->isSuccess());
         $this->assertFalse($chain->validate([1])->isSuccess());
     }

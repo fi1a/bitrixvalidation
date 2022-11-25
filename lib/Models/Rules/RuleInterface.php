@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Fi1a\BitrixValidation\Models\Rules;
 
+use Fi1a\BitrixValidation\Models\EntityInterface;
+use Fi1a\BitrixValidation\Models\GroupInterface;
 use Fi1a\Collection\DataType\IValueObject;
 use Fi1a\Validation\ChainInterface;
 
@@ -95,6 +97,8 @@ interface RuleInterface extends IValueObject
 
     /**
      * Конфигурирует правило для валидации
+     *
+     * @param string|int|null $id
      */
-    public function configure(ChainInterface $chain): void;
+    public function configure(ChainInterface $chain, EntityInterface $entity, GroupInterface $group, $id): void;
 }

@@ -13,6 +13,7 @@ use Bitrix\Main\Loader;
 use CIBlockProperty;
 use CUserTypeEntity;
 use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
+use Fi1a\BitrixValidation\Models\EntityInterface;
 use Fi1a\BitrixValidation\Models\GroupInterface;
 use Fi1a\BitrixValidation\Models\Rules\RuleInterface;
 use Fi1a\BitrixValidation\Services\EntityService;
@@ -143,6 +144,7 @@ class Events
         $titles = [];
         $messages = [];
         $propertyByIds = [];
+        $id = isset($fields['ID']) ? (int) $fields['ID'] : null;
 
         $service = new EntityService();
         $entity = $service->getEntity('ib', (int) $fields['IBLOCK_ID']);
@@ -166,11 +168,11 @@ class Events
             assert($group instanceof GroupInterface);
 
             $titles = self::getTitles($group, $titles);
-            $chain = self::getChain($group);
+            $chain = self::getChain($entity, $group, $id);
             $messages = array_merge($messages, self::getMessages($group));
 
             if ($group->getMultiple()) {
-                $rules[$group->getId()] = self::getMultipleChain($group);
+                $rules[$group->getId()] = self::getMultipleChain($entity, $group, $id);
                 $rules[$group->getId() . ':*'] = $chain;
             } else {
                 $rules[$group->getId()] = $chain;
@@ -247,6 +249,7 @@ class Events
         $fieldByIds = [];
         $mapFields = [];
         $result = new EventResult();
+        $id = $event->getParameter('id')['ID'] ? (int) $event->getParameter('id')['ID'] : null;
 
         $hl = HighloadBlockTable::getList([
             'filter' => [
@@ -281,11 +284,11 @@ class Events
             assert($group instanceof GroupInterface);
 
             $titles = self::getTitles($group, $titles);
-            $chain = self::getChain($group);
+            $chain = self::getChain($entity, $group, $id);
             $messages = array_merge($messages, self::getMessages($group));
 
             if ($group->getMultiple()) {
-                $rules[$group->getId()] = self::getMultipleChain($group);
+                $rules[$group->getId()] = self::getMultipleChain($entity, $group, $id);
                 $rules[$group->getId() . ':*'] = $chain;
             } else {
                 $rules[$group->getId()] = $chain;
@@ -378,13 +381,15 @@ class Events
 
     /**
      * Возвращает цепочку правил
+     *
+     * @param string|int|null $id
      */
-    private static function getChain(GroupInterface $group): ChainInterface
+    private static function getChain(EntityInterface $entity, GroupInterface $group, $id): ChainInterface
     {
         $chain = AllOf::create();
         foreach ($group->getRules() as $rule) {
             assert($rule instanceof RuleInterface);
-            $rule->configure($chain);
+            $rule->configure($chain, $entity, $group, $id);
         }
 
         return $chain;
@@ -409,13 +414,15 @@ class Events
 
     /**
      * Возвращает цепочку правил для множественного значения
+     *
+     * @param string|int|null $id
      */
-    private static function getMultipleChain(GroupInterface $group): ChainInterface
+    private static function getMultipleChain(EntityInterface $entity, GroupInterface $group, $id): ChainInterface
     {
         $multipleChain = AllOf::create()->array();
         foreach ($group->getMultipleRules() as $rule) {
             assert($rule instanceof RuleInterface);
-            $rule->configure($multipleChain);
+            $rule->configure($multipleChain, $entity, $group, $id);
         }
 
         return $multipleChain;

@@ -6,13 +6,14 @@ namespace Fi1a\Unit\BitrixValidation\Models\Rules;
 
 use Fi1a\BitrixValidation\Models\Rules\AlphaNumericRule;
 use Fi1a\BitrixValidation\Models\Rules\PrimaryId;
-use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
+use Fi1a\BitrixValidation\Services\EntityService;
+use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 use Fi1a\Validation\AllOf;
 
 /**
  * Значение должно быть буквенно-цифровым
  */
-class AlphaNumericRuleTest extends ModuleTestCase
+class AlphaNumericRuleTest extends EntityTestCase
 {
     /**
      * Возврашаемые типы
@@ -61,6 +62,10 @@ class AlphaNumericRuleTest extends ModuleTestCase
      */
     public function testConfigure(): void
     {
+        $service = new EntityService();
+        $entity = $service->getEntity('ib', static::$iblockId);
+        $group = $entity->getGroups()[0];
+
         $rule = new AlphaNumericRule([
             'key' => 'alphaNumeric',
             'options' => [],
@@ -73,7 +78,7 @@ class AlphaNumericRuleTest extends ModuleTestCase
         ]);
 
         $chain = AllOf::create();
-        $rule->configure($chain);
+        $rule->configure($chain, $entity, $group, null);
         $this->assertTrue($chain->validate('123abc')->isSuccess());
         $this->assertFalse($chain->validate('abc 123')->isSuccess());
     }

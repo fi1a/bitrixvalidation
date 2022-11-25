@@ -6,13 +6,14 @@ namespace Fi1a\Unit\BitrixValidation\Models\Rules;
 
 use Fi1a\BitrixValidation\Models\Rules\DateRule;
 use Fi1a\BitrixValidation\Models\Rules\PrimaryId;
-use Fi1a\Unit\BitrixValidation\TestCase\ModuleTestCase;
+use Fi1a\BitrixValidation\Services\EntityService;
+use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
 use Fi1a\Validation\AllOf;
 
 /**
  * Проверка на формат даты
  */
-class DateRuleTest extends ModuleTestCase
+class DateRuleTest extends EntityTestCase
 {
     /**
      * Возврашаемые типы
@@ -81,6 +82,10 @@ class DateRuleTest extends ModuleTestCase
      */
     public function testConfigure(): void
     {
+        $service = new EntityService();
+        $entity = $service->getEntity('ib', static::$iblockId);
+        $group = $entity->getGroups()[0];
+
         $rule = new DateRule([
             'key' => 'date',
             'options' => [
@@ -95,7 +100,7 @@ class DateRuleTest extends ModuleTestCase
         ]);
 
         $chain = AllOf::create();
-        $rule->configure($chain);
+        $rule->configure($chain, $entity, $group, null);
         $this->assertTrue($chain->validate('10.10.2022')->isSuccess());
         $this->assertFalse($chain->validate('10-10-2022')->isSuccess());
     }

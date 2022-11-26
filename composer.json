@@ -1,7 +1,7 @@
 {
   "name": "fi1a/bitrixvalidation",
   "type": "bitrix-d7-module",
-  "description": "Модуль 1С-Битрикс \"Валидация полей и свойств инфоблока и highloadblock'a\"",
+  "description": "Модуль 1С-Битрикс \"Проверка значений (валидация) полей и свойств инфоблоков и highloadblock'ов\"",
   "keywords": [],
   "homepage": "https://github.com/fi1a/bitrixvalidation",
   "license": "MIT",

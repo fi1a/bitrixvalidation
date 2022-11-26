@@ -41,29 +41,29 @@
 
 import { useVuelidate } from '@vuelidate/core'
 import { required, integer, minValue } from '@vuelidate/validators'
-import MinRule from "./Rules/MinRule.vue";
-import MaxRule from "./Rules/MaxRule.vue";
-import MinCountRule from "./Rules/MinCountRule.vue";
-import MaxCountRule from "./Rules/MaxCountRule.vue";
-import BetweenCountRule from "./Rules/BetweenCountRule.vue";
-import BetweenRule from "./Rules/BetweenRule.vue";
-import MinLengthRule from "./Rules/MinLengthRule.vue";
-import MaxLengthRule from "./Rules/MaxLengthRule.vue";
-import BetweenLengthRule from "./Rules/BetweenLengthRule.vue";
-import AlphaNumericRule from "./Rules/AlphaNumericRule.vue";
-import AlphaRule from "./Rules/AlphaRule.vue";
-import BooleanRule from "./Rules/BooleanRule.vue";
-import IntegerRule from "./Rules/IntegerRule.vue";
-import NumericRule from "./Rules/NumericRule.vue";
-import EmailRule from "./Rules/EmailRule.vue";
-import DateRule from "./Rules/DateRule.vue";
-import JsonRule from "./Rules/JsonRule.vue";
-import RegexRule from "./Rules/RegexRule.vue";
-import UniqueRule from "./Rules/UniqueRule.vue";
-import InRule from "./Rules/InRule.vue";
-import NotInRule from "./Rules/NotInRule.vue";
-import StrictInRule from "./Rules/StrictInRule.vue";
-import StrictNotInRule from "./Rules/StrictNotInRule.vue";
+import MinRule from "./RuleOptions/MinRule.vue";
+import MaxRule from "./RuleOptions/MaxRule.vue";
+import MinCountRule from "./RuleOptions/MinCountRule.vue";
+import MaxCountRule from "./RuleOptions/MaxCountRule.vue";
+import BetweenCountRule from "./RuleOptions/BetweenCountRule.vue";
+import BetweenRule from "./RuleOptions/BetweenRule.vue";
+import MinLengthRule from "./RuleOptions/MinLengthRule.vue";
+import MaxLengthRule from "./RuleOptions/MaxLengthRule.vue";
+import BetweenLengthRule from "./RuleOptions/BetweenLengthRule.vue";
+import AlphaNumericRule from "./RuleOptions/AlphaNumericRule.vue";
+import AlphaRule from "./RuleOptions/AlphaRule.vue";
+import BooleanRule from "./RuleOptions/BooleanRule.vue";
+import IntegerRule from "./RuleOptions/IntegerRule.vue";
+import NumericRule from "./RuleOptions/NumericRule.vue";
+import EmailRule from "./RuleOptions/EmailRule.vue";
+import DateRule from "./RuleOptions/DateRule.vue";
+import JsonRule from "./RuleOptions/JsonRule.vue";
+import RegexRule from "./RuleOptions/RegexRule.vue";
+import UniqueRule from "./RuleOptions/UniqueRule.vue";
+import InRule from "./RuleOptions/InRule.vue";
+import NotInRule from "./RuleOptions/NotInRule.vue";
+import StrictInRule from "./RuleOptions/StrictInRule.vue";
+import StrictNotInRule from "./RuleOptions/StrictNotInRule.vue";
 
 export default {
   name: "Rule",

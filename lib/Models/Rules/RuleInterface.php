@@ -6,7 +6,7 @@ namespace Fi1a\BitrixValidation\Models\Rules;
 
 use Fi1a\BitrixValidation\Models\EntityInterface;
 use Fi1a\BitrixValidation\Models\GroupInterface;
-use Fi1a\Collection\DataType\IValueObject;
+use Fi1a\Collection\DataType\ValueObjectInterface;
 use Fi1a\Validation\ChainInterface;
 
 /**
@@ -22,7 +22,7 @@ use Fi1a\Validation\ChainInterface;
  * @method mixed[] getOptions()
  * @method string getMessage()
  */
-interface RuleInterface extends IValueObject
+interface RuleInterface extends ValueObjectInterface
 {
     /**
      * ИД

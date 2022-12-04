@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Fi1a\BitrixValidation\Models;
 
-use Fi1a\Collection\ICollection;
+use Fi1a\Collection\CollectionInterface;
 
 /**
  * Коллекция сущностей
  */
-interface EntityCollectionInterface extends ICollection
+interface EntityCollectionInterface extends CollectionInterface
 {
     /**
      * Возвращает массив

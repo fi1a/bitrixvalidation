@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\BitrixValidation\Models;
 
 use Fi1a\BitrixValidation\Models\Rules\RuleCollectionInterface;
-use Fi1a\Collection\DataType\IValueObject;
+use Fi1a\Collection\DataType\ValueObjectInterface;
 
 /**
  * Поле
@@ -27,6 +27,6 @@ use Fi1a\Collection\DataType\IValueObject;
  * @method RuleCollectionInterface getRules()
  * @method RuleCollectionInterface getMultipleRules()
  */
-interface FieldInterface extends IValueObject
+interface FieldInterface extends ValueObjectInterface
 {
 }

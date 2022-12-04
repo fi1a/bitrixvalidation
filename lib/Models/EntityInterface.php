@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fi1a\BitrixValidation\Models;
 
-use Fi1a\Collection\DataType\IValueObject;
+use Fi1a\Collection\DataType\ValueObjectInterface;
 
 /**
  * Сущность
@@ -24,6 +24,6 @@ use Fi1a\Collection\DataType\IValueObject;
  * @method array getFields()
  * @method array getGroups()
  */
-interface EntityInterface extends IValueObject
+interface EntityInterface extends ValueObjectInterface
 {
 }

@@ -53,7 +53,7 @@ class Fi1aBitrixValidationAdminComponent extends CBitrixComponent implements Con
             'submit' => [
                 'prefilters' => [
                     new Authentication(),
-                    new Rights(static::MODULE_ID, 'E'),
+                    new Rights(static::MODULE_ID, 'F'),
                     new HttpMethod(
                         [HttpMethod::METHOD_POST,]
                     ),
@@ -134,6 +134,7 @@ class Fi1aBitrixValidationAdminComponent extends CBitrixComponent implements Con
             'STATUS' => '',
             'ERRORS' => [],
             'LANGUAGE_ID' => LANGUAGE_ID,
+            'RIGHT' => $APPLICATION->GetGroupRight(static::MODULE_ID),
         ];
         $moduleMode = Loader::includeSharewareModule(static::MODULE_ID);
 
@@ -148,29 +149,13 @@ class Fi1aBitrixValidationAdminComponent extends CBitrixComponent implements Con
         }
 
         // Проверка прав
-        $right = $APPLICATION->GetGroupRight(static::MODULE_ID);
-        if ($right < 'E') {
+        if ($this->arResult['RIGHT'] < 'E') {
             $this->arResult['STATUS'] = 'ERROR';
             $this->arResult['ERRORS'][] = Loc::getMessage('FBV_NO_RIGHTS');
 
             $this->IncludeComponentTemplate();
 
             return;
-        }
-
-        $request = Application::getInstance()->getContext()->getRequest();
-
-        // Сохранение значений
-        if ($request->isPost() && ($request->getPost('save') || $request->getPost('apply'))) {
-            if (!check_bitrix_sessid()) {
-                $this->arResult['ERRORS'][] = Loc::getMessage('FBV_SESSION_EXPIRED');
-            } elseif ($this->arParams['RIGHT'] < 'F') {
-                $this->arResult['ERRORS'][] = Loc::getMessage('FBV_NO_RIGHTS_FOR_CHANGE');
-            }
-
-            if (empty($this->arResult['ERRORS'])) {
-
-            }
         }
 
         $this->IncludeComponentTemplate();

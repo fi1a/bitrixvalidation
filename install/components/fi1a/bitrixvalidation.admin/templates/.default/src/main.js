@@ -18,6 +18,8 @@ app.config.globalProperties.$scrollTop = (top) => {
     }, 20)
 }
 
+app.config.globalProperties.$right = document.getElementById('app').dataset.right;
+
 app.component('Edit', Edit);
 app.component('List', List);
 

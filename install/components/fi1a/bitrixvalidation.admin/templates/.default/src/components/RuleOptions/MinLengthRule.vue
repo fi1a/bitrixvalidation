@@ -1,7 +1,7 @@
 <template>
   <div class="rule-min-count-row">
-    <label for="min">{{$t('minLength.min')}}</label>
-    <input id="min" type="text" :value="values.min" @input="setMin($event.target.value)">
+    <label for="minLength">{{$t('minLength.min')}}</label>
+    <input :disabled="!$root.canEdit()" id="minLength" type="text" :value="values.min" @input="setMin($event.target.value)">
     <p v-if="v$.values.min.$invalid" class="error">
       <template v-if="v$.values.min.integer.$invalid">
         {{$t('errors.integer')}}

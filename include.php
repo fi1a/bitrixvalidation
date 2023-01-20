@@ -37,6 +37,7 @@ if (is_file(__DIR__ . '/vendor/autoload.php')) {
 }
 
 $classLocFilePaths = [
+    __DIR__ . '/lib/ActionFilter/Rights.php',
     __DIR__ . '/lib/Repositories/IBEntityRepository.php',
     __DIR__ . '/lib/Repositories/HLEntityRepository.php',
     __DIR__ . '/lib/Models/Rules/MinRule.php',

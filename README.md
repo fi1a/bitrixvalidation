@@ -14,9 +14,9 @@
 
 В вашем composer.json проекта необходимо указать:
 
-- в блоке require указать инсталятор ```"fi1a/installers": "^2.0"```;
-- в блоке require указать модуль ```"fi1a/bitrixvalidation": "^2.0"```;
-- указать путь до 1С-Битрикс (`bitrix-dir`) для копирования модулей при установке ```fi1a/installers```.
+- в блоке require указать инсталятор `"fi1a/installers": "^2.1"`;
+- в блоке require указать модуль `"fi1a/bitrixvalidation": "^3.0"`;
+- указать путь до 1С-Битрикс (`bitrix-dir`) для копирования модулей при установке `fi1a/installers`.
 
 Пример файла composer.json проекта:
 
@@ -32,8 +32,8 @@
     }
   ],
   "require": {
-    "fi1a/installers": "^2.0",
-    "fi1a/bitrixvalidation": "^2.0"
+    "fi1a/installers": "^2.1",
+    "fi1a/bitrixvalidation": "^3.0"
   },
   "extra": {
     "bitrix-dir": "../bitrix"
@@ -41,7 +41,7 @@
 }
 ```
 
-Затем выполняем установку пакетов командой ```composer install```.
+Затем выполняем установку пакетов командой `composer install`.
 
 Если у вас не подключен composer autoload.php, его необходимо подключить в файле local/php_interface/init.php
 

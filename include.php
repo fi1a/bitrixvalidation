@@ -1,5 +1,6 @@
 <?php
-namespace Fi1a\UserSettings;
+
+namespace Fi1a\BitrixValidation;
 
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;

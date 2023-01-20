@@ -1,7 +1,7 @@
 <template>
   <div class="rule-regex-row">
     <label for="regex">{{$t('regex.regex')}}</label>
-    <input id="regex" type="text" :value="values.regex" @input="setRegex($event.target.value)">
+    <input :disabled="!$root.canEdit()" id="regex" type="text" :value="values.regex" @input="setRegex($event.target.value)">
     <p v-if="v$.values.regex.$invalid && v$.values.regex.$dirty" class="error">
       <template v-if="v$.values.regex.required.$invalid">
         {{$t('errors.required')}}

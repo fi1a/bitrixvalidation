@@ -5,14 +5,15 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 /**
  * @var array $arParams
  * @var array $arResult
+ * @var string $templateFolder
  */
+
+$module = CModule::CreateModuleObject('fi1a.bitrixrequire');
 
 $this->addExternalCss('/bitrix/components/bitrix/main.ui.grid/templates/.default/style.css');
 
 ?>
-<script>
-    window.I18N_LOCALE = '<?= $arResult['LANGUAGE_ID']?>';
-</script>
-<?php
+<div data-right="<?= $arResult['RIGHT']?>" data-locale="<?= $arResult['LANGUAGE_ID']?>" id="app"></div>
 
-include __DIR__ . '/dist/index.html';
+<link rel="stylesheet" type="text/css" href="<?= $templateFolder?>/dist/style.css?v=<?= $module->MODULE_VERSION?>">
+<script type="module" src="<?= $templateFolder?>/dist/bitrixvalidation.admin.js?v=<?= $module->MODULE_VERSION?>"></script>

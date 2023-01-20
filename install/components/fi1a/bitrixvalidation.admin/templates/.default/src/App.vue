@@ -47,6 +47,7 @@ export default {
       history.pushState({id: this.entity.id, type: this.entity.type}, '', urlParams.toString())
       this.$scrollTop(document.getElementById('app').offsetTop);
     },
+
     cancelEdit() {
       this.entity = {
         id: null,
@@ -57,6 +58,10 @@ export default {
       urlParams.searchParams.delete('type');
       history.pushState({id: null, type: null}, '', urlParams.toString())
       this.$scrollTop(document.getElementById('app').offsetTop);
+    },
+
+    canEdit() {
+      return this.$right >= 'F';
     }
   }
 }

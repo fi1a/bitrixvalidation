@@ -1,7 +1,7 @@
 <template>
   <div class="rule-min-row">
     <label for="min">{{$t('min.min')}}</label>
-    <input id="min" type="text" :value="values.min" @input="setMin($event.target.value)">
+    <input :disabled="!$root.canEdit()" id="min" type="text" :value="values.min" @input="setMin($event.target.value)">
     <p v-if="v$.values.min.$invalid" class="error">
       <template v-if="v$.values.min.decimal.$invalid">
         {{$t('errors.decimal')}}

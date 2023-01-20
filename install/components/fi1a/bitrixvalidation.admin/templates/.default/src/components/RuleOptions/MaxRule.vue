@@ -1,7 +1,7 @@
 <template>
   <div class="rule-max-row">
     <label for="max">{{$t('max.max')}}</label>
-    <input id="max" type="text" :value="values.max" @input="setMax($event.target.value)">
+    <input :disabled="!$root.canEdit()" id="max" type="text" :value="values.max" @input="setMax($event.target.value)">
     <p v-if="v$.values.max.$invalid" class="error">
       <template v-if="v$.values.max.decimal.$invalid">
         {{$t('errors.decimal')}}

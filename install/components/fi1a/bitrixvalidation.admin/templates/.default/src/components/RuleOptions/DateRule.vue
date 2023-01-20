@@ -1,7 +1,7 @@
 <template>
   <div class="rule-date-row">
     <label for="format">{{$t('date.format')}}</label>
-    <input id="format" type="text" :value="values.format" @input="setFormat($event.target.value)">
+    <input :disabled="!$root.canEdit()" id="format" type="text" :value="values.format" @input="setFormat($event.target.value)">
   </div>
 </template>
 

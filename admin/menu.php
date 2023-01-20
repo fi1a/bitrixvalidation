@@ -1,6 +1,6 @@
 <?php
 
-namespace Fi1a\UserSettings;
+namespace Fi1a\BitrixValidation;
 
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 

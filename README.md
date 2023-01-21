@@ -99,7 +99,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 - (regex) Регулярное выражение;
 - (strictIn) Допустимые значения (строгая проверка);
 - (strictNotIn) Не допустимые значения (строгая проверка);
-- (unique) Уникальное значение.
+- (unique) Уникальное значение;
+- (url) Url адрес.
 
 [badge-release]: https://img.shields.io/packagist/v/fi1a/bitrixvalidation?label=release
 [badge-license]: https://img.shields.io/github/license/fi1a/bitrixvalidation?style=flat-square

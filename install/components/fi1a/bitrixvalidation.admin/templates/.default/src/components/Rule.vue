@@ -69,6 +69,7 @@ import EqualDateRule from "./RuleOptions/EqualDateRule.vue";
 import BetweenDateRule from "./RuleOptions/BetweenDateRule.vue";
 import MaxDateRule from "./RuleOptions/MaxDateRule.vue";
 import MinDateRule from "./RuleOptions/MinDateRule.vue";
+import EqualRule from "./RuleOptions/EqualRule.vue";
 
 export default {
   name: "Rule",
@@ -90,7 +91,7 @@ export default {
     MinRule, MaxRule, MinCountRule, MaxCountRule, BetweenCountRule, BetweenRule, MinLengthRule, MaxLengthRule,
     BetweenLengthRule, AlphaNumericRule, AlphaRule, BooleanRule, IntegerRule, NumericRule, EmailRule, DateRule,
     JsonRule, RegexRule, UniqueRule, InRule, NotInRule, StrictInRule, StrictNotInRule, EqualDateRule,
-    BetweenDateRule, MaxDateRule, MinDateRule,
+    BetweenDateRule, MaxDateRule, MinDateRule, EqualRule,
   },
 
   emits: ['delete'],

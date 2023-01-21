@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fi1a\Unit\BitrixValidation\Models\Rules;
 
-use Fi1a\BitrixValidation\Models\Rules\EqualDateRule;
+use Fi1a\BitrixValidation\Models\Rules\EqualRule;
 use Fi1a\BitrixValidation\Models\Rules\PrimaryId;
 use Fi1a\BitrixValidation\Services\EntityService;
 use Fi1a\Unit\BitrixValidation\TestCase\EntityTestCase;
@@ -12,16 +12,16 @@ use Fi1a\Validation\AllOf;
 use InvalidArgumentException;
 
 /**
- * Проверяет дату на равенство
+ * Проверяет число на равенство
  */
-class EqualDateRuleTest extends EntityTestCase
+class EqualRuleTest extends EntityTestCase
 {
     /**
      * Возврашаемые типы
      */
     public function testGetTypes(): void
     {
-        $this->assertEquals(['string'], EqualDateRule::getTypes());
+        $this->assertEquals(['number'], EqualRule::getTypes());
     }
 
     /**
@@ -29,7 +29,7 @@ class EqualDateRuleTest extends EntityTestCase
      */
     public function testGetTitle(): void
     {
-        $this->assertIsString(EqualDateRule::getTitle());
+        $this->assertIsString(EqualRule::getTitle());
     }
 
     /**
@@ -37,7 +37,7 @@ class EqualDateRuleTest extends EntityTestCase
      */
     public function testGetMessageDescription(): void
     {
-        $this->assertIsString(EqualDateRule::getMessageDescription());
+        $this->assertIsString(EqualRule::getMessageDescription());
     }
 
     /**
@@ -45,11 +45,10 @@ class EqualDateRuleTest extends EntityTestCase
      */
     public function testOptions(): void
     {
-        $rule = new EqualDateRule([
-            'key' => 'equalDate',
+        $rule = new EqualRule([
+            'key' => 'equal',
             'options' => [
-                'equalDate' => '21.01.2023',
-                'format' => 'd.m.Y',
+                'equal' => 10,
             ],
             'sort' => 500,
             'id' => new PrimaryId(1),
@@ -58,38 +57,37 @@ class EqualDateRuleTest extends EntityTestCase
             'entity_id' => 1,
             'multiple' => false,
         ]);
-        $this->assertEquals(['equalDate' => '21.01.2023', 'format' => 'd.m.Y',], $rule->getOptions());
+        $this->assertEquals(['equal' => 10,], $rule->getOptions());
     }
 
     /**
-     * Опции
+     * Опции (исключение)
      */
-    public function testEmptyOptions(): void
-    {
-        $rule = new EqualDateRule([
-            'key' => 'equalDate',
-            'options' => [
-                'equalDate' => '21.01.2023',
-            ],
-            'sort' => 500,
-            'id' => new PrimaryId(1),
-            'field_id' => '1',
-            'entity_type' => 'ib',
-            'entity_id' => 1,
-            'multiple' => false,
-        ]);
-        $this->assertEquals(['equalDate' => '21.01.2023', 'format' => null,], $rule->getOptions());
-    }
-
-    /**
-     * Опции
-     */
-    public function testEmptyEqualDate(): void
+    public function testOptionsExceptionEmpty(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new EqualDateRule([
-            'key' => 'equalDate',
+        new EqualRule([
+            'key' => 'equal',
+            'options' => [],
+            'sort' => 500,
+            'id' => new PrimaryId(1),
+            'field_id' => '1',
+            'entity_type' => 'ib',
+            'entity_id' => 1,
+            'multiple' => false,
+        ]);
+    }
+
+    /**
+     * Опции (исключение)
+     */
+    public function testOptionsExceptionNotNumeric(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new EqualRule([
+            'key' => 'equal',
             'options' => [
+                'equal' => 'foo',
             ],
             'sort' => 500,
             'id' => new PrimaryId(1),
@@ -109,11 +107,10 @@ class EqualDateRuleTest extends EntityTestCase
         $entity = $service->getEntity('ib', static::$iblockId);
         $group = $entity->getGroups()[0];
 
-        $rule = new EqualDateRule([
-            'key' => 'equalDate',
+        $rule = new EqualRule([
+            'key' => 'equal',
             'options' => [
-                'equalDate' => '21.01.2023',
-                'format' => 'd.m.Y',
+                'equal' => 1,
             ],
             'sort' => 500,
             'id' => new PrimaryId(1),
@@ -125,8 +122,7 @@ class EqualDateRuleTest extends EntityTestCase
 
         $chain = AllOf::create();
         $rule->configure($chain, $entity, $group, null);
-        $this->assertTrue($chain->validate('21.01.2023')->isSuccess());
-        $this->assertFalse($chain->validate('21-01-2023')->isSuccess());
-        $this->assertFalse($chain->validate('01.01.2023')->isSuccess());
+        $this->assertTrue($chain->validate(1)->isSuccess());
+        $this->assertFalse($chain->validate(2)->isSuccess());
     }
 }

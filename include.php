@@ -12,6 +12,7 @@ use Fi1a\BitrixValidation\Models\Rules\BetweenRule;
 use Fi1a\BitrixValidation\Models\Rules\BooleanRule;
 use Fi1a\BitrixValidation\Models\Rules\DateRule;
 use Fi1a\BitrixValidation\Models\Rules\EmailRule;
+use Fi1a\BitrixValidation\Models\Rules\EqualDateRule;
 use Fi1a\BitrixValidation\Models\Rules\InRule;
 use Fi1a\BitrixValidation\Models\Rules\IntegerRule;
 use Fi1a\BitrixValidation\Models\Rules\JsonRule;
@@ -64,6 +65,7 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Models/Rules/StrictNotInRule.php',
     __DIR__ . '/lib/Models/Rules/UniqueRule.php',
     __DIR__ . '/lib/ValidationRules/UniqueRule.php',
+    __DIR__ . '/lib/Models/Rules/EqualDateRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -121,6 +123,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Models\Rules\StrictInRule' => 'lib/Models/Rules/StrictInRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\StrictNotInRule' => 'lib/Models/Rules/StrictNotInRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\UniqueRule' => 'lib/Models/Rules/UniqueRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\EqualDateRule' => 'lib/Models/Rules/EqualDateRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -177,3 +180,4 @@ RuleRegistry::add('notIn', NotInRule::class);
 RuleRegistry::add('strictIn', StrictInRule::class);
 RuleRegistry::add('strictNotIn', StrictNotInRule::class);
 RuleRegistry::add('unique', UniqueRule::class);
+RuleRegistry::add('equalDate', EqualDateRule::class);

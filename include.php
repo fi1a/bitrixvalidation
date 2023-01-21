@@ -20,6 +20,7 @@ use Fi1a\BitrixValidation\Models\Rules\JsonRule;
 use Fi1a\BitrixValidation\Models\Rules\MaxDateRule;
 use Fi1a\BitrixValidation\Models\Rules\MaxLengthRule;
 use Fi1a\BitrixValidation\Models\Rules\MaxRule;
+use Fi1a\BitrixValidation\Models\Rules\MinDateRule;
 use Fi1a\BitrixValidation\Models\Rules\MinLengthRule;
 use Fi1a\BitrixValidation\Models\Rules\MinRule;
 use Fi1a\BitrixValidation\Models\Rules\MaxCountRule;
@@ -70,6 +71,7 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Models/Rules/EqualDateRule.php',
     __DIR__ . '/lib/Models/Rules/BetweenDateRule.php',
     __DIR__ . '/lib/Models/Rules/MaxDateRule.php',
+    __DIR__ . '/lib/Models/Rules/MinDateRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -130,6 +132,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Models\Rules\EqualDateRule' => 'lib/Models/Rules/EqualDateRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\BetweenDateRule' => 'lib/Models/Rules/BetweenDateRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\MaxDateRule' => 'lib/Models/Rules/MaxDateRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\MinDateRule' => 'lib/Models/Rules/MinDateRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -189,3 +192,4 @@ RuleRegistry::add('unique', UniqueRule::class);
 RuleRegistry::add('equalDate', EqualDateRule::class);
 RuleRegistry::add('betweenDate', BetweenDateRule::class);
 RuleRegistry::add('maxDate', MaxDateRule::class);
+RuleRegistry::add('minDate', MinDateRule::class);

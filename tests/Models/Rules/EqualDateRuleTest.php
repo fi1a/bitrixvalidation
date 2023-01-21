@@ -12,7 +12,7 @@ use Fi1a\Validation\AllOf;
 use InvalidArgumentException;
 
 /**
- * Проверка на формат даты
+ * Проверяет дату на равенство
  */
 class EqualDateRuleTest extends EntityTestCase
 {
@@ -127,5 +127,6 @@ class EqualDateRuleTest extends EntityTestCase
         $rule->configure($chain, $entity, $group, null);
         $this->assertTrue($chain->validate('21.01.2023')->isSuccess());
         $this->assertFalse($chain->validate('21-01-2023')->isSuccess());
+        $this->assertFalse($chain->validate('01.01.2023')->isSuccess());
     }
 }

@@ -7,6 +7,7 @@ use Bitrix\Main\Localization\Loc;
 use Fi1a\BitrixValidation\Models\Rules\AlphaNumericRule;
 use Fi1a\BitrixValidation\Models\Rules\AlphaRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenCountRule;
+use Fi1a\BitrixValidation\Models\Rules\BetweenDateRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenLengthRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenRule;
 use Fi1a\BitrixValidation\Models\Rules\BooleanRule;
@@ -66,6 +67,7 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Models/Rules/UniqueRule.php',
     __DIR__ . '/lib/ValidationRules/UniqueRule.php',
     __DIR__ . '/lib/Models/Rules/EqualDateRule.php',
+    __DIR__ . '/lib/Models/Rules/BetweenDateRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -124,6 +126,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Models\Rules\StrictNotInRule' => 'lib/Models/Rules/StrictNotInRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\UniqueRule' => 'lib/Models/Rules/UniqueRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\EqualDateRule' => 'lib/Models/Rules/EqualDateRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\BetweenDateRule' => 'lib/Models/Rules/BetweenDateRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -181,3 +184,4 @@ RuleRegistry::add('strictIn', StrictInRule::class);
 RuleRegistry::add('strictNotIn', StrictNotInRule::class);
 RuleRegistry::add('unique', UniqueRule::class);
 RuleRegistry::add('equalDate', EqualDateRule::class);
+RuleRegistry::add('betweenDate', BetweenDateRule::class);

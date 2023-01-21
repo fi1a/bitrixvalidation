@@ -3,8 +3,13 @@
     <label for="equalDate">{{$t('equalDate.equalDate')}}</label>
     <div class="adm-input-wrap adm-input-wrap-calendar">
       <input class="adm-input adm-input-calendar" :disabled="!$root.canEdit()" id="equalDate" type="text" :value="values.equalDate" @input="setEqualDate($event.target.value)">
-      <span class="adm-calendar-icon" title="Нажмите для выбора даты" @click.prevent="showCalendar($event.target)"></span>
+      <span class="adm-calendar-icon" :title="$t('equalDate.showCalendarTitle')" @click.prevent="showCalendar($event.target)"></span>
     </div>
+    <p v-if="v$.values.equalDate.$invalid" class="error">
+      <template v-if="v$.values.equalDate.required.$invalid">
+        {{$t('errors.required')}}
+      </template>
+    </p>
   </div>
   <div class="rule-date-row">
     <label for="formatEqualDate">{{$t('equalDate.format')}}</label>

@@ -46,7 +46,7 @@ class BetweenDateRuleTest extends EntityTestCase
     public function testOptions(): void
     {
         $rule = new BetweenDateRule([
-            'key' => 'date',
+            'key' => 'betweenDate',
             'options' => [
                 'minDate' => '01.01.2023',
                 'maxDate' => '31.01.2023',
@@ -75,7 +75,7 @@ class BetweenDateRuleTest extends EntityTestCase
     public function testEmptyOptions(): void
     {
         $rule = new BetweenDateRule([
-            'key' => 'date',
+            'key' => 'betweenDate',
             'options' => [
                 'minDate' => '01.01.2023 00:00:00',
                 'maxDate' => '31.01.2023 00:00:00',
@@ -104,7 +104,7 @@ class BetweenDateRuleTest extends EntityTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new BetweenDateRule([
-            'key' => 'date',
+            'key' => 'betweenDate',
             'options' => [
             ],
             'sort' => 500,
@@ -123,7 +123,7 @@ class BetweenDateRuleTest extends EntityTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new BetweenDateRule([
-            'key' => 'date',
+            'key' => 'betweenDate',
             'options' => [
                 'minDate' => '01.01.2023',
             ],
@@ -143,7 +143,7 @@ class BetweenDateRuleTest extends EntityTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new BetweenDateRule([
-            'key' => 'date',
+            'key' => 'betweenDate',
             'options' => [
                 'minDate' => '01.01',
                 'maxDate' => '31.01.2023',
@@ -165,7 +165,7 @@ class BetweenDateRuleTest extends EntityTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new BetweenDateRule([
-            'key' => 'date',
+            'key' => 'betweenDate',
             'options' => [
                 'minDate' => '01.01.2023',
                 'maxDate' => '31.01',
@@ -187,7 +187,7 @@ class BetweenDateRuleTest extends EntityTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new BetweenDateRule([
-            'key' => 'date',
+            'key' => 'betweenDate',
             'options' => [
                 'minDate' => '31.01.2023',
                 'maxDate' => '01.01.2023',
@@ -212,7 +212,7 @@ class BetweenDateRuleTest extends EntityTestCase
         $group = $entity->getGroups()[0];
 
         $rule = new BetweenDateRule([
-            'key' => 'date',
+            'key' => 'betweenDate',
             'options' => [
                 'minDate' => '01.01.2023',
                 'maxDate' => '31.01.2023',

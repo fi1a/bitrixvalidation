@@ -46,7 +46,7 @@ class MinDateRuleTest extends EntityTestCase
     public function testOptions(): void
     {
         $rule = new MinDateRule([
-            'key' => 'date',
+            'key' => 'minDate',
             'options' => [
                 'minDate' => '01.01.2023',
                 'format' => 'd.m.Y',
@@ -73,7 +73,7 @@ class MinDateRuleTest extends EntityTestCase
     public function testEmptyOptions(): void
     {
         $rule = new MinDateRule([
-            'key' => 'date',
+            'key' => 'minDate',
             'options' => [
                 'minDate' => '01.01.2023 00:00:00',
             ],
@@ -100,7 +100,7 @@ class MinDateRuleTest extends EntityTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new MinDateRule([
-            'key' => 'date',
+            'key' => 'minDate',
             'options' => [
             ],
             'sort' => 500,
@@ -119,7 +119,7 @@ class MinDateRuleTest extends EntityTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new MinDateRule([
-            'key' => 'date',
+            'key' => 'minDate',
             'options' => [
                 'minDate' => '01.01',
                 'format' => 'd.m.Y',
@@ -143,7 +143,7 @@ class MinDateRuleTest extends EntityTestCase
         $group = $entity->getGroups()[0];
 
         $rule = new MinDateRule([
-            'key' => 'date',
+            'key' => 'minDate',
             'options' => [
                 'minDate' => '01.01.2023',
                 'format' => 'd.m.Y',

@@ -46,7 +46,7 @@ class MaxDateRuleTest extends EntityTestCase
     public function testOptions(): void
     {
         $rule = new MaxDateRule([
-            'key' => 'date',
+            'key' => 'maxDate',
             'options' => [
                 'maxDate' => '31.01.2023',
                 'format' => 'd.m.Y',
@@ -73,7 +73,7 @@ class MaxDateRuleTest extends EntityTestCase
     public function testEmptyOptions(): void
     {
         $rule = new MaxDateRule([
-            'key' => 'date',
+            'key' => 'maxDate',
             'options' => [
                 'maxDate' => '31.01.2023 00:00:00',
             ],
@@ -100,7 +100,7 @@ class MaxDateRuleTest extends EntityTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new MaxDateRule([
-            'key' => 'date',
+            'key' => 'maxDate',
             'options' => [
             ],
             'sort' => 500,
@@ -119,7 +119,7 @@ class MaxDateRuleTest extends EntityTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         new MaxDateRule([
-            'key' => 'date',
+            'key' => 'maxDate',
             'options' => [
                 'maxDate' => '31.01',
                 'format' => 'd.m.Y',
@@ -143,7 +143,7 @@ class MaxDateRuleTest extends EntityTestCase
         $group = $entity->getGroups()[0];
 
         $rule = new MaxDateRule([
-            'key' => 'date',
+            'key' => 'maxDate',
             'options' => [
                 'maxDate' => '31.01.2023',
                 'format' => 'd.m.Y',

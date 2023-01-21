@@ -80,6 +80,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 - (boolean) Логическое значение;
 - (date) Дата и время;
 - (email) E-mail адрес;
+- (equalDate) Проверяет дату на равенство;
 - (in) Допустимые значения (не строгая проверка);
 - (integer) Целое число;
 - (json) JSON-строка;

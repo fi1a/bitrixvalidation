@@ -65,6 +65,7 @@ import InRule from "./RuleOptions/InRule.vue";
 import NotInRule from "./RuleOptions/NotInRule.vue";
 import StrictInRule from "./RuleOptions/StrictInRule.vue";
 import StrictNotInRule from "./RuleOptions/StrictNotInRule.vue";
+import EqualDateRule from "./RuleOptions/EqualDateRule.vue";
 
 export default {
   name: "Rule",
@@ -85,7 +86,7 @@ export default {
   components: {
     MinRule, MaxRule, MinCountRule, MaxCountRule, BetweenCountRule, BetweenRule, MinLengthRule, MaxLengthRule,
     BetweenLengthRule, AlphaNumericRule, AlphaRule, BooleanRule, IntegerRule, NumericRule, EmailRule, DateRule,
-    JsonRule, RegexRule, UniqueRule, InRule, NotInRule, StrictInRule, StrictNotInRule,
+    JsonRule, RegexRule, UniqueRule, InRule, NotInRule, StrictInRule, StrictNotInRule, EqualDateRule,
   },
 
   emits: ['delete'],
@@ -156,7 +157,7 @@ export default {
       deep: true
     },
     'rule.key': {
-      handler() {
+      handler(newValue, oldValue) {
         this.rule.options = {};
       }
     }

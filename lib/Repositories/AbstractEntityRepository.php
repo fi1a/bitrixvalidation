@@ -63,6 +63,9 @@ abstract class AbstractEntityRepository implements EntityRepositoryInterface
                 '=ENTITY_TYPE' => $entityType,
                 '=ENTITY_ID' => $entityId,
             ],
+            'order' => [
+                'ID' => 'ASC',
+            ],
         ]);
         foreach ($rules as $rule) {
             assert($rule instanceof RuleInterface);

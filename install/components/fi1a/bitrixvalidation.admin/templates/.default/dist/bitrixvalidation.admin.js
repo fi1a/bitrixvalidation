@@ -1,5 +1,5 @@
 var Ud = (e, t) => () => (t || e((t = { exports: {} }).exports, t), t.exports);
-var mw = Ud((pw, As) => {
+var _w = Ud((vw, As) => {
   function Sn(e, t) {
     const n = /* @__PURE__ */ Object.create(null), r = e.split(",");
     for (let s = 0; s < r.length; s++)
@@ -2388,8 +2388,8 @@ For more details, see https://link.vuejs.org/feature-flags.`);
       let L, N;
       const { type: p, props: y, shapeFlag: U, transition: H, dirs: se } = c;
       if (L = c.el = o(c.type, R, y && y.is, y), U & 8 ? f(L, c.children) : U & 16 && Q(c.children, L, null, T, w, R && p !== "foreignObject", F, S), se && xn(c, null, T, "created"), y) {
-        for (const ue in y)
-          ue !== "value" && !Ts(ue) && i(L, ue, null, y[ue], R, c.children, T, w, wt);
+        for (const ce in y)
+          ce !== "value" && !Ts(ce) && i(L, ce, null, y[ce], R, c.children, T, w, wt);
         "value" in y && i(L, "value", null, y.value), (N = y.onVnodeBeforeMount) && Pt(N, T, c);
       }
       q(L, c, c.scopeId, F, T), {}.NODE_ENV !== "production" && (Object.defineProperty(L, "__vnode", {
@@ -2432,8 +2432,8 @@ For more details, see https://link.vuejs.org/feature-flags.`);
           we(S, h, y, U, b, T, w);
         else if (L & 2 && y.class !== U.class && i(S, "class", null, U.class, w), L & 4 && i(S, "style", y.style, U.style, w), L & 8) {
           const me = h.dynamicProps;
-          for (let ue = 0; ue < me.length; ue++) {
-            const $e = me[ue], mt = y[$e], Zt = U[$e];
+          for (let ce = 0; ce < me.length; ce++) {
+            const $e = me[ce], mt = y[$e], Zt = U[$e];
             (Zt !== mt || $e === "value") && i(S, $e, mt, Zt, w, c.children, b, T, wt);
           }
         }
@@ -2490,8 +2490,8 @@ For more details, see https://link.vuejs.org/feature-flags.`);
     }, oe = (c, h, b, T, w, R, F) => {
       const S = () => {
         if (c.isMounted) {
-          let { next: p, bu: y, u: U, parent: H, vnode: se } = c, me = p, ue;
-          ({}).NODE_ENV !== "production" && ks(p || c.vnode), Rn(c, !1), p ? (p.el = se.el, ee(c, p, F)) : p = se, y && cr(y), (ue = p.props && p.props.onVnodeBeforeUpdate) && Pt(ue, H, p, se), Rn(c, !0), {}.NODE_ENV !== "production" && Qt(c, "render");
+          let { next: p, bu: y, u: U, parent: H, vnode: se } = c, me = p, ce;
+          ({}).NODE_ENV !== "production" && ks(p || c.vnode), Rn(c, !1), p ? (p.el = se.el, ee(c, p, F)) : p = se, y && cr(y), (ce = p.props && p.props.onVnodeBeforeUpdate) && Pt(ce, H, p, se), Rn(c, !0), {}.NODE_ENV !== "production" && Qt(c, "render");
           const $e = Fi(c);
           ({}).NODE_ENV !== "production" && en(c, "render");
           const mt = c.subTree;
@@ -2503,15 +2503,15 @@ For more details, see https://link.vuejs.org/feature-flags.`);
             c,
             w,
             R
-          ), {}.NODE_ENV !== "production" && en(c, "patch"), p.el = $e.el, me === null && _m(c, $e.el), U && ct(U, w), (ue = p.props && p.props.onVnodeUpdated) && ct(() => Pt(ue, H, p, se), w), {}.NODE_ENV !== "production" && Fu(c), {}.NODE_ENV !== "production" && Ms();
+          ), {}.NODE_ENV !== "production" && en(c, "patch"), p.el = $e.el, me === null && _m(c, $e.el), U && ct(U, w), (ce = p.props && p.props.onVnodeUpdated) && ct(() => Pt(ce, H, p, se), w), {}.NODE_ENV !== "production" && Fu(c), {}.NODE_ENV !== "production" && Ms();
         } else {
           let p;
-          const { el: y, props: U } = h, { bm: H, m: se, parent: me } = c, ue = Ss(h);
-          if (Rn(c, !1), H && cr(H), !ue && (p = U && U.onVnodeBeforeMount) && Pt(p, me, h), Rn(c, !0), y && Ir) {
+          const { el: y, props: U } = h, { bm: H, m: se, parent: me } = c, ce = Ss(h);
+          if (Rn(c, !1), H && cr(H), !ce && (p = U && U.onVnodeBeforeMount) && Pt(p, me, h), Rn(c, !0), y && Ir) {
             const $e = () => {
               ({}).NODE_ENV !== "production" && Qt(c, "render"), c.subTree = Fi(c), {}.NODE_ENV !== "production" && en(c, "render"), {}.NODE_ENV !== "production" && Qt(c, "hydrate"), Ir(y, c.subTree, c, w, null), {}.NODE_ENV !== "production" && en(c, "hydrate");
             };
-            ue ? h.type.__asyncLoader().then(
+            ce ? h.type.__asyncLoader().then(
               () => !c.isUnmounted && $e()
             ) : $e();
           } else {
@@ -2519,7 +2519,7 @@ For more details, see https://link.vuejs.org/feature-flags.`);
             const $e = c.subTree = Fi(c);
             ({}).NODE_ENV !== "production" && en(c, "render"), {}.NODE_ENV !== "production" && Qt(c, "patch"), O(null, $e, b, T, c, w, R), {}.NODE_ENV !== "production" && en(c, "patch"), h.el = $e.el;
           }
-          if (se && ct(se, w), !ue && (p = U && U.onVnodeMounted)) {
+          if (se && ct(se, w), !ce && (p = U && U.onVnodeMounted)) {
             const $e = h;
             ct(() => Pt(p, me, $e), w);
           }
@@ -2591,7 +2591,7 @@ For more details, see https://link.vuejs.org/feature-flags.`);
           const st = h[N] = L ? $n(h[N]) : kt(h[N]);
           st.key != null && ({}.NODE_ENV !== "production" && me.has(st.key) && x("Duplicate keys found during update:", JSON.stringify(st.key), "Make sure keys are unique."), me.set(st.key, N));
         }
-        let ue, $e = 0;
+        let ce, $e = 0;
         const mt = U - se + 1;
         let Zt = !1, za = 0;
         const xr = new Array(mt);
@@ -2607,17 +2607,17 @@ For more details, see https://link.vuejs.org/feature-flags.`);
           if (st.key != null)
             Vt = me.get(st.key);
           else
-            for (ue = se; ue <= U; ue++)
-              if (xr[ue - se] === 0 && Pn(st, h[ue])) {
-                Vt = ue;
+            for (ce = se; ce <= U; ce++)
+              if (xr[ce - se] === 0 && Pn(st, h[ce])) {
+                Vt = ce;
                 break;
               }
           Vt === void 0 ? Lt(st, w, R, !0) : (xr[Vt - se] = N + 1, Vt >= za ? za = Vt : Zt = !0, O(st, h[Vt], b, null, w, R, F, S, L), $e++);
         }
         const Ya = Zt ? sh(xr) : gr;
-        for (ue = Ya.length - 1, N = mt - 1; N >= 0; N--) {
+        for (ce = Ya.length - 1, N = mt - 1; N >= 0; N--) {
           const st = se + N, Vt = h[st], Ua = st + 1 < p ? h[st + 1].el : T;
-          xr[N] === 0 ? O(null, Vt, b, Ua, w, R, F, S, L) : Zt && (ue < 0 || N !== Ya[ue] ? Be(Vt, b, Ua, 2) : ue--);
+          xr[N] === 0 ? O(null, Vt, b, Ua, w, R, F, S, L) : Zt && (ce < 0 || N !== Ya[ce] ? Be(Vt, b, Ua, 2) : ce--);
         }
       }
     }, Be = (c, h, b, T, w = null) => {
@@ -3649,7 +3649,7 @@ Component that was made reactive: `, e)), _(e, t, n, r, s, o, i, !0);
     $h();
   }
   ({}).NODE_ENV !== "production" && Xh();
-  const ce = (e, t) => {
+  const ue = (e, t) => {
     const n = e.__vccOpts || e;
     for (const [r, s] of t)
       n[r] = s;
@@ -3708,7 +3708,7 @@ Component that was made reactive: `, e)), _(e, t, n, r, s, o, i, !0);
       }))
     ]);
   }
-  const Qh = /* @__PURE__ */ ce(Zh, [["render", Jh]]);
+  const Qh = /* @__PURE__ */ ue(Zh, [["render", Jh]]);
   /*!
     * shared v9.2.2
     * (c) 2022 kazuya kawaguchi
@@ -4857,16 +4857,16 @@ ${l}` : a);
     }
     const ee = (p, y, U, H, se, me) => {
       Z();
-      let ue;
+      let ce;
       if ({}.NODE_ENV !== "production" || __INTLIFY_PROD_DEVTOOLS__)
         try {
-          Il(u_()), r || (k.fallbackContext = n ? Fp() : void 0), ue = p(k);
+          Il(u_()), r || (k.fallbackContext = n ? Fp() : void 0), ce = p(k);
         } finally {
           Il(null), r || (k.fallbackContext = void 0);
         }
       else
-        ue = p(k);
-      if (He(ue) && ue === Ei) {
+        ce = p(k);
+      if (He(ce) && ce === Ei) {
         const [$e, mt] = y();
         if ({}.NODE_ENV !== "production" && n && W($e) && oe(U, mt) && (m && ($i(d, $e) || wc(f, $e)) && Tr(bi(Tt.FALLBACK_TO_ROOT, {
           key: $e,
@@ -4882,8 +4882,8 @@ ${l}` : a);
         }
         return n && m ? H(n) : se($e);
       } else {
-        if (me(ue))
-          return ue;
+        if (me(ce))
+          return ce;
         throw vt(be.UNEXPECTED_RETURN_TYPE);
       }
     };
@@ -6411,7 +6411,7 @@ ${l}` : a);
       [jh, n.loading]
     ]);
   }
-  const Wc = /* @__PURE__ */ ce(F_, [["render", q_], ["__scopeId", "data-v-846e8528"]]);
+  const Wc = /* @__PURE__ */ ue(F_, [["render", q_], ["__scopeId", "data-v-846e8528"]]);
   function Xl(e) {
     let t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : [];
     return Object.keys(e).reduce((n, r) => (t.includes(r) || (n[r] = he(e[r])), n), {});
@@ -7081,7 +7081,7 @@ ${l}` : a);
       ])) : z("", !0)
     ]);
   }
-  const bg = /* @__PURE__ */ ce(_g, [["render", $g]]), Og = {
+  const bg = /* @__PURE__ */ ue(_g, [["render", $g]]), Og = {
     name: "MaxRule",
     setup() {
       return {
@@ -7141,7 +7141,7 @@ ${l}` : a);
       ])) : z("", !0)
     ]);
   }
-  const Mg = /* @__PURE__ */ ce(Og, [["render", kg]]), Sg = {
+  const Mg = /* @__PURE__ */ ue(Og, [["render", kg]]), Sg = {
     name: "MinCountRule",
     setup() {
       return {
@@ -7201,7 +7201,7 @@ ${l}` : a);
       ])) : z("", !0)
     ]);
   }
-  const Vg = /* @__PURE__ */ ce(Sg, [["render", Lg]]), Pg = {
+  const Vg = /* @__PURE__ */ ue(Sg, [["render", Lg]]), Pg = {
     name: "MaxCountRule",
     setup() {
       return {
@@ -7261,7 +7261,7 @@ ${l}` : a);
       ])) : z("", !0)
     ]);
   }
-  const jg = /* @__PURE__ */ ce(Pg, [["render", Ug]]), va = (e) => function(t, n, r) {
+  const jg = /* @__PURE__ */ ue(Pg, [["render", Ug]]), va = (e) => function(t, n, r) {
     return Number(t) >= Number(n[e]);
   }, ya = (e) => function(t, n, r) {
     return Number(t) <= Number(n[e]);
@@ -7361,7 +7361,7 @@ ${l}` : a);
       ])
     ], 64);
   }
-  const ev = /* @__PURE__ */ ce(Wg, [["render", Qg]]), tv = {
+  const ev = /* @__PURE__ */ ue(Wg, [["render", Qg]]), tv = {
     name: "BetweenRule",
     setup() {
       return {
@@ -7457,7 +7457,7 @@ ${l}` : a);
       ])
     ], 64);
   }
-  const dv = /* @__PURE__ */ ce(tv, [["render", cv]]), fv = {
+  const dv = /* @__PURE__ */ ue(tv, [["render", cv]]), fv = {
     name: "MinLengthRule",
     setup() {
       return {
@@ -7517,7 +7517,7 @@ ${l}` : a);
       ])) : z("", !0)
     ]);
   }
-  const vv = /* @__PURE__ */ ce(fv, [["render", gv]]), yv = {
+  const vv = /* @__PURE__ */ ue(fv, [["render", gv]]), yv = {
     name: "MaxLengthRule",
     setup() {
       return {
@@ -7577,7 +7577,7 @@ ${l}` : a);
       ])) : z("", !0)
     ]);
   }
-  const Dv = /* @__PURE__ */ ce(yv, [["render", Nv]]), wv = {
+  const Dv = /* @__PURE__ */ ue(yv, [["render", Nv]]), wv = {
     name: "BetweenLengthRule",
     setup() {
       return {
@@ -7673,7 +7673,7 @@ ${l}` : a);
       ])
     ], 64);
   }
-  const Vv = /* @__PURE__ */ ce(wv, [["render", Lv]]), Pv = {
+  const Vv = /* @__PURE__ */ ue(wv, [["render", Lv]]), Pv = {
     name: "AlphaNumericRule",
     props: {
       options: Object
@@ -7691,7 +7691,7 @@ ${l}` : a);
   function Av(e, t, n, r, s, i) {
     return null;
   }
-  const Fv = /* @__PURE__ */ ce(Pv, [["render", Av]]), zv = {
+  const Fv = /* @__PURE__ */ ue(Pv, [["render", Av]]), zv = {
     name: "AlphaRule",
     props: {
       options: Object
@@ -7709,7 +7709,7 @@ ${l}` : a);
   function Yv(e, t, n, r, s, i) {
     return null;
   }
-  const Uv = /* @__PURE__ */ ce(zv, [["render", Yv]]), jv = {
+  const Uv = /* @__PURE__ */ ue(zv, [["render", Yv]]), jv = {
     name: "BooleanRule",
     props: {
       options: Object
@@ -7727,7 +7727,7 @@ ${l}` : a);
   function Wv(e, t, n, r, s, i) {
     return null;
   }
-  const Hv = /* @__PURE__ */ ce(jv, [["render", Wv]]), Bv = {
+  const Hv = /* @__PURE__ */ ue(jv, [["render", Wv]]), Bv = {
     name: "IntegerRule",
     props: {
       options: Object
@@ -7745,7 +7745,7 @@ ${l}` : a);
   function qv(e, t, n, r, s, i) {
     return null;
   }
-  const Gv = /* @__PURE__ */ ce(Bv, [["render", qv]]), Kv = {
+  const Gv = /* @__PURE__ */ ue(Bv, [["render", qv]]), Kv = {
     name: "NumericRule",
     props: {
       options: Object
@@ -7763,7 +7763,7 @@ ${l}` : a);
   function Xv(e, t, n, r, s, i) {
     return null;
   }
-  const Zv = /* @__PURE__ */ ce(Kv, [["render", Xv]]), Jv = {
+  const Zv = /* @__PURE__ */ ue(Kv, [["render", Xv]]), Jv = {
     name: "EmailRule",
     props: {
       options: Object
@@ -7781,7 +7781,7 @@ ${l}` : a);
   function Qv(e, t, n, r, s, i) {
     return null;
   }
-  const ey = /* @__PURE__ */ ce(Jv, [["render", Qv]]), ty = {
+  const ey = /* @__PURE__ */ ue(Jv, [["render", Qv]]), ty = {
     name: "DateRule",
     emits: ["updateOptions"],
     props: {
@@ -7816,7 +7816,7 @@ ${l}` : a);
       }, null, 40, sy)
     ]);
   }
-  const oy = /* @__PURE__ */ ce(ty, [["render", iy]]), ay = {
+  const oy = /* @__PURE__ */ ue(ty, [["render", iy]]), ay = {
     name: "JsonRule",
     props: {
       options: Object
@@ -7834,7 +7834,7 @@ ${l}` : a);
   function ly(e, t, n, r, s, i) {
     return null;
   }
-  const uy = /* @__PURE__ */ ce(ay, [["render", ly]]), cy = {
+  const uy = /* @__PURE__ */ ue(ay, [["render", ly]]), cy = {
     name: "RegexRule",
     setup() {
       return {
@@ -7891,7 +7891,7 @@ ${l}` : a);
       ])) : z("", !0)
     ]);
   }
-  const _y = /* @__PURE__ */ ce(cy, [["render", py]]), gy = {
+  const _y = /* @__PURE__ */ ue(cy, [["render", py]]), gy = {
     name: "UniqueRule",
     props: {
       options: Object
@@ -7909,7 +7909,7 @@ ${l}` : a);
   function vy(e, t, n, r, s, i) {
     return null;
   }
-  const yy = /* @__PURE__ */ ce(gy, [["render", vy]]), Oi = function(e) {
+  const yy = /* @__PURE__ */ ue(gy, [["render", vy]]), Oi = function(e) {
     let t = !0;
     return e.forEach((n) => {
       t = t && Boolean(n.value);
@@ -8023,7 +8023,7 @@ ${l}` : a);
       }, null, 8, Ty)) : z("", !0)
     ]);
   }
-  const My = /* @__PURE__ */ ce(Ey, [["render", ky]]), Sy = {
+  const My = /* @__PURE__ */ ue(Ey, [["render", ky]]), Sy = {
     name: "NotInRule",
     setup() {
       return {
@@ -8132,7 +8132,7 @@ ${l}` : a);
       }, null, 8, Vy)) : z("", !0)
     ]);
   }
-  const Ay = /* @__PURE__ */ ce(Sy, [["render", Py]]), Fy = {
+  const Ay = /* @__PURE__ */ ue(Sy, [["render", Py]]), Fy = {
     name: "StrictInRule",
     setup() {
       return {
@@ -8241,7 +8241,7 @@ ${l}` : a);
       }, null, 8, Hy)) : z("", !0)
     ]);
   }
-  const qy = /* @__PURE__ */ ce(Fy, [["render", By]]), Gy = {
+  const qy = /* @__PURE__ */ ue(Fy, [["render", By]]), Gy = {
     name: "StrictNotInRule",
     setup() {
       return {
@@ -8350,7 +8350,7 @@ ${l}` : a);
       }, null, 8, eE)) : z("", !0)
     ]);
   }
-  const nE = /* @__PURE__ */ ce(Gy, [["render", tE]]);
+  const nE = /* @__PURE__ */ ue(Gy, [["render", tE]]);
   //! moment.js
   //! version : 2.29.4
   //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -10944,7 +10944,7 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
       ])
     ], 64);
   }
-  const hN = /* @__PURE__ */ ce(rN, [["render", mN]]), pN = (e, t = "") => function(n, r, s) {
+  const hN = /* @__PURE__ */ ue(rN, [["render", mN]]), pN = (e, t = "") => function(n, r, s) {
     let i = "d.m.Y H:i:s";
     return t && r[t] && (i = r[t]), i = s.$toMomentFormat(i), A(r[e], i).isSameOrAfter(A(n, i));
   }, _N = (e, t = "") => function(n, r, s) {
@@ -11082,7 +11082,7 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
       ])
     ], 64);
   }
-  const CN = /* @__PURE__ */ ce(gN, [["render", RN]]), LN = {
+  const CN = /* @__PURE__ */ ue(gN, [["render", RN]]), LN = {
     name: "MaxDateRule",
     setup() {
       return {
@@ -11175,7 +11175,7 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
       ])
     ], 64);
   }
-  const BN = /* @__PURE__ */ ce(LN, [["render", HN]]), qN = {
+  const BN = /* @__PURE__ */ ue(LN, [["render", HN]]), qN = {
     name: "MinDateRule",
     setup() {
       return {
@@ -11268,7 +11268,7 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
       ])
     ], 64);
   }
-  const s0 = /* @__PURE__ */ ce(qN, [["render", r0]]), i0 = {
+  const s0 = /* @__PURE__ */ ue(qN, [["render", r0]]), i0 = {
     name: "EqualRule",
     setup() {
       return {
@@ -11328,7 +11328,25 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
       ])) : z("", !0)
     ]);
   }
-  const d0 = /* @__PURE__ */ ce(i0, [["render", c0]]), f0 = {
+  const d0 = /* @__PURE__ */ ue(i0, [["render", c0]]), f0 = {
+    name: "UrlRule",
+    props: {
+      options: Object
+    },
+    emits: ["updateOptions"],
+    data() {
+      return {
+        values: Object.assign({}, this.options)
+      };
+    },
+    mounted() {
+      this.$emit("updateOptions", this.values);
+    }
+  };
+  function m0(e, t, n, r, s, i) {
+    return null;
+  }
+  const h0 = /* @__PURE__ */ ue(f0, [["render", m0]]), p0 = {
     name: "Rule",
     setup() {
       return {
@@ -11369,7 +11387,8 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
       BetweenDateRule: CN,
       MaxDateRule: BN,
       MinDateRule: s0,
-      EqualRule: d0
+      EqualRule: d0,
+      UrlRule: h0
     },
     emits: ["delete"],
     computed: {
@@ -11427,68 +11446,68 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
       const e = this.$parent.$parent;
       typeof e.$data.validation[this.group.id] < "u" && typeof e.$data.validation[this.group.id].rule < "u" && (e.$data.validation[this.group.id].rule = !1);
     }
-  }, m0 = { class: "rule-cell" }, h0 = { value: null }, p0 = ["value"], _0 = ["value"], g0 = {
+  }, _0 = { class: "rule-cell" }, g0 = { value: null }, v0 = ["value"], y0 = ["value"], E0 = {
     key: 2,
     class: "error"
-  }, v0 = { class: "rule-cell" }, y0 = { class: "rule-cell" }, E0 = ["disabled"], $0 = {
+  }, $0 = { class: "rule-cell" }, b0 = { class: "rule-cell" }, O0 = ["disabled"], N0 = {
     key: 0,
     class: "rule-message-description"
-  }, b0 = { class: "rule-cell" }, O0 = ["disabled"], N0 = {
+  }, D0 = { class: "rule-cell" }, w0 = ["disabled"], T0 = {
     key: 0,
     class: "error"
-  }, D0 = { key: 0 }, w0 = ["title", "value"];
-  function T0(e, t, n, r, s, i) {
+  }, k0 = { key: 0 }, M0 = ["title", "value"];
+  function S0(e, t, n, r, s, i) {
     return g(), v("tr", {
       key: n.rule.id
     }, [
-      _("td", m0, [
+      _("td", _0, [
         e.$root.canEdit() ? ln((g(), v("select", {
           key: 0,
           "onUpdate:modelValue": t[0] || (t[0] = (o) => r.v$.rule.key.$model = o),
           class: "rule-select"
         }, [
-          _("option", h0, D(e.$t("edit.selectRule")), 1),
+          _("option", g0, D(e.$t("edit.selectRule")), 1),
           n.rule.key ? (g(), v("option", {
             key: 0,
             value: n.rule.key
-          }, D(i.getCurrentRule.title), 9, p0)) : z("", !0),
+          }, D(i.getCurrentRule.title), 9, v0)) : z("", !0),
           (g(!0), v(C, null, _t(i.rulesByTypeAndFilterSelected, (o) => (g(), v("option", {
             value: o.key
-          }, D(o.title), 9, _0))), 256))
+          }, D(o.title), 9, y0))), 256))
         ], 512)), [
           [_c, r.v$.rule.key.$model]
         ]) : (g(), v(C, { key: 1 }, [
           G(D(i.getCurrentRule.title), 1)
         ], 64)),
-        r.v$.rule.key.$invalid && r.v$.rule.key.$dirty ? (g(), v("p", g0, D(e.$t("errors.required")), 1)) : z("", !0)
+        r.v$.rule.key.$invalid && r.v$.rule.key.$dirty ? (g(), v("p", E0, D(e.$t("errors.required")), 1)) : z("", !0)
       ]),
-      _("td", v0, [
+      _("td", $0, [
         (g(), Qn(xm(n.rule.key + "Rule"), {
           options: n.rule.options,
           onUpdateOptions: t[1] || (t[1] = (o) => i.updateOptions(o))
         }, null, 40, ["options"]))
       ]),
-      _("td", y0, [
+      _("td", b0, [
         ln(_("input", {
           disabled: !e.$root.canEdit(),
           type: "text",
           "onUpdate:modelValue": t[2] || (t[2] = (o) => n.rule.message = o),
           class: "rule-message"
-        }, null, 8, E0), [
+        }, null, 8, O0), [
           [Or, n.rule.message]
         ]),
-        i.getCurrentRule ? (g(), v("p", $0, D(i.getCurrentRule.messageDescription), 1)) : z("", !0)
+        i.getCurrentRule ? (g(), v("p", N0, D(i.getCurrentRule.messageDescription), 1)) : z("", !0)
       ]),
-      _("td", b0, [
+      _("td", D0, [
         ln(_("input", {
           disabled: !e.$root.canEdit(),
           type: "text",
           "onUpdate:modelValue": t[3] || (t[3] = (o) => r.v$.rule.sort.$model = o),
           class: "rule-sort"
-        }, null, 8, O0), [
+        }, null, 8, w0), [
           [Or, r.v$.rule.sort.$model]
         ]),
-        r.v$.rule.sort.$invalid ? (g(), v("p", N0, [
+        r.v$.rule.sort.$invalid ? (g(), v("p", T0, [
           r.v$.rule.sort.integer.$invalid ? (g(), v(C, { key: 0 }, [
             G(D(e.$t("errors.integer")), 1)
           ], 64)) : r.v$.rule.sort.required.$invalid ? (g(), v(C, { key: 1 }, [
@@ -11498,20 +11517,20 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
           ], 64)) : z("", !0)
         ])) : z("", !0)
       ]),
-      e.$root.canEdit() ? (g(), v("td", D0, [
+      e.$root.canEdit() ? (g(), v("td", k0, [
         _("input", {
           class: "rule-delete",
           onClick: t[4] || (t[4] = Ce((o) => e.$emit("delete"), ["prevent"])),
           type: "button",
           title: e.$t("edit.delete"),
           value: e.$t("edit.delete")
-        }, null, 8, w0)
+        }, null, 8, M0)
       ])) : z("", !0)
     ]);
   }
-  const k0 = /* @__PURE__ */ ce(f0, [["render", T0]]), M0 = {
+  const I0 = /* @__PURE__ */ ue(p0, [["render", S0]]), x0 = {
     name: "Group",
-    components: { Rule: k0 },
+    components: { Rule: I0 },
     props: {
       group: Object,
       entity: Object,
@@ -11569,36 +11588,36 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
         n.key = t, this.group.multiple_rules.push(n);
       }
     }
-  }, S0 = { class: "group" }, I0 = { class: "internal" }, x0 = { class: "heading" }, R0 = { class: "col-rule" }, C0 = { class: "col-rule" }, L0 = { class: "col-rule" }, V0 = {
+  }, R0 = { class: "group" }, C0 = { class: "internal" }, L0 = { class: "heading" }, V0 = { class: "col-rule" }, P0 = { class: "col-rule" }, A0 = { class: "col-rule" }, F0 = {
     key: 0,
     class: "col-delete"
-  }, P0 = { key: 0 }, A0 = {
+  }, z0 = { key: 0 }, Y0 = {
     colspan: "4",
     class: "empty-rules"
-  }, F0 = ["disabled", "title", "value"], z0 = { class: "internal" }, Y0 = { class: "heading" }, U0 = { class: "col-rule" }, j0 = { class: "col-rule" }, W0 = { class: "col-rule" }, H0 = {
+  }, U0 = ["disabled", "title", "value"], j0 = { class: "internal" }, W0 = { class: "heading" }, H0 = { class: "col-rule" }, B0 = { class: "col-rule" }, q0 = { class: "col-rule" }, G0 = {
     key: 0,
     class: "col-delete"
-  }, B0 = { key: 0 }, q0 = {
+  }, K0 = { key: 0 }, X0 = {
     colspan: "4",
     class: "empty-rules"
-  }, G0 = ["disabled", "title", "value"];
-  function K0(e, t, n, r, s, i) {
+  }, Z0 = ["disabled", "title", "value"];
+  function J0(e, t, n, r, s, i) {
     const o = Jn("Rule");
-    return g(), v("div", S0, [
+    return g(), v("div", R0, [
       _("h3", null, D(n.group.name), 1),
       n.group.multiple ? (g(), v(C, { key: 0 }, [
         _("h4", null, D(e.$t("edit.multiple")), 1),
-        _("table", I0, [
+        _("table", C0, [
           _("tbody", null, [
-            _("tr", x0, [
-              _("td", R0, D(e.$t("edit.rule")), 1),
+            _("tr", L0, [
+              _("td", V0, D(e.$t("edit.rule")), 1),
               _("td", null, D(e.$t("edit.options")), 1),
-              _("td", C0, D(e.$t("edit.message")), 1),
-              _("td", L0, D(e.$t("edit.sort")), 1),
-              e.$root.canEdit() ? (g(), v("td", V0, D(e.$t("edit.delete")), 1)) : z("", !0)
+              _("td", P0, D(e.$t("edit.message")), 1),
+              _("td", A0, D(e.$t("edit.sort")), 1),
+              e.$root.canEdit() ? (g(), v("td", F0, D(e.$t("edit.delete")), 1)) : z("", !0)
             ]),
-            i.sortedGroupMultipleRules.length ? z("", !0) : (g(), v("tr", P0, [
-              _("td", A0, D(e.$t("edit.emptyRules")), 1)
+            i.sortedGroupMultipleRules.length ? z("", !0) : (g(), v("tr", z0, [
+              _("td", Y0, D(e.$t("edit.emptyRules")), 1)
             ])),
             (g(!0), v(C, null, _t(i.sortedGroupMultipleRules, (a, l) => (g(), Qn(o, {
               rule: a,
@@ -11617,20 +11636,20 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
           title: e.$t("edit.add"),
           class: "adm-btn-save",
           value: e.$t("edit.add")
-        }, null, 8, F0)) : z("", !0)
+        }, null, 8, U0)) : z("", !0)
       ], 64)) : z("", !0),
       _("h4", null, D(e.$t("edit.notMultiple")), 1),
-      _("table", z0, [
+      _("table", j0, [
         _("tbody", null, [
-          _("tr", Y0, [
-            _("td", U0, D(e.$t("edit.rule")), 1),
+          _("tr", W0, [
+            _("td", H0, D(e.$t("edit.rule")), 1),
             _("td", null, D(e.$t("edit.options")), 1),
-            _("td", j0, D(e.$t("edit.message")), 1),
-            _("td", W0, D(e.$t("edit.sort")), 1),
-            e.$root.canEdit() ? (g(), v("td", H0, D(e.$t("edit.delete")), 1)) : z("", !0)
+            _("td", B0, D(e.$t("edit.message")), 1),
+            _("td", q0, D(e.$t("edit.sort")), 1),
+            e.$root.canEdit() ? (g(), v("td", G0, D(e.$t("edit.delete")), 1)) : z("", !0)
           ]),
-          i.sortedGroupRules.length ? z("", !0) : (g(), v("tr", B0, [
-            _("td", q0, D(e.$t("edit.emptyRules")), 1)
+          i.sortedGroupRules.length ? z("", !0) : (g(), v("tr", K0, [
+            _("td", X0, D(e.$t("edit.emptyRules")), 1)
           ])),
           (g(!0), v(C, null, _t(i.sortedGroupRules, (a, l) => (g(), Qn(o, {
             key: a.id,
@@ -11650,15 +11669,15 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
         title: e.$t("edit.add"),
         class: "adm-btn-save",
         value: e.$t("edit.add")
-      }, null, 8, G0)) : z("", !0)
+      }, null, 8, Z0)) : z("", !0)
     ]);
   }
-  const X0 = /* @__PURE__ */ ce(M0, [["render", K0]]), Z0 = {
+  const Q0 = /* @__PURE__ */ ue(x0, [["render", J0]]), eD = {
     name: "Edit",
     props: {
       entityKey: Object
     },
-    components: { Spinner: Wc, Group: X0 },
+    components: { Spinner: Wc, Group: Q0 },
     emits: ["cancel"],
     data() {
       return {
@@ -11771,62 +11790,62 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
         });
       }
     }
-  }, J0 = { class: "spinner-container" }, Q0 = {
+  }, tD = { class: "spinner-container" }, nD = {
     key: 0,
     class: "adm-info-message-wrap adm-info-message-red"
-  }, eD = { class: "adm-info-message" }, tD = { class: "adm-info-message-title" }, nD = /* @__PURE__ */ _("br", null, null, -1), rD = /* @__PURE__ */ _("br", null, null, -1), sD = /* @__PURE__ */ _("div", { class: "adm-info-message-icon" }, null, -1), iD = {
+  }, rD = { class: "adm-info-message" }, sD = { class: "adm-info-message-title" }, iD = /* @__PURE__ */ _("br", null, null, -1), oD = /* @__PURE__ */ _("br", null, null, -1), aD = /* @__PURE__ */ _("div", { class: "adm-info-message-icon" }, null, -1), lD = {
     key: 1,
     class: "adm-info-message-wrap adm-info-message-green"
-  }, oD = { class: "adm-info-message" }, aD = { class: "adm-info-message-title" }, lD = /* @__PURE__ */ _("br", null, null, -1), uD = /* @__PURE__ */ _("br", null, null, -1), cD = /* @__PURE__ */ _("div", { class: "adm-info-message-icon" }, null, -1), dD = { key: 2 }, fD = { class: "adm-detail-block" }, mD = { class: "adm-detail-content-wrap" }, hD = { class: "adm-detail-content" }, pD = { class: "adm-detail-title" }, _D = { class: "adm-detail-content-item-block" }, gD = { class: "add-field" }, vD = /* @__PURE__ */ _("option", null, null, -1), yD = ["value"], ED = ["disabled", "value", "title"], $D = /* @__PURE__ */ _("hr", null, null, -1), bD = { class: "groups" }, OD = {
+  }, uD = { class: "adm-info-message" }, cD = { class: "adm-info-message-title" }, dD = /* @__PURE__ */ _("br", null, null, -1), fD = /* @__PURE__ */ _("br", null, null, -1), mD = /* @__PURE__ */ _("div", { class: "adm-info-message-icon" }, null, -1), hD = { key: 2 }, pD = { class: "adm-detail-block" }, _D = { class: "adm-detail-content-wrap" }, gD = { class: "adm-detail-content" }, vD = { class: "adm-detail-title" }, yD = { class: "adm-detail-content-item-block" }, ED = { class: "add-field" }, $D = /* @__PURE__ */ _("option", null, null, -1), bD = ["value"], OD = ["disabled", "value", "title"], ND = /* @__PURE__ */ _("hr", null, null, -1), DD = { class: "groups" }, wD = {
     key: 0,
     class: "empty-groups"
-  }, ND = { class: "adm-detail-content-btns-wrap" }, DD = { class: "adm-detail-content-btns" }, wD = ["disabled", "value", "title"], TD = ["disabled", "value", "title"], kD = ["value", "title"];
-  function MD(e, t, n, r, s, i) {
+  }, TD = { class: "adm-detail-content-btns-wrap" }, kD = { class: "adm-detail-content-btns" }, MD = ["disabled", "value", "title"], SD = ["disabled", "value", "title"], ID = ["value", "title"];
+  function xD(e, t, n, r, s, i) {
     const o = Jn("Group"), a = Jn("Spinner");
-    return g(), v("div", J0, [
-      s.errors.length ? (g(), v("div", Q0, [
-        _("div", eD, [
-          _("div", tD, D(e.$t("edit.errors")), 1),
+    return g(), v("div", tD, [
+      s.errors.length ? (g(), v("div", nD, [
+        _("div", rD, [
+          _("div", sD, D(e.$t("edit.errors")), 1),
           (g(!0), v(C, null, _t(s.errors, (l) => (g(), v(C, null, [
             G(D(l.message), 1),
-            nD
+            iD
           ], 64))), 256)),
-          rD,
-          sD
+          oD,
+          aD
         ])
       ])) : z("", !0),
-      s.success.length ? (g(), v("div", iD, [
-        _("div", oD, [
-          _("div", aD, D(e.$t("edit.success")), 1),
+      s.success.length ? (g(), v("div", lD, [
+        _("div", uD, [
+          _("div", cD, D(e.$t("edit.success")), 1),
           (g(!0), v(C, null, _t(s.success, (l) => (g(), v(C, null, [
             G(D(l.message), 1),
-            lD
+            dD
           ], 64))), 256)),
-          uD,
-          cD
+          fD,
+          mD
         ])
       ])) : z("", !0),
-      s.entity ? (g(), v("div", dD, [
-        _("div", fD, [
-          _("div", mD, [
-            _("div", hD, [
-              _("div", pD, [
+      s.entity ? (g(), v("div", hD, [
+        _("div", pD, [
+          _("div", _D, [
+            _("div", gD, [
+              _("div", vD, [
                 G(D(s.entity.entity_type_name) + ": ", 1),
                 s.entity.type_name ? (g(), v(C, { key: 0 }, [
                   G(D(s.entity.type_name) + " / ", 1)
                 ], 64)) : z("", !0),
                 G(D(s.entity.name), 1)
               ]),
-              _("div", _D, [
+              _("div", yD, [
                 e.$root.canEdit() ? (g(), v(C, { key: 0 }, [
-                  _("div", gD, [
+                  _("div", ED, [
                     ln(_("select", {
                       "onUpdate:modelValue": t[0] || (t[0] = (l) => s.fieldId = l)
                     }, [
-                      vD,
+                      $D,
                       (g(!0), v(C, null, _t(this.fields, (l) => (g(), v("option", {
                         value: l.id
-                      }, D(l.name), 9, yD))), 256))
+                      }, D(l.name), 9, bD))), 256))
                     ], 512), [
                       [_c, s.fieldId]
                     ]),
@@ -11839,11 +11858,11 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
                       value: e.$t("edit.addRule"),
                       title: e.$t("edit.addRuleTitle"),
                       class: "adm-btn-save"
-                    }, null, 8, ED)
+                    }, null, 8, OD)
                   ]),
-                  $D
+                  ND
                 ], 64)) : z("", !0),
-                _("div", bD, [
+                _("div", DD, [
                   (g(!0), v(C, null, _t(s.entity.groups, (l, u) => (g(), Qn(o, {
                     key: l.id,
                     group: l,
@@ -11851,12 +11870,12 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
                     rules: s.rules,
                     onDelete: (f) => i.deleteGroup(u)
                   }, null, 8, ["group", "entity", "rules", "onDelete"]))), 128)),
-                  s.entity.groups.length ? z("", !0) : (g(), v("div", OD, D(e.$t("edit.emptyGroups")), 1))
+                  s.entity.groups.length ? z("", !0) : (g(), v("div", wD, D(e.$t("edit.emptyGroups")), 1))
                 ])
               ])
             ]),
-            _("div", ND, [
-              _("div", DD, [
+            _("div", TD, [
+              _("div", kD, [
                 e.$root.canEdit() ? (g(), v("input", {
                   key: 0,
                   disabled: i.isDisabled,
@@ -11865,7 +11884,7 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
                   value: e.$t("edit.save"),
                   title: e.$t("edit.saveTitle"),
                   class: "adm-btn-save"
-                }, null, 8, wD)) : z("", !0),
+                }, null, 8, MD)) : z("", !0),
                 e.$root.canEdit() ? (g(), v("input", {
                   key: 1,
                   disabled: i.isDisabled,
@@ -11873,13 +11892,13 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
                   type: "submit",
                   value: e.$t("edit.apply"),
                   title: e.$t("edit.applyTitle")
-                }, null, 8, TD)) : z("", !0),
+                }, null, 8, SD)) : z("", !0),
                 _("input", {
                   onClick: t[4] || (t[4] = Ce((l) => e.$emit("cancel"), ["prevent"])),
                   type: "button",
                   value: e.$t("edit.cancel"),
                   title: e.$t("edit.cancelTitle")
-                }, null, 8, kD)
+                }, null, 8, ID)
               ])
             ])
           ])
@@ -11890,7 +11909,7 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
       }, null, 8, ["loading"])
     ]);
   }
-  const SD = /* @__PURE__ */ ce(Z0, [["render", MD]]), ID = {
+  const RD = /* @__PURE__ */ ue(eD, [["render", xD]]), CD = {
     name: "TableList",
     props: {
       entities: Array
@@ -11900,52 +11919,52 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
         this.$emit("select", e);
       }
     }
-  }, Yd = (e) => (um("data-v-db7a486d"), e = e(), cm(), e), xD = { class: "main-grid-table" }, RD = { class: "main-grid-header" }, CD = { class: "main-grid-row-head" }, LD = { class: "main-grid-cell-head main-grid-cell-left" }, VD = { class: "main-grid-cell-inner" }, PD = { class: "main-grid-cell-head-container" }, AD = { class: "main-grid-head-title" }, FD = /* @__PURE__ */ Yd(() => /* @__PURE__ */ _("span", { class: "main-grid-resize-button" }, null, -1)), zD = { class: "main-grid-cell-head main-grid-cell-left" }, YD = { class: "main-grid-cell-inner" }, UD = { class: "main-grid-cell-head-container" }, jD = { class: "main-grid-head-title" }, WD = /* @__PURE__ */ Yd(() => /* @__PURE__ */ _("span", { class: "main-grid-resize-button" }, null, -1)), HD = {
+  }, Yd = (e) => (um("data-v-db7a486d"), e = e(), cm(), e), LD = { class: "main-grid-table" }, VD = { class: "main-grid-header" }, PD = { class: "main-grid-row-head" }, AD = { class: "main-grid-cell-head main-grid-cell-left" }, FD = { class: "main-grid-cell-inner" }, zD = { class: "main-grid-cell-head-container" }, YD = { class: "main-grid-head-title" }, UD = /* @__PURE__ */ Yd(() => /* @__PURE__ */ _("span", { class: "main-grid-resize-button" }, null, -1)), jD = { class: "main-grid-cell-head main-grid-cell-left" }, WD = { class: "main-grid-cell-inner" }, HD = { class: "main-grid-cell-head-container" }, BD = { class: "main-grid-head-title" }, qD = /* @__PURE__ */ Yd(() => /* @__PURE__ */ _("span", { class: "main-grid-resize-button" }, null, -1)), GD = {
     class: "main-grid-cell-head main-grid-cell-left",
     style: { width: "1px" }
-  }, BD = { class: "main-grid-cell-inner" }, qD = { class: "main-grid-cell-head-container" }, GD = { class: "main-grid-head-title" }, KD = { class: "main-grid-row main-grid-row-body main-grid-not-count" }, XD = {
+  }, KD = { class: "main-grid-cell-inner" }, XD = { class: "main-grid-cell-head-container" }, ZD = { class: "main-grid-head-title" }, JD = { class: "main-grid-row main-grid-row-body main-grid-not-count" }, QD = {
     class: "main-grid-cell main-grid-cell-left",
     style: { width: "1px" }
-  }, ZD = { class: "main-grid-cell-inner" }, JD = { class: "main-grid-cell-content" }, QD = { class: "main-grid-cell main-grid-cell-left" }, ew = { class: "main-grid-cell-inner" }, tw = { class: "main-grid-cell-content" }, nw = ["onClick", "title"], rw = { class: "main-grid-cell main-grid-cell-left" }, sw = { class: "main-grid-cell-inner" }, iw = { class: "main-grid-cell-content" };
-  function ow(e, t, n, r, s, i) {
-    return g(), v("table", xD, [
-      _("thead", RD, [
-        _("tr", CD, [
-          _("th", LD, [
-            _("div", VD, [
-              _("span", PD, [
-                _("span", AD, D(e.$t("list.id")), 1),
-                FD
+  }, ew = { class: "main-grid-cell-inner" }, tw = { class: "main-grid-cell-content" }, nw = { class: "main-grid-cell main-grid-cell-left" }, rw = { class: "main-grid-cell-inner" }, sw = { class: "main-grid-cell-content" }, iw = ["onClick", "title"], ow = { class: "main-grid-cell main-grid-cell-left" }, aw = { class: "main-grid-cell-inner" }, lw = { class: "main-grid-cell-content" };
+  function uw(e, t, n, r, s, i) {
+    return g(), v("table", LD, [
+      _("thead", VD, [
+        _("tr", PD, [
+          _("th", AD, [
+            _("div", FD, [
+              _("span", zD, [
+                _("span", YD, D(e.$t("list.id")), 1),
+                UD
               ])
             ])
           ]),
-          _("th", zD, [
-            _("div", YD, [
-              _("span", UD, [
-                _("span", jD, D(e.$t("list.name")), 1),
-                WD
+          _("th", jD, [
+            _("div", WD, [
+              _("span", HD, [
+                _("span", BD, D(e.$t("list.name")), 1),
+                qD
               ])
             ])
           ]),
-          _("th", HD, [
-            _("div", BD, [
-              _("span", qD, [
-                _("span", GD, D(e.$t("list.count")), 1)
+          _("th", GD, [
+            _("div", KD, [
+              _("span", XD, [
+                _("span", ZD, D(e.$t("list.count")), 1)
               ])
             ])
           ])
         ])
       ]),
       _("tbody", null, [
-        (g(!0), v(C, null, _t(n.entities, (o) => (g(), v("tr", KD, [
-          _("td", XD, [
-            _("div", ZD, [
-              _("span", JD, D(o.id), 1)
-            ])
-          ]),
+        (g(!0), v(C, null, _t(n.entities, (o) => (g(), v("tr", JD, [
           _("td", QD, [
             _("div", ew, [
-              _("span", tw, [
+              _("span", tw, D(o.id), 1)
+            ])
+          ]),
+          _("td", nw, [
+            _("div", rw, [
+              _("span", sw, [
                 _("a", {
                   href: "#1",
                   onClick: Ce((a) => i.select({ id: o.id, type: o.entity_type }), ["prevent"]),
@@ -11955,22 +11974,22 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
                     G(D(o.type_name) + " / ", 1)
                   ], 64)) : z("", !0),
                   G(D(o.name), 1)
-                ], 8, nw)
+                ], 8, iw)
               ])
             ])
           ]),
-          _("td", rw, [
-            _("div", sw, [
-              _("span", iw, D(o.count_rules), 1)
+          _("td", ow, [
+            _("div", aw, [
+              _("span", lw, D(o.count_rules), 1)
             ])
           ])
         ]))), 256))
       ])
     ]);
   }
-  const aw = /* @__PURE__ */ ce(ID, [["render", ow], ["__scopeId", "data-v-db7a486d"]]), lw = {
+  const cw = /* @__PURE__ */ ue(CD, [["render", uw], ["__scopeId", "data-v-db7a486d"]]), dw = {
     name: "List",
-    components: { TableList: aw, Spinner: Wc },
+    components: { TableList: cw, Spinner: Wc },
     emits: ["select"],
     data() {
       return {
@@ -11988,11 +12007,11 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
         });
       }
     }
-  }, uw = { class: "spinner-container" }, cw = { key: 0 };
-  function dw(e, t, n, r, s, i) {
+  }, fw = { class: "spinner-container" }, mw = { key: 0 };
+  function hw(e, t, n, r, s, i) {
     const o = Jn("TableList"), a = Jn("Spinner");
-    return g(), v("div", uw, [
-      s.loading ? z("", !0) : (g(), v("div", cw, [
+    return g(), v("div", fw, [
+      s.loading ? z("", !0) : (g(), v("div", mw, [
         (g(!0), v(C, null, _t(s.entities, (l, u) => (g(), v(C, null, [
           _("h2", null, D(e.$t("list." + u)), 1),
           Ge(o, {
@@ -12006,7 +12025,7 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
       Ge(a, { loading: s.loading }, null, 8, ["loading"])
     ]);
   }
-  const fw = /* @__PURE__ */ ce(lw, [["render", dw]]), ir = Bh(Qh);
+  const pw = /* @__PURE__ */ ue(dw, [["render", hw]]), ir = Bh(Qh);
   ir.config.globalProperties.$scrollTop = (e) => {
     globalThis.intervalId = setInterval(() => {
       if (window.scrollY <= e) {
@@ -12067,9 +12086,9 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
     return e.strtr(t);
   };
   ir.config.globalProperties.$right = document.getElementById("app").dataset.right;
-  ir.component("Edit", SD);
-  ir.component("List", fw);
+  ir.component("Edit", RD);
+  ir.component("List", pw);
   ir.use(A_);
   ir.mount("#app");
 });
-export default mw();
+export default _w();

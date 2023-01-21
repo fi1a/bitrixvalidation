@@ -34,6 +34,7 @@ use Fi1a\BitrixValidation\Models\Rules\StrictInRule;
 use Fi1a\BitrixValidation\Models\Rules\StrictNotInRule;
 use \Fi1a\BitrixValidation\Models\Rules\UniqueRule;
 use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
+use Fi1a\BitrixValidation\Models\Rules\UrlRule;
 use Fi1a\BitrixValidation\ValidationRules\UniqueRule as ValidationUniqueRule;
 use Fi1a\Validation\Validator;
 
@@ -74,6 +75,7 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Models/Rules/MaxDateRule.php',
     __DIR__ . '/lib/Models/Rules/MinDateRule.php',
     __DIR__ . '/lib/Models/Rules/EqualRule.php',
+    __DIR__ . '/lib/Models/Rules/UrlRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -136,6 +138,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Models\Rules\MaxDateRule' => 'lib/Models/Rules/MaxDateRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\MinDateRule' => 'lib/Models/Rules/MinDateRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\EqualRule' => 'lib/Models/Rules/EqualRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\UrlRule' => 'lib/Models/Rules/UrlRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -197,3 +200,5 @@ RuleRegistry::add('betweenDate', BetweenDateRule::class);
 RuleRegistry::add('maxDate', MaxDateRule::class);
 RuleRegistry::add('minDate', MinDateRule::class);
 RuleRegistry::add('equal', EqualRule::class);
+RuleRegistry::add('url', UrlRule::class);
+

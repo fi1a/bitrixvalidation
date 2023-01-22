@@ -239,7 +239,8 @@ class fi1a_bitrixvalidation extends CModule
                 $tableName,
                 RuleTable::getMap(),
                 ['ID'],
-                ['ID']
+                ['ID'],
+                ['MESSAGE']
             );
         }
     }
@@ -261,7 +262,8 @@ class fi1a_bitrixvalidation extends CModule
         string $tableName,
         array $fields,
         array $primary = [],
-        array $autoincrement = []
+        array $autoincrement = [],
+        array $nullable = []
     ) {
         $sql = 'CREATE TABLE ' . $connection->getSqlHelper()->quote($tableName).' (';
         $sqlFields = array();
@@ -277,7 +279,7 @@ class fi1a_bitrixvalidation extends CModule
 
             $sqlFields[] = $connection->getSqlHelper()->quote($realColumnName)
                 . ' ' . $connection->getSqlHelper()->getColumnTypeByField($field)
-                . ($field->isNullable() ? ' NULL' : ' NOT NULL')
+                . (in_array($field->getColumnName(), $nullable) ? ' NULL' : ' NOT NULL')
                 . (in_array($columnName, $autoincrement, true) ? ' AUTO_INCREMENT' : '')
             ;
         }

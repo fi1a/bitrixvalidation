@@ -8,7 +8,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
  * @var string $templateFolder
  */
 
-$module = CModule::CreateModuleObject('fi1a.bitrixrequire');
+$module = CModule::CreateModuleObject('fi1a.bitrixvalidation');
 
 $this->addExternalCss('/bitrix/components/bitrix/main.ui.grid/templates/.default/style.css');
 

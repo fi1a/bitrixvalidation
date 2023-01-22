@@ -38,6 +38,8 @@ use Fi1a\BitrixValidation\Models\Rules\UrlRule;
 use Fi1a\BitrixValidation\ValidationRules\UniqueRule as ValidationUniqueRule;
 use Fi1a\Validation\Validator;
 
+Loader::includeModule('fi1a.bitrixrequire');
+
 if (is_file(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
 }

@@ -8,7 +8,7 @@ if (PHP_SAPI !== 'cli') {
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$_SERVER['DOCUMENT_ROOT'] = realpath($_ENV['BITRIX_DIR']);
+$_SERVER['DOCUMENT_ROOT'] = realpath(getenv('BITRIX_DIR'));
 $DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 
 require_once __DIR__ . '/bxdefine.php';

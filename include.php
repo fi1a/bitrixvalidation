@@ -1,21 +1,27 @@
 <?php
-namespace Fi1a\UserSettings;
+
+namespace Fi1a\BitrixValidation;
 
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Fi1a\BitrixValidation\Models\Rules\AlphaNumericRule;
 use Fi1a\BitrixValidation\Models\Rules\AlphaRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenCountRule;
+use Fi1a\BitrixValidation\Models\Rules\BetweenDateRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenLengthRule;
 use Fi1a\BitrixValidation\Models\Rules\BetweenRule;
 use Fi1a\BitrixValidation\Models\Rules\BooleanRule;
 use Fi1a\BitrixValidation\Models\Rules\DateRule;
 use Fi1a\BitrixValidation\Models\Rules\EmailRule;
+use Fi1a\BitrixValidation\Models\Rules\EqualDateRule;
+use Fi1a\BitrixValidation\Models\Rules\EqualRule;
 use Fi1a\BitrixValidation\Models\Rules\InRule;
 use Fi1a\BitrixValidation\Models\Rules\IntegerRule;
 use Fi1a\BitrixValidation\Models\Rules\JsonRule;
+use Fi1a\BitrixValidation\Models\Rules\MaxDateRule;
 use Fi1a\BitrixValidation\Models\Rules\MaxLengthRule;
 use Fi1a\BitrixValidation\Models\Rules\MaxRule;
+use Fi1a\BitrixValidation\Models\Rules\MinDateRule;
 use Fi1a\BitrixValidation\Models\Rules\MinLengthRule;
 use Fi1a\BitrixValidation\Models\Rules\MinRule;
 use Fi1a\BitrixValidation\Models\Rules\MaxCountRule;
@@ -28,14 +34,16 @@ use Fi1a\BitrixValidation\Models\Rules\StrictInRule;
 use Fi1a\BitrixValidation\Models\Rules\StrictNotInRule;
 use \Fi1a\BitrixValidation\Models\Rules\UniqueRule;
 use Fi1a\BitrixValidation\Helpers\ModuleRegistry;
+use Fi1a\BitrixValidation\Models\Rules\UrlRule;
 use Fi1a\BitrixValidation\ValidationRules\UniqueRule as ValidationUniqueRule;
 use Fi1a\Validation\Validator;
 
-if (is_file(__DIR__ . '/vendor/autoload.php')) {
-    require_once __DIR__ . '/vendor/autoload.php';
+if (!defined('F1_INCLUDE_COMPOSER') || F1_INCLUDE_COMPOSER === false) {
+    Loader::includeModule('fi1a.bitrixrequire');
 }
 
 $classLocFilePaths = [
+    __DIR__ . '/lib/ActionFilter/Rights.php',
     __DIR__ . '/lib/Repositories/IBEntityRepository.php',
     __DIR__ . '/lib/Repositories/HLEntityRepository.php',
     __DIR__ . '/lib/Models/Rules/MinRule.php',
@@ -62,6 +70,12 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Models/Rules/StrictNotInRule.php',
     __DIR__ . '/lib/Models/Rules/UniqueRule.php',
     __DIR__ . '/lib/ValidationRules/UniqueRule.php',
+    __DIR__ . '/lib/Models/Rules/EqualDateRule.php',
+    __DIR__ . '/lib/Models/Rules/BetweenDateRule.php',
+    __DIR__ . '/lib/Models/Rules/MaxDateRule.php',
+    __DIR__ . '/lib/Models/Rules/MinDateRule.php',
+    __DIR__ . '/lib/Models/Rules/EqualRule.php',
+    __DIR__ . '/lib/Models/Rules/UrlRule.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -119,6 +133,12 @@ Loader::registerAutoloadClasses(
         '\Fi1a\BitrixValidation\Models\Rules\StrictInRule' => 'lib/Models/Rules/StrictInRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\StrictNotInRule' => 'lib/Models/Rules/StrictNotInRule.php',
         '\Fi1a\BitrixValidation\Models\Rules\UniqueRule' => 'lib/Models/Rules/UniqueRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\EqualDateRule' => 'lib/Models/Rules/EqualDateRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\BetweenDateRule' => 'lib/Models/Rules/BetweenDateRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\MaxDateRule' => 'lib/Models/Rules/MaxDateRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\MinDateRule' => 'lib/Models/Rules/MinDateRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\EqualRule' => 'lib/Models/Rules/EqualRule.php',
+        '\Fi1a\BitrixValidation\Models\Rules\UrlRule' => 'lib/Models/Rules/UrlRule.php',
 
         //Репозиторий
         '\Fi1a\BitrixValidation\Repositories\EntityRepositoryInterface' => 'lib/Repositories/EntityRepositoryInterface.php',
@@ -175,3 +195,10 @@ RuleRegistry::add('notIn', NotInRule::class);
 RuleRegistry::add('strictIn', StrictInRule::class);
 RuleRegistry::add('strictNotIn', StrictNotInRule::class);
 RuleRegistry::add('unique', UniqueRule::class);
+RuleRegistry::add('equalDate', EqualDateRule::class);
+RuleRegistry::add('betweenDate', BetweenDateRule::class);
+RuleRegistry::add('maxDate', MaxDateRule::class);
+RuleRegistry::add('minDate', MinDateRule::class);
+RuleRegistry::add('equal', EqualRule::class);
+RuleRegistry::add('url', UrlRule::class);
+

@@ -1,7 +1,7 @@
 <template>
   <div class="rule-min-count-row">
-    <label for="min">{{$t('between.min')}}</label>
-    <input id="min" type="text" :value="values.min" @input="setMin($event.target.value)">
+    <label for="minBetween">{{$t('between.min')}}</label>
+    <input :disabled="!$root.canEdit()" id="minBetween" type="text" :value="values.min" @input="setMin($event.target.value)">
     <p v-if="v$.values.min.$invalid" class="error">
       <template v-if="v$.values.min.decimal.$invalid">
         {{$t('errors.decimal')}}
@@ -15,8 +15,8 @@
     </p>
   </div>
   <div class="rule-max-count-row">
-    <label for="max">{{$t('between.max')}}</label>
-    <input id="max" type="text" :value="values.max" @input="setMax($event.target.value)">
+    <label for="maxBetween">{{$t('between.max')}}</label>
+    <input :disabled="!$root.canEdit()" id="maxBetween" type="text" :value="values.max" @input="setMax($event.target.value)">
     <p v-if="v$.values.max.$invalid" class="error">
       <template v-if="v$.values.max.decimal.$invalid">
         {{$t('errors.decimal')}}

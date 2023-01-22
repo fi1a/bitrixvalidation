@@ -1,11 +1,12 @@
 <template>
   <tr :key="rule.id">
     <td class="rule-cell">
-      <select v-model="v$.rule.key.$model" class="rule-select">
+      <select v-if="$root.canEdit()" v-model="v$.rule.key.$model" class="rule-select">
         <option :value="null">{{$t('edit.selectRule')}}</option>
         <option v-if="rule.key" :value="rule.key">{{getCurrentRule.title}}</option>
         <option v-for="item in rulesByTypeAndFilterSelected" :value="item.key">{{item.title}}</option>
       </select>
+      <template v-else>{{getCurrentRule.title}}</template>
       <p v-if="v$.rule.key.$invalid && v$.rule.key.$dirty" class="error">
         {{$t('errors.required')}}
       </p>
@@ -14,11 +15,11 @@
       <component :is="rule.key + 'Rule'" :options="rule.options" @updateOptions="updateOptions($event)"/>
     </td>
     <td class="rule-cell">
-      <input type="text" v-model="rule.message" class="rule-message">
+      <input :disabled="!$root.canEdit()" type="text" v-model="rule.message" class="rule-message">
       <p class="rule-message-description" v-if="getCurrentRule">{{getCurrentRule.messageDescription}}</p>
     </td>
     <td class="rule-cell">
-      <input type="text" v-model="v$.rule.sort.$model" class="rule-sort">
+      <input :disabled="!$root.canEdit()" type="text" v-model="v$.rule.sort.$model" class="rule-sort">
       <p v-if="v$.rule.sort.$invalid" class="error">
         <template v-if="v$.rule.sort.integer.$invalid">
           {{$t('errors.integer')}}
@@ -31,7 +32,7 @@
         </template>
       </p>
     </td>
-    <td>
+    <td v-if="$root.canEdit()">
       <input class="rule-delete" v-on:click.prevent="$emit('delete')" type="button" :title="$t('edit.delete')" :value="$t('edit.delete')">
     </td>
   </tr>
@@ -64,6 +65,12 @@ import InRule from "./RuleOptions/InRule.vue";
 import NotInRule from "./RuleOptions/NotInRule.vue";
 import StrictInRule from "./RuleOptions/StrictInRule.vue";
 import StrictNotInRule from "./RuleOptions/StrictNotInRule.vue";
+import EqualDateRule from "./RuleOptions/EqualDateRule.vue";
+import BetweenDateRule from "./RuleOptions/BetweenDateRule.vue";
+import MaxDateRule from "./RuleOptions/MaxDateRule.vue";
+import MinDateRule from "./RuleOptions/MinDateRule.vue";
+import EqualRule from "./RuleOptions/EqualRule.vue";
+import UrlRule from "./RuleOptions/UrlRule.vue";
 
 export default {
   name: "Rule",
@@ -84,7 +91,8 @@ export default {
   components: {
     MinRule, MaxRule, MinCountRule, MaxCountRule, BetweenCountRule, BetweenRule, MinLengthRule, MaxLengthRule,
     BetweenLengthRule, AlphaNumericRule, AlphaRule, BooleanRule, IntegerRule, NumericRule, EmailRule, DateRule,
-    JsonRule, RegexRule, UniqueRule, InRule, NotInRule, StrictInRule, StrictNotInRule,
+    JsonRule, RegexRule, UniqueRule, InRule, NotInRule, StrictInRule, StrictNotInRule, EqualDateRule,
+    BetweenDateRule, MaxDateRule, MinDateRule, EqualRule, UrlRule,
   },
 
   emits: ['delete'],
@@ -155,7 +163,7 @@ export default {
       deep: true
     },
     'rule.key': {
-      handler() {
+      handler(newValue, oldValue) {
         this.rule.options = {};
       }
     }

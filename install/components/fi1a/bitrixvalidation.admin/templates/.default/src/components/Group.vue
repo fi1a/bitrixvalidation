@@ -10,13 +10,13 @@
           <td>{{$t('edit.options')}}</td>
           <td class="col-rule">{{$t('edit.message')}}</td>
           <td class="col-rule">{{$t('edit.sort')}}</td>
-          <td class="col-delete">{{$t('edit.delete')}}</td>
+          <td v-if="$root.canEdit()" class="col-delete">{{$t('edit.delete')}}</td>
         </tr>
         <tr v-if="!sortedGroupMultipleRules.length"><td colspan="4" class="empty-rules">{{$t('edit.emptyRules')}}</td></tr>
         <Rule v-for="(rule, index) in sortedGroupMultipleRules" :rule="rule" :group="group" :rules="rulesByMultipleType" :groupRules="group.multiple_rules" @delete="deleteMultipleRule(index)"/>
         </tbody>
       </table>
-      <input :disabled="this.group.multiple_rules.length === rulesByMultipleType.length" v-on:click.prevent="addMultipleRule()" type="submit" :title="$t('edit.add')" class="adm-btn-save" :value="$t('edit.add')">
+      <input v-if="$root.canEdit()" :disabled="this.group.multiple_rules.length === rulesByMultipleType.length" v-on:click.prevent="addMultipleRule()" type="submit" :title="$t('edit.add')" class="adm-btn-save" :value="$t('edit.add')">
     </template>
     <h4>{{$t('edit.notMultiple')}}</h4>
     <table class="internal">
@@ -26,13 +26,13 @@
         <td>{{$t('edit.options')}}</td>
         <td class="col-rule">{{$t('edit.message')}}</td>
         <td class="col-rule">{{$t('edit.sort')}}</td>
-        <td class="col-delete">{{$t('edit.delete')}}</td>
+        <td v-if="$root.canEdit()" class="col-delete">{{$t('edit.delete')}}</td>
       </tr>
       <tr v-if="!sortedGroupRules.length"><td colspan="4" class="empty-rules">{{$t('edit.emptyRules')}}</td></tr>
-      <Rule v-for="(rule, index) in sortedGroupRules" :rule="rule" :group="group" :rules="rulesByType" :groupRules="group.rules" @delete="deleteRule(index)"/>
+      <Rule v-for="(rule, index) in sortedGroupRules" :key="rule.id" :rule="rule" :group="group" :rules="rulesByType" :groupRules="group.rules" @delete="deleteRule(index)"/>
       </tbody>
     </table>
-    <input :disabled="this.group.rules.length === rulesByType.length" v-on:click.prevent="addRule()" type="submit" :title="$t('edit.add')" class="adm-btn-save" :value="$t('edit.add')">
+    <input v-if="$root.canEdit()" :disabled="this.group.rules.length === rulesByType.length" v-on:click.prevent="addRule()" type="submit" :title="$t('edit.add')" class="adm-btn-save" :value="$t('edit.add')">
   </div>
 </template>
 

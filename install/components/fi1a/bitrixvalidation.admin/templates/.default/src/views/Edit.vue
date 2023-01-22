@@ -27,14 +27,16 @@
             <div class="adm-detail-title">{{entity.entity_type_name}}: <template v-if="entity.type_name">{{entity.type_name}} / </template>{{entity.name}}</div>
 
             <div class="adm-detail-content-item-block">
-              <div class="add-field">
-                <select v-model="fieldId">
-                  <option></option>
-                  <option v-for="field in this.fields" :value="field.id">{{field.name}}</option>
-                </select>
-                <input :disabled="!fieldId" v-on:click.prevent="addRule(fieldId); fieldId = null;" type="button" :value="$t('edit.addRule')" :title="$t('edit.addRuleTitle')" class="adm-btn-save">
-              </div>
-              <hr>
+              <template v-if="$root.canEdit()">
+                <div class="add-field">
+                  <select v-model="fieldId">
+                    <option></option>
+                    <option v-for="field in this.fields" :value="field.id">{{field.name}}</option>
+                  </select>
+                  <input :disabled="!fieldId" v-on:click.prevent="addRule(fieldId); fieldId = null;" type="button" :value="$t('edit.addRule')" :title="$t('edit.addRuleTitle')" class="adm-btn-save">
+                </div>
+                <hr>
+              </template>
               <div class="groups">
                 <Group :key="group.id" v-for="(group, index) in entity.groups" :group="group" :entity="entity" :rules="rules" @delete="deleteGroup(index)" />
                 <div class="empty-groups" v-if="!entity.groups.length">{{$t('edit.emptyGroups')}}</div>
@@ -43,8 +45,8 @@
           </div>
           <div class="adm-detail-content-btns-wrap">
             <div class="adm-detail-content-btns">
-              <input :disabled="isDisabled" v-on:click.prevent="save()" type="submit" :value="$t('edit.save')" :title="$t('edit.saveTitle')" class="adm-btn-save">
-              <input :disabled="isDisabled" v-on:click.prevent="apply()" type="submit" :value="$t('edit.apply')" :title="$t('edit.applyTitle')">
+              <input v-if="$root.canEdit()" :disabled="isDisabled" v-on:click.prevent="save()" type="submit" :value="$t('edit.save')" :title="$t('edit.saveTitle')" class="adm-btn-save">
+              <input v-if="$root.canEdit()" :disabled="isDisabled" v-on:click.prevent="apply()" type="submit" :value="$t('edit.apply')" :title="$t('edit.applyTitle')">
               <input v-on:click.prevent="$emit('cancel')" type="button" :value="$t('edit.cancel')" :title="$t('edit.cancelTitle')">
             </div>
           </div>

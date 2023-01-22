@@ -1,15 +1,15 @@
 <template>
   <div class="rule-in-row">
-    <label for="in">{{$t('strictIn.in')}}</label>
+    <label>{{$t('strictIn.in')}}</label>
     <div class="rule-in" v-for="(find, index) in v$.values.in.$model">
-      <input class="value" type="text" v-model.trim="find.value" :key="index"><input v-if="values.in.length > 1" class="delete" v-on:click.prevent="deleteItem(index)" type="button" title="X" value="X">
+      <input :disabled="!$root.canEdit()" class="value" type="text" v-model.trim="find.value" :key="index"><input v-if="values.in.length > 1 && $root.canEdit()" class="delete" v-on:click.prevent="deleteItem(index)" type="button" title="X" value="X">
     </div>
     <p v-if="v$.values.in.multipleRequired.$invalid && v$.values.$dirty" class="error">
       <template v-if="v$.values.in.multipleRequired.$invalid">
         {{$t('errors.required')}}
       </template>
     </p>
-    <input v-on:click.prevent="addItem()" type="button" :title="$t('edit.add')" :value="$t('edit.add')">
+    <input v-if="$root.canEdit()" v-on:click.prevent="addItem()" type="button" :title="$t('edit.add')" :value="$t('edit.add')">
   </div>
 </template>
 
@@ -115,7 +115,7 @@ export default {
 }
 
 .rule-in-row .rule-in input.value {
-  width: 260px;
+  width: 250px;
 }
 
 .rule-in-row .rule-in input.delete {

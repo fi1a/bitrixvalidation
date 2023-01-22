@@ -89,5 +89,29 @@
   },
   "strictNotIn": {
     "notIn": "Не допустимые значения"
+  },
+  "equalDate": {
+    "equalDate": "Дата и время",
+    "format": "Формат даты и времени",
+    "showCalendarTitle": "Нажмите для выбора даты"
+  },
+  "betweenDate": {
+    "minDate": "Минимальная дата",
+    "maxDate": "Максимальная дата",
+    "format": "Формат даты и времени",
+    "showCalendarTitle": "Нажмите для выбора даты"
+  },
+  "maxDate": {
+    "maxDate": "Максимальная дата",
+    "format": "Формат даты и времени",
+    "showCalendarTitle": "Нажмите для выбора даты"
+  },
+  "minDate": {
+    "minDate": "Минимальная дата",
+    "format": "Формат даты и времени",
+    "showCalendarTitle": "Нажмите для выбора даты"
+  },
+  "equal": {
+    "equal": "Значение"
   }
 }

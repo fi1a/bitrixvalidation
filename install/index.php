@@ -9,8 +9,11 @@ use Bitrix\Main\ModuleManager;
 use Bitrix\Main\IO\FileDeleteException;
 use Fi1a\BitrixValidation\Events\Events;
 use Fi1a\BitrixValidation\ORM\RuleTable;
+use Fi1a\BitrixRequire\ModulePackages;
 
 Loc::loadMessages(__FILE__);
+
+require_once __DIR__ . '/../lib/ORM/RuleTable.php';
 
 /**
  * Инсталятор модуля
@@ -36,6 +39,14 @@ class fi1a_bitrixvalidation extends CModule
      * @var string
      */
     private $bitrixAdminDir;
+
+    /**
+     * @var array<string, string>
+     */
+    private $packages = [
+        'fi1a/collection' => '^2.0',
+        'fi1a/validation' => '^3.0',
+    ];
 
     /**
      * Конструктор
@@ -116,6 +127,12 @@ class fi1a_bitrixvalidation extends CModule
      */
     public function DoInstall()
     {
+        if (!$this->isComposerInstall()) {
+            if (!$this->installPackages()) {
+                return false;
+            }
+        }
+
         if (!$this->InstallDB()) {
             return false;
         }
@@ -131,6 +148,42 @@ class fi1a_bitrixvalidation extends CModule
             $this->UninstallFiles();
 
             return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Устанавливает зависимости через модуль fi1a.bitrixrequire
+     */
+    public function installPackages(): bool
+    {
+        global $APPLICATION;
+
+        if (!Loader::includeModule('fi1a.bitrixrequire')) {
+            $APPLICATION->ResetException();
+            $APPLICATION->ThrowException(Loc::getMessage('FBV_FBR_MODULE_REQUIRE'));
+
+            return false;
+        }
+
+        $modulePackages = new ModulePackages();
+        $success = [];
+
+        foreach ($this->packages as $package => $version) {
+            $result = $modulePackages->require($this->MODULE_ID, $package, $version);
+            if (!$result->isSuccess()) {
+                foreach ($success as $successPackage) {
+                    $modulePackages->remove($this->MODULE_ID, $successPackage);
+                }
+
+                $APPLICATION->ResetException();
+                $APPLICATION->ThrowException($result->getOutput());
+
+                return false;
+            }
+
+            $success[] = $package;
         }
 
         return true;
@@ -155,7 +208,6 @@ class fi1a_bitrixvalidation extends CModule
             $connection->startTransaction();
 
             ModuleManager::registerModule($this->MODULE_ID);
-            Loader::includeModule($this->MODULE_ID);
 
             $this->createRuleTable($connection);
             $this->setSettings();
@@ -334,6 +386,28 @@ class fi1a_bitrixvalidation extends CModule
             return false;
         }
 
+        if (!$this->isComposerInstall()) {
+            $this->uninstallPackages();
+        }
+
+        return true;
+    }
+
+    /**
+     * Удаляем зависимости через модуль fi1a.bitrixrequire
+     */
+    public function uninstallPackages(): bool
+    {
+        if (!Loader::includeModule('fi1a.bitrixrequire')) {
+            return false;
+        }
+
+        $modulePackages = new ModulePackages();
+
+        foreach (array_keys($this->packages) as $package) {
+            $modulePackages->remove($this->MODULE_ID, $package);
+        }
+
         return true;
     }
 
@@ -351,8 +425,6 @@ class fi1a_bitrixvalidation extends CModule
         $connection = Application::getConnection();
 
         try {
-            Loader::includeModule($this->MODULE_ID);
-
             $connection->startTransaction();
 
             $this->dropRuleTable($connection);
@@ -696,5 +768,14 @@ class fi1a_bitrixvalidation extends CModule
         }
 
         return true;
+    }
+
+    /**
+     * Модуль установлен через composer
+     */
+    public function isComposerInstall(): bool
+    {
+        return Option::get('fi1a.installers', $this->MODULE_ID) === 'Y'
+            || (defined('F1_INCLUDE_COMPOSER') && F1_INCLUDE_COMPOSER === true);
     }
 }

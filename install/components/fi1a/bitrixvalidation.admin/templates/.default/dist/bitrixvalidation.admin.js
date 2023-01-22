@@ -11573,7 +11573,7 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
           e.indexOf(r.key) === -1 && (t = r.key);
         });
         let n = this.$parent.getEmptyRule(this.group.id, this.entity, !1);
-        n.key = t, this.group.rules.push(n);
+        n.key = t, n.uniqid = Math.random().toString(16), this.group.rules.push(n);
       },
       addMultipleRule() {
         let e = [];
@@ -11585,7 +11585,7 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
           e.indexOf(r.key) === -1 && (t = r.key);
         });
         let n = this.$parent.getEmptyRule(this.group.id, this.entity, !0);
-        n.key = t, this.group.multiple_rules.push(n);
+        n.key = t, n.uniqid = Math.random().toString(16), this.group.multiple_rules.push(n);
       }
     }
   }, R0 = { class: "group" }, C0 = { class: "internal" }, L0 = { class: "heading" }, V0 = { class: "col-rule" }, P0 = { class: "col-rule" }, A0 = { class: "col-rule" }, F0 = {
@@ -11620,12 +11620,13 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
               _("td", Y0, D(e.$t("edit.emptyRules")), 1)
             ])),
             (g(!0), v(C, null, _t(i.sortedGroupMultipleRules, (a, l) => (g(), Qn(o, {
+              key: a.id ? a.id : a.uniqid,
               rule: a,
               group: n.group,
               rules: i.rulesByMultipleType,
               groupRules: n.group.multiple_rules,
               onDelete: (u) => i.deleteMultipleRule(l)
-            }, null, 8, ["rule", "group", "rules", "groupRules", "onDelete"]))), 256))
+            }, null, 8, ["rule", "group", "rules", "groupRules", "onDelete"]))), 128))
           ])
         ]),
         e.$root.canEdit() ? (g(), v("input", {
@@ -11652,7 +11653,7 @@ Arguments: ` + Array.prototype.slice.call(r).join("") + `
             _("td", X0, D(e.$t("edit.emptyRules")), 1)
           ])),
           (g(!0), v(C, null, _t(i.sortedGroupRules, (a, l) => (g(), Qn(o, {
-            key: a.id,
+            key: a.id ? a.id : a.uniqid,
             rule: a,
             group: n.group,
             rules: i.rulesByType,

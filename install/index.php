@@ -776,6 +776,7 @@ class fi1a_bitrixvalidation extends CModule
      */
     public function isComposerInstall(): bool
     {
-        return Option::get('fi1a.installers', $this->MODULE_ID) === 'Y';
+        return Option::get('fi1a.installers', $this->MODULE_ID) === 'Y'
+            || (defined('F1_INCLUDE_COMPOSER') && F1_INCLUDE_COMPOSER === true);
     }
 }

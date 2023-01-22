@@ -13,7 +13,7 @@ use Fi1a\BitrixRequire\ModulePackages;
 
 Loc::loadMessages(__FILE__);
 
-include __DIR__ . '/../lib/ORM/RuleTable.php';
+require_once __DIR__ . '/../lib/ORM/RuleTable.php';
 
 /**
  * Инсталятор модуля

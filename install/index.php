@@ -1,12 +1,14 @@
 <?php
 
 use Bitrix\Main\Application;
+use Bitrix\Main\ArgumentException;
 use Bitrix\Main\Config\Option;
 use Bitrix\Main\DB\Connection;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ModuleManager;
 use Bitrix\Main\IO\FileDeleteException;
+use Bitrix\Main\ORM\Fields\ScalarField;
 use Fi1a\BitrixValidation\Events\Events;
 use Fi1a\BitrixValidation\ORM\RuleTable;
 use Fi1a\BitrixRequire\ModulePackages;
@@ -232,13 +234,69 @@ class fi1a_bitrixvalidation extends CModule
     {
         $tableName = RuleTable::getTableName();
         if (!$connection->isTableExists($tableName)) {
-            $connection->createTable(
+            $this->createTable(
+                $connection,
                 $tableName,
                 RuleTable::getMap(),
                 ['ID'],
                 ['ID']
             );
         }
+    }
+
+    /**
+     * Создать таблицу
+     *
+     * @param Connection $connection
+     * @param string $tableName
+     * @param ScalarField[] $fields
+     * @param string[] $primary
+     * @param string[] $autoincrement
+     *
+     * @throws ArgumentException
+     * @throws \Bitrix\Main\DB\SqlQueryException
+     */
+    private function createTable(
+        Connection $connection,
+        string $tableName,
+        array $fields,
+        array $primary = [],
+        array $autoincrement = []
+    ) {
+        $sql = 'CREATE TABLE ' . $connection->getSqlHelper()->quote($tableName).' (';
+        $sqlFields = array();
+
+        foreach ($fields as $columnName => $field) {
+            if (!($field instanceof ScalarField)) {
+                throw new ArgumentException(sprintf(
+                    'Field `%s` should be an Entity\ScalarField instance', $columnName
+                ));
+            }
+
+            $realColumnName = $field->getColumnName();
+
+            $sqlFields[] = $connection->getSqlHelper()->quote($realColumnName)
+                . ' ' . $connection->getSqlHelper()->getColumnTypeByField($field)
+                . ($field->isNullable() ? ' NULL' : ' NOT NULL')
+                . (in_array($columnName, $autoincrement, true) ? ' AUTO_INCREMENT' : '')
+            ;
+        }
+
+        $sql .= join(', ', $sqlFields);
+
+        if (!empty($primary))
+        {
+            foreach ($primary as &$primaryColumn) {
+                $realColumnName = $fields[$primaryColumn]->getColumnName();
+                $primaryColumn = $connection->getSqlHelper()->quote($realColumnName);
+            }
+
+            $sql .= ', PRIMARY KEY('.join(', ', $primary).')';
+        }
+
+        $sql .= ')';
+
+        $connection->query($sql);
     }
 
     /**

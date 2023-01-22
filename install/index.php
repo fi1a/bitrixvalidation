@@ -13,6 +13,8 @@ use Fi1a\BitrixRequire\ModulePackages;
 
 Loc::loadMessages(__FILE__);
 
+include __DIR__ . '/../lib/ORM/RuleTable.php';
+
 /**
  * Инсталятор модуля
  */
@@ -206,7 +208,6 @@ class fi1a_bitrixvalidation extends CModule
             $connection->startTransaction();
 
             ModuleManager::registerModule($this->MODULE_ID);
-            Loader::includeModule($this->MODULE_ID);
 
             $this->createRuleTable($connection);
             $this->setSettings();
@@ -424,8 +425,6 @@ class fi1a_bitrixvalidation extends CModule
         $connection = Application::getConnection();
 
         try {
-            Loader::includeModule($this->MODULE_ID);
-
             $connection->startTransaction();
 
             $this->dropRuleTable($connection);

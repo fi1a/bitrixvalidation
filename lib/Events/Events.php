@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\BitrixValidation\Events;
 
 use Bitrix\Highloadblock\HighloadBlockTable;
+use Bitrix\Iblock\PropertyTable;
 use Bitrix\Main\Entity\Event;
 use Bitrix\Main\Entity\EventResult;
 use Bitrix\Main\Entity\FieldError;
@@ -150,18 +151,18 @@ class Events
         $entity = $service->getEntity('ib', (int) $fields['IBLOCK_ID']);
 
         if (count($entity->getGroups())) {
+            $iterator = PropertyTable::query()
+                ->setSelect(['ID', 'CODE'])
+                ->where('IBLOCK_ID', '=', (int) $fields['IBLOCK_ID'])
+                ->where('CODE', 'in', array_keys($fields['PROPERTY_VALUES']))
+                ->exec();
             $propertyByIds = $fields['PROPERTY_VALUES'];
-            foreach ($fields['PROPERTY_VALUES'] as $propertyCode => $value) {
-                $property = CIBlockProperty::GetList([], [
-                    '=IBLOCK_ID' => (int) $fields['IBLOCK_ID'],
-                    '=CODE' => $propertyCode,
-                ])->Fetch();
-
-                if (!$property) {
-                    continue;
+            while ($property = $iterator->Fetch()) {
+                foreach ($fields['PROPERTY_VALUES'] as $propertyCode => $value) {
+                    if ($propertyCode === $property['CODE']) {
+                        $propertyByIds[(int) $property['ID']] = $value;
+                    }
                 }
-
-                $propertyByIds[(int) $property['ID']] = $value;
             }
         }
 

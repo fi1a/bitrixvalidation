@@ -150,17 +150,18 @@ class Events
         $entity = $service->getEntity('ib', (int) $fields['IBLOCK_ID']);
 
         if (count($entity->getGroups())) {
-            $iterator = CIBlockProperty::GetList([], [
-                '=IBLOCK_ID' => (int) $fields['IBLOCK_ID'],
-                '=CODE' => array_keys($fields['PROPERTY_VALUES']),
-            ]);
             $propertyByIds = $fields['PROPERTY_VALUES'];
-            while ($property = $iterator->Fetch()) {
-                foreach ($fields['PROPERTY_VALUES'] as $propertyCode => $value) {
-                    if ($propertyCode === $property['CODE']) {
-                        $propertyByIds[(int) $property['ID']] = $value;
-                    }
+            foreach ($fields['PROPERTY_VALUES'] as $propertyCode => $value) {
+                $property = CIBlockProperty::GetList([], [
+                    '=IBLOCK_ID' => (int) $fields['IBLOCK_ID'],
+                    '=CODE' => $propertyCode,
+                ])->Fetch();
+
+                if (!$property) {
+                    continue;
                 }
+
+                $propertyByIds[(int) $property['ID']] = $value;
             }
         }
 

@@ -31,6 +31,11 @@ class EntityTestCase extends ModuleTestCase
     /**
      * @var int
      */
+    protected static $iblockId3;
+
+    /**
+     * @var int
+     */
     protected static $hlId;
 
     /**
@@ -138,6 +143,38 @@ class EntityTestCase extends ModuleTestCase
 
         if (!static::$iblockId2) {
             throw new ErrorException('Не удалось добавить инфоблок');
+        }
+
+        static::$iblockId3 = (int) $ib->Add([
+            'ACTIVE' => 'Y',
+            'NAME' => 'BitrixValidation Test 3',
+            'CODE' => 'BITRIXVALIDATION_TEST_3',
+            'LIST_PAGE_URL' => '',
+            'DETAIL_PAGE_URL' => '',
+            'IBLOCK_TYPE_ID' => 'fbv_test',
+            'SITE_ID' => ['s1'],
+            'SORT' => 100,
+            'PICTURE' => null,
+            'DESCRIPTION' => null,
+            'DESCRIPTION_TYPE' => null,
+            'GROUP_ID' => [],
+        ]);
+
+        if (!static::$iblockId3) {
+            throw new ErrorException('Не удалось добавить инфоблок');
+        }
+
+        $result = RuleTable::add([
+            'KEY' => 'alpha',
+            'OPTIONS' => '{}',
+            'SORT' => 500,
+            'FIELD_ID' => 'NAME',
+            'ENTITY_TYPE' => 'ib',
+            'ENTITY_ID' => static::$iblockId3,
+            'MESSAGE' => '',
+        ]);
+        if ($result->isSuccess()) {
+            static::$ruleIds[] = $result->getId();
         }
 
         $ibp = new CIBlockProperty();
@@ -426,9 +463,14 @@ class EntityTestCase extends ModuleTestCase
     {
         if (static::$iblockId) {
             CIBlock::Delete(static::$iblockId);
-            CIBlock::Delete(static::$iblockId2);
-            CIBlockType::Delete('fbv_test');
         }
+        if (static::$iblockId2) {
+            CIBlock::Delete(static::$iblockId2);
+        }
+        if (static::$iblockId3) {
+            CIBlock::Delete(static::$iblockId3);
+        }
+        CIBlockType::Delete('fbv_test');
         if (static::$hlId) {
             HighloadBlockTable::delete(static::$hlId);
         }

@@ -150,7 +150,12 @@ class Events
         $service = new EntityService();
         $entity = $service->getEntity('ib', (int) $fields['IBLOCK_ID']);
 
-        if (count($entity->getGroups())) {
+        if (
+            count($entity->getGroups())
+            && isset($fields['PROPERTY_VALUES'])
+            && is_array($fields['PROPERTY_VALUES'])
+            && count($fields['PROPERTY_VALUES'])
+        ) {
             $iterator = PropertyTable::query()
                 ->setSelect(['ID', 'CODE'])
                 ->where('IBLOCK_ID', '=', (int) $fields['IBLOCK_ID'])

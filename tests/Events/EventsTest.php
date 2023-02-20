@@ -77,6 +77,42 @@ class EventsTest extends EntityTestCase
     /**
      * Валидация при добавлении элемента инфоблока
      */
+    public function testOnBeforeIBlockElementAddAndUpdateEmptyProperties(): void
+    {
+        $instance = new CIBlockElement();
+
+        $id = $instance->Add([
+            'IBLOCK_ID' => static::$iblockId3,
+            'NAME' => '123',
+            'ACTIVE' => 'Y',
+        ]);
+
+        $this->assertFalse($id);
+
+        $id = $instance->Add([
+            'IBLOCK_ID' => static::$iblockId3,
+            'NAME' => 'TestName',
+            'ACTIVE' => 'Y',
+        ]);
+
+        $this->assertIsNumeric($id);
+
+        $result = $instance->Update($id, [
+            'NAME' => '20',
+        ]);
+
+        $this->assertFalse($result);
+
+        $result = $instance->Update($id, [
+            'NAME' => 'NewTestName',
+        ]);
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * Валидация при добавлении элемента инфоблока
+     */
     public function testOnBeforeIBlockElementAddAndUpdateAdmin(): void
     {
         $instance = new CIBlockElement();

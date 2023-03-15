@@ -168,7 +168,7 @@ Loader::registerAutoloadClasses(
 
 global $APPLICATION;
 
-ModuleRegistry::configure($APPLICATION, $GLOBALS);
+ModuleRegistry::configure($APPLICATION);
 
 Validator::addRule(ValidationUniqueRule::class);
 
